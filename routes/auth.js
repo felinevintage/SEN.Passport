@@ -3,7 +3,9 @@ var router = express.Router();
 var models = require("../models");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+require("dotenv").config();
 const saltRounds = 10;
+const supersecret = process.env.SUPER_SECRET;
 
 /* GET home page. */
 router.get("/", function (req, res, next) {
@@ -31,29 +33,23 @@ router.post("/register", async (req, res) => {
 /*POST login */
 router.post("/login", async (req, res) => {
   const { username, password } = req.body;
+  try {
+    const user = await models.Users.findOne({ where: { username } });
+    // console.log(user.dataValues);
 
-  const results = await models.Users.findOne({});
-
-  // try {
-  //   const results = await db(
-  //     `SELECT * FROM users WHERE username = "${username}"`
-  //   );
-  //   const user = results.data[0];
-  //   if (user) {
-  //     const user_id = user.id;
-
-  //     const correctPassword = await bcrypt.compare(password, user.password);
-
-  //     if (!correctPassword) throw new Error("Incorrect password");
-
-  //     var token = jwt.sign({ user_id }, supersecret);
-  //     res.send({ message: "Login successful, here is your token", token });
-  //   } else {
-  //     throw new Error("User does not exist");
-  //   }
-  // } catch (err) {
-  //   res.status(400).send({ message: err.message });
-  // }
+    if (user) {
+      const user_id = user.id;
+      const correctPassword = await bcrypt.compare(password, user.password);
+      if (!correctPassword) throw new Error("Incorrect password");
+      const token = jwt.sign({ user_id }, supersecret);
+      console.log(token);
+      res.send({ message: "Login successful, here is your token", token });
+    } else {
+      throw new Error("User does not exist");
+    }
+  } catch (error) {
+    res.status(400).send({ message: error.message });
+  }
 });
 
 module.exports = router;
