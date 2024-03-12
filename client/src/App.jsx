@@ -1,10 +1,10 @@
 import {Routes, Route, Link} from "react-router-dom";
 import { useState } from 'react'
 import NavBar from "./components/NavBar";
-import AddAssessment from "./pages/Add-assessment";
-import AddChild from "./pages/Add-child";
-import AddEvent from "./pages/Add-event";
-import AllEvents from "./pages/All-events";
+import AddAssessment from "./pages/AddAssessment";
+import AddChild from "./pages/AddChild";
+import AddEvent from "./pages/AddEvent";
+import AllEvents from "./pages/AllEvents";
 import Assessment from "./pages/Assessment";
 import Assessments from "./pages/Assessments";
 import Child from "./pages/Child";
