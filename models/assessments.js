@@ -11,6 +11,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      Assessments.belongsTo(models.Children);
     }
   }
   Assessments.init({
