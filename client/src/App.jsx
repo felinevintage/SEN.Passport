@@ -1,5 +1,5 @@
-import {Routes, Route, Link} from "react-router-dom";
-import { useState } from 'react'
+import { Routes, Route, Link } from "react-router-dom";
+import { useState } from "react";
 import NavBar from "./components/NavBar";
 import AddAssessment from "./pages/AddAssessment";
 import AddChild from "./pages/AddChild";
@@ -14,16 +14,16 @@ import Documents from "./pages/Documents";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Settings from "./pages/Settings";
-import './App.css'
+import "./App.css";
 
 function App() {
-  
-
   return (
-    <>
-      
-    </>
-  )
+    <div>
+      <Routes>
+        <Route path="/register" element={<Register />} />
+      </Routes>
+    </div>
+  );
 }
 
-export default App
+export default App;
