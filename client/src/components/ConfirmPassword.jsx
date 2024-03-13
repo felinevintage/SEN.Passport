@@ -1,9 +1,8 @@
-import React from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
 
-export default function ConfirmPassword() {
+export default function ConfirmPassword({ newUser, setNewUser }) {
   const formSchema = Yup.object().shape({
     password: Yup.string()
       .required("Password is required")
@@ -19,6 +18,7 @@ export default function ConfirmPassword() {
 
   function onSubmit(data) {
     alert("SUCCESS!! :)\n\n" + JSON.stringify(data, null, 4));
+    setNewUser({ ...newUser, password: data });
     return false;
   }
 

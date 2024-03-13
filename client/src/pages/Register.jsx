@@ -42,7 +42,7 @@ export default function Register() {
             value={newUser.email}
             onChange={(e) => setNewUser({ ...newUser, email: e.target.value })}
           ></input>
-          <ConfirmPassword value={newUser.pasword} />
+          <ConfirmPassword setNewUser={setNewUser} newUser={newUser} />
 
           {/* <input
             type="password"
