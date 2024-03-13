@@ -1,7 +1,5 @@
-import "./App.css"
-import {Routes, Route, Link} from "react-router-dom";
-import { useState } from 'react'
-import AuthContext from "./contexts/AuthContext";
+import { Routes, Route, Link } from "react-router-dom";
+import { useState } from "react";
 import NavBar from "./components/NavBar";
 import AddAssessment from "./pages/AddAssessment";
 import AddChild from "./pages/AddChild";
@@ -16,52 +14,33 @@ import Documents from "./pages/Documents";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Settings from "./pages/Settings";
-
-const [isLoggedIn,setIsLoggedIn] =useState(false)
-
-function signIn(){
-  setIsLoggedIn(true)
-}
-function signOut(){
-  setIsLoggedIn(false)
-}
-
-const authObject = {
-  isLoggedIn,
-  signIn,
-  signOut
-}
+import "./App.css";
 
 function App() {
   return (
     <AuthContext.Provider value={authObject}>
-    <div className= "App container">
-     <h1 className="text-xl underline bg-blue-300">
-     TEST Group B Project
-     </h1>
-     <NavBar />
-     <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/child" element={<Child />} />
-        <Route path="/addchild" element={<AddChild />} />
-        <Route path="/assessment" element={<Assessment />} />
-        <Route path="/assessments" element={<Assessments />} />
-        <Route path="/addassessment" element={<AddAssessment />} />
-        <Route path="/document" element={<Document />} />
-        <Route path="/documents" element={<Documents />} />
-        <Route path="/allevents" element={<AllEvents />} /> 
-        <Route path="/addevent" element={<AddEvent />} />
-        <Route path="/settings" element={<Settings />} />   
-     </Routes>
-     </div>
-     </AuthContext.Provider>
-   );
+      <div className="App container">
+        <h1 className="text-xl underline bg-blue-300">TEST Group B Project</h1>
+        <NavBar />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/child" element={<Child />} />
+          <Route path="/addchild" element={<AddChild />} />
+          <Route path="/assessment" element={<Assessment />} />
+          <Route path="/assessments" element={<Assessments />} />
+          <Route path="/addassessment" element={<AddAssessment />} />
+          <Route path="/document" element={<Document />} />
+          <Route path="/documents" element={<Documents />} />
+          <Route path="/allevents" element={<AllEvents />} />
+          <Route path="/addevent" element={<AddEvent />} />
+          <Route path="/settings" element={<Settings />} />
+        </Routes>
+      </div>
+    </AuthContext.Provider>
+  );
 }
 
-export default App
-function Home() {
-  return<div>HOME</div>;
-}
+export default App;
