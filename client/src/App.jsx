@@ -7,6 +7,7 @@ import AddEvent from "./pages/AddEvent";
 import AllEvents from "./pages/AllEvents";
 import Assessment from "./pages/Assessment";
 import Assessments from "./pages/Assessments";
+import AuthContext from "./contexts/AuthContext";
 import Child from "./pages/Child";
 import Dashboard from "./pages/Dashboard";
 import Document from "./pages/Document";
@@ -16,29 +17,28 @@ import Register from "./pages/Register";
 import Settings from "./pages/Settings";
 import "./App.css";
 
-const [isLoggedIn,setIsLoggedIn] =useState(false)
-
-function signIn(){
-  setIsLoggedIn(true)
-}
-function signOut(){
-  setIsLoggedIn(false)
-}
-
-const authObject = {
-  isLoggedIn,
-  signIn,
-  signOut
-}
-
 function App() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  function signIn() {
+    setIsLoggedIn(true);
+  }
+  function signOut() {
+    setIsLoggedIn(false);
+  }
+
+  const authObject = {
+    isLoggedIn,
+    signIn,
+    signOut,
+  };
   return (
     <AuthContext.Provider value={authObject}>
       <div className="App container">
         <h1 className="text-xl underline bg-blue-300">TEST Group B Project</h1>
         <NavBar />
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route path="/" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
           <Route path="/dashboard" element={<Dashboard />} />
