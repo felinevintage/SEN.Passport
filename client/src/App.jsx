@@ -16,6 +16,21 @@ import Register from "./pages/Register";
 import Settings from "./pages/Settings";
 import "./App.css";
 
+const [isLoggedIn,setIsLoggedIn] =useState(false)
+
+function signIn(){
+  setIsLoggedIn(true)
+}
+function signOut(){
+  setIsLoggedIn(false)
+}
+
+const authObject = {
+  isLoggedIn,
+  signIn,
+  signOut
+}
+
 function App() {
   return (
     <AuthContext.Provider value={authObject}>
