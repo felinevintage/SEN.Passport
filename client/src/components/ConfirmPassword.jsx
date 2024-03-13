@@ -17,8 +17,8 @@ export default function ConfirmPassword({ newUser, setNewUser }) {
   const { errors } = formState;
 
   function onSubmit(data) {
-    alert("SUCCESS!! :)\n\n" + JSON.stringify(data, null, 4));
-    setNewUser({ ...newUser, password: data });
+    alert("SUCCESS!! :)\n\n");
+    setNewUser({ ...newUser, password: data.password });
     return false;
   }
 
