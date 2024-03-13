@@ -1,6 +1,6 @@
 import { Routes, Route, Link } from "react-router-dom";
 import { useState } from "react";
-import NavBar from "./components/NavBar";
+import NavBarMenu from "./components/NavBar";
 import AddAssessment from "./pages/AddAssessment";
 import AddChild from "./pages/AddChild";
 import AddEvent from "./pages/AddEvent";
@@ -34,9 +34,9 @@ function App() {
   };
   return (
     <AuthContext.Provider value={authObject}>
-      <div className="App container">
-        <h1 className="text-xl underline bg-blue-300">TEST Group B Project</h1>
-        <NavBar />
+  
+    
+        <NavBarMenu />
         <Routes>
           <Route path="/" element={<Login />} />
           <Route path="/register" element={<Register />} />
@@ -53,7 +53,7 @@ function App() {
           <Route path="/addevent" element={<AddEvent />} />
           <Route path="/settings" element={<Settings />} />
         </Routes>
-      </div>
+    
     </AuthContext.Provider>
   );
 }
