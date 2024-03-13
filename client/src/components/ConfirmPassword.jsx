@@ -16,39 +16,41 @@ export default function ConfirmPassword({ newUser, setNewUser }) {
   const { register, handleSubmit, reset, formState } = useForm(formOptions);
   const { errors } = formState;
 
-  function onSubmit(data) {
-    alert("SUCCESS!! :)\n\n");
-    setNewUser({ ...newUser, password: data.password });
-    return false;
-  }
+  //   function onSubmit(data) {
+  //     //alert("SUCCESS!! :)\n\n");
+  //     setNewUser({ ...newUser, password: data.password });
+  //     return false;
+  //   }
 
   return (
     <div>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <div>
-          <input
-            name="password"
-            type="password"
-            placeholder="Password"
-            {...register("password")}
-            // className={`form-control ${errors.password ? "is-invalid" : ""}`}
-          />
-          {/* <div className="invalid-feedback">{errors.password?.message}</div> */}
-          <div>{errors.password?.message}</div>
-        </div>
-        <div>
-          <input
-            name="confirmPwd"
-            type="password"
-            placeholder="Confirm password"
-            {...register("confirmPwd")}
-            // className={`form-control ${errors.confirmPwd ? "is-invalid" : ""}`}
-          />
-          {/* <div className="invalid-feedback">{errors.confirmPwd?.message}</div> */}
-          <div>{errors.confirmPwd?.message}</div>
-        </div>
-        <button>Submit</button>
-      </form>
+      <div>
+        <input
+          name="password"
+          type="password"
+          placeholder="Password"
+          {...register("password")}
+          // className={`form-control ${errors.password ? "is-invalid" : ""}`}
+        />
+        {/* <div className="invalid-feedback">{errors.password?.message}</div> */}
+        <div>{errors.password?.message}</div>
+      </div>
+      <div>
+        <input
+          name="confirmPwd"
+          type="password"
+          placeholder="Confirm password"
+          {...register("confirmPwd")}
+          // className={`form-control ${errors.confirmPwd ? "is-invalid" : ""}`}
+        />
+        {/* <div className="invalid-feedback">{errors.confirmPwd?.message}</div> */}
+        <div>{errors.confirmPwd?.message}</div>
+      </div>
+      <button
+        onClick={(e) => setNewUser({ ...newUser, password: e.target.value })}
+      >
+        Register
+      </button>
     </div>
   );
 }
