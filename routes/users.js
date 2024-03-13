@@ -32,7 +32,23 @@ router.get('/:id', async function(req, res, next) {
 
 
 //GET children associated with user
-router.get('/:id/children',async function(req, res, next) {
+// router.get('/:id/children',async function(req, res, next) {
+//   const { id } = req.params;
+
+//   try {
+//     const user = await models.Users.findOne({
+//       where: {
+//         id,
+//       },
+//     })
+//     res.send(user.getChildren());
+//   } catch(error) {
+//     res.status(500).send(error);
+//   }
+// })
+
+//GET children associated with user
+router.get('/:id/children', async function(req, res, next) {
   const { id } = req.params;
 
   try {
@@ -40,12 +56,24 @@ router.get('/:id/children',async function(req, res, next) {
       where: {
         id,
       },
-    })
-    res.send(user.getChildren());
+      include: [{ model: models.Children }] // Include associated Children
+    });
+
+    // Check if user exists
+    if (!user) {
+      return res.status(404).send('User not found');
+    }
+
+    // Access children through the retrieved user
+    const children = user.Children;
+
+    res.send(children);
   } catch(error) {
-    res.status(500).send(error);
+    console.error(error);
+    res.status(500).send('Internal server error');
   }
 })
+
 
 //GET users associated with other user
 router.get('/:id/users',async function(req, res, next) {
