@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 // Any component that wants to ‘consume’ / be aware of authContext
@@ -22,15 +23,24 @@ export default function Login() {
     username: "",
     password: "",
   });
+  const [errors, setErrors] = useState("");
+  const navigate = useNavigate();
 
   async function login() {
     try {
       const { data } = await axios.post("/api/auth/login", credentials);
       localStorage.setItem("token", data.token);
+      setErrors("");
+      navigate("/dashboard");
     } catch (error) {
-      console.log(error.response.data.message);
+      setErrors(error.response.data.message);
     }
   }
+
+  function logout() {
+    localStorage.removeItem("token");
+  }
+
   return (
     <div>
       <input
@@ -49,6 +59,7 @@ export default function Login() {
         }
       ></input>
       <button onClick={login}>Login</button>
+      <div>{errors ? errors : null}</div>
     </div>
   );
 }
