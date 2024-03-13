@@ -33,7 +33,25 @@ router.post("/:id/children", async function (req, res, next) {
 } catch (error) { 
   res.status(400).send(error)
 }
-  
 });
+
+
+//GET child
+router.get("/children/:id", async function(req, res, next) {
+  const { id } = req.params;
+
+  try {
+    const child = await models.Children.findOne({
+      where: {
+        id,
+      }
+      
+    });
+    res.send(child);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
+  
 
 module.exports = router;
