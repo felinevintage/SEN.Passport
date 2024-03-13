@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { useForm } from "react-hook-form";
+import ConfirmPassword from "../components/ConfirmPassword";
 
 export default function Register() {
   const [newUser, setNewUser] = useState({
@@ -11,7 +13,7 @@ export default function Register() {
 
   return (
     <div>
-      <form>
+      <div>
         <div>
           <input
             name="username"
@@ -40,7 +42,9 @@ export default function Register() {
             value={newUser.email}
             onChange={(e) => setNewUser({ ...newUser, email: e.target.value })}
           ></input>
-          <input
+          <ConfirmPassword value={newUser.pasword} />
+
+          {/* <input
             type="password"
             placeholder="Password"
             value={newUser.password}
@@ -48,9 +52,9 @@ export default function Register() {
               setNewUser({ ...newUser, password: e.target.value })
             }
           ></input>
-          <input placeholder="Repeat password" pattern=""></input>
+          <input placeholder="Confirm password" pattern=""></input> */}
         </div>
-      </form>
+      </div>
     </div>
   );
 }
