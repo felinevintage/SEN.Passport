@@ -16,7 +16,26 @@ module.exports = (sequelize, DataTypes) => {
   }
   Children.init({
     firstname: DataTypes.STRING,
-    lastname: DataTypes.STRING
+    lastname: DataTypes.STRING,
+    diagnoses: DataTypes.TEXT,
+    school_support: DataTypes.TEXT,
+    home_support: DataTypes.TEXT,
+    specialists: DataTypes.TEXT,
+    medication: DataTypes.TEXT,
+    educaiton: DataTypes.STRING,
+    aids: DataTypes.TEXT,
+    dateofbirth: DataTypes.DATEONLY,
+    emergency_contact: DataTypes.BIGINT,
+    createdAt: {
+      type: DataTypes.DATE,
+      allowNull: false,
+      defaultValue: DataTypes.NOW,
+    },
+    updatedAt: {
+      type: DataTypes.DATE,
+      allowNull: false,
+      defaultValue: DataTypes.NOW,
+    },
   }, {
     sequelize,
     modelName: 'Children',
