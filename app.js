@@ -7,7 +7,7 @@ const cors = require("cors");
 var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
 var assessRouter = require("./routes/assess");
-var childRouter = require("./routes/child");
+var childrenRouter = require("./routes/children");
 var docsRouter = require("./routes/docs");
 var eventsRouter = require("./routes/events");
 var authRouter = require("./routes/auth");
@@ -25,7 +25,7 @@ app.use("/api", indexRouter);
 app.use("/api/users", usersRouter);
 app.use("/api/auth", authRouter);
 app.use("/api/assess", assessRouter);
-app.use("/api/child", childRouter);
+app.use("/api/children", childrenRouter);
 app.use("/api/docs", docsRouter);
 app.use("/api/events", eventsRouter);
 
