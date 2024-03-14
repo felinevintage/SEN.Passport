@@ -48,6 +48,10 @@ export default function Login() {
     localStorage.removeItem("token");
   }
 
+  function goToRegister() {
+    navigate("/register");
+  }
+
   return (
     <div className="container p-4 flex justify-center items-center h-screen ">
       <div className="grid grid-cols-1 bg-slate-300 p-8 rounded-md">
@@ -68,6 +72,10 @@ export default function Login() {
         {/* <button onClick={login}>Login</button> */}
         <div className="text-center text-red-500 m-2">
           {errors ? errors : null}
+        </div>
+        <div className="text-center text-slate-500">
+          <p>Are you a new user?</p>
+          <Button text={"Register"} onClick={goToRegister} />
         </div>
       </div>
     </div>
