@@ -29,7 +29,7 @@ export default function AddChild () {
         e.preventDefault();
     
         try {
-            const response = await fetch('/api/child', {
+            const response = await fetch('/api/children', {
                 method: "POST", 
                 headers: {
                     "Content-Type": "application/json",
@@ -58,7 +58,7 @@ export default function AddChild () {
     
 
 return (
-    <div className="flex flex-col h-screen justify-center items-center">
+    <div className="flex flex-col h-screen mt-4 justify-center items-center">
         <p className="font-medium p-4 text-lg">Add a Child</p>
         
         <form onSubmit={handleSubmit}>
@@ -66,7 +66,7 @@ return (
             <div>
                 <label></label>
                     <InputBox 
-                    onChange={handleChange}
+                    handleChange={handleChange}
                     value={child.firstname}
                     name="firstname"
                     type="text"
@@ -76,7 +76,7 @@ return (
             <div>
                 <label></label>
                     <InputBox
-                    onChange={handleChange}
+                    handleChange={handleChange}
                     value={child.lastname}
                     name="lastname"
                     type="text"
@@ -86,9 +86,9 @@ return (
             <div>
                 <label></label>
                     <InputBox
-                    onChange={handleChange}
+                    handleChange={handleChange}
                     value={child.dateofbirth}
-                    name="dateobirth"
+                    name="dateofbirth"
                     type="date"
                     placeholder="Date of Birth">
                     </InputBox>
@@ -96,7 +96,7 @@ return (
             <div>
                 <label></label>
                     <InputBox
-                    onChange={handleChange}
+                    handleChange={handleChange}
                     value={child.medication}
                     name="medication"
                     type="text"
@@ -106,7 +106,7 @@ return (
              <div>
                 <label></label>
                     <InputBox
-                    onChange={handleChange}
+                    handleChange={handleChange}
                     value={child.aids}
                     name="aids"
                     type="text"
@@ -116,7 +116,7 @@ return (
             <div>
                 <label></label>
                     <InputBox
-                    onChange={handleChange}
+                    handleChange={handleChange}
                     value={child.education}
                     name="education"
                     type="text"
@@ -126,7 +126,7 @@ return (
             <div>
                 <label></label>
                     <InputBox
-                    onChange={handleChange}
+                    handleChange={handleChange}
                     value={child.emergency_contact}
                     name="emergency_contact"
                     type="text"
@@ -146,7 +146,7 @@ return (
             <div>
                 <label></label>
                     <InputBox
-                    onChange={handleChange}
+                    handleChange={handleChange}
                     value={child.specialists}
                     name="Specialists"
                     type="text"

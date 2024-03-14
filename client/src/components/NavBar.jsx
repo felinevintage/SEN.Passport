@@ -17,19 +17,19 @@ import {
   Bars3Icon,
   XMarkIcon,
   CogIcon,
-  LogoutIcon,
+  // LogoutIcon,
 } from "@heroicons/react/24/outline";
-import {
-  Bars4Icon,
-  GlobeAmericasIcon,
-  NewspaperIcon,
-  PhoneIcon,
-  RectangleGroupIcon,
-  SquaresPlusIcon,
-  SunIcon,
-  TagIcon,
-  UserGroupIcon,
-} from "@heroicons/react/24/solid";
+// import {
+//   Bars4Icon,
+//   GlobeAmericasIcon,
+//   NewspaperIcon,
+//   PhoneIcon,
+//   RectangleGroupIcon,
+//   SquaresPlusIcon,
+//   SunIcon,
+//   TagIcon,
+//   UserGroupIcon,
+// } from "@heroicons/react/24/solid";
  
 const navListMenuItems = [
   {
@@ -40,7 +40,7 @@ const navListMenuItems = [
   {
     title: "Sign Out",
     description: "Reach out to us for assistance or inquiries",
-    icon: LogoutIcon,
+    // icon: LogoutIcon,
   }
 ];
  
@@ -206,4 +206,4 @@ export default function NavBarMenu() {
       </Collapse> */}
     </Navbar>
   );
-}
+// }
