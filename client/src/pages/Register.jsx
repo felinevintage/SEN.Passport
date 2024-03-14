@@ -21,7 +21,6 @@ export default function Register() {
 
   async function handleSubmit(e) {
     e.preventDefault();
-
     try {
       const response = await axios.post("/api/auth/register", newUser);
       console.log(response);
@@ -44,51 +43,57 @@ export default function Register() {
   }
 
   return (
-    <div className="container px-4">
+    <div className="container p-4 flex justify-center items-center h-screen">
       {registrationOk ? (
-        <div>
+        <div className="max-w-100 text-center text-2xl">
           <p>Your user has been registered.</p>
-          Click <Link to="/login">here</Link> to login.
+          <p>
+            Click{" "}
+            <Link to="/login" className="text-purple-500">
+              here
+            </Link>{" "}
+            to login.
+          </p>
         </div>
       ) : (
-        <div>
-          <form onSubmit={handleSubmit}>
-            <div className="columns-1">
-              <InputBox
-                name="username"
-                placeholder="Username"
-                value={newUser.username}
-                handleChange={handleChange}
-              />
-              <InputBox
-                name="firstname"
-                placeholder="First name"
-                value={newUser.firstname}
-                handleChange={handleChange}
-              />
-              <InputBox
-                name="lastname"
-                placeholder="Last name"
-                value={newUser.lastname}
-                handleChange={handleChange}
-              />
-              <InputBox
-                name="email"
-                placeholder="Email"
-                value={newUser.email}
-                handleChange={handleChange}
-              />
-              {/* <ConfirmPassword setNewUser={setNewUser} newUser={newUser} /> */}
-              <InputBox
-                name="password"
-                type="password"
-                placeholder="Password"
-                value={newUser.password}
-                handleChange={handleChange}
-              />
-              {/*<input placeholder="Confirm password" pattern=""></input> */}
-              <button>Register</button>
-            </div>
+        <div className="max-w-80">
+          <form onSubmit={handleSubmit} className="grid grid-cols-1">
+            <InputBox
+              name="username"
+              placeholder="Username"
+              value={newUser.username}
+              handleChange={handleChange}
+            />
+            <InputBox
+              name="firstname"
+              placeholder="First name"
+              value={newUser.firstname}
+              handleChange={handleChange}
+            />
+            <InputBox
+              name="lastname"
+              placeholder="Last name"
+              value={newUser.lastname}
+              handleChange={handleChange}
+            />
+            <InputBox
+              name="email"
+              placeholder="Email"
+              value={newUser.email}
+              handleChange={handleChange}
+            />
+            {/* <ConfirmPassword setNewUser={setNewUser} newUser={newUser} /> */}
+            <InputBox
+              name="password"
+              type="password"
+              placeholder="Password"
+              value={newUser.password}
+              handleChange={handleChange}
+            />
+            {/*<input placeholder="Confirm password" pattern=""></input> */}
+            <button className="bg-purple-500 hover:bg-purple-700 text-white font-bold m-2 py-2 px-4 rounded w-40 mx-auto block">
+              Register
+            </button>
           </form>
         </div>
       )}
