@@ -57,8 +57,11 @@ export default function Register() {
           </p>
         </div>
       ) : (
-        <div className="max-w-80">
-          <form onSubmit={handleSubmit} className="grid grid-cols-1">
+        <div>
+          <form
+            onSubmit={handleSubmit}
+            className="grid grid-cols-1 bg-slate-300 p-8 rounded-md"
+          >
             <InputBox
               name="username"
               placeholder="Username"
