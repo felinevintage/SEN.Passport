@@ -2,6 +2,7 @@ import React from "react";
 import {useState, useEffect} from "react";
 import {useNavigate} from "react-router-dom";
 import InputBox from "../components/InputBox";
+import Button from "../components/Button";
 
 
 const initial = {
@@ -57,14 +58,15 @@ export default function AddChild () {
     
 
 return (
-    <div className="flex flex-no wrap container max-width: 1024">
+    <div className="flex flex-col h-screen justify-center items-center">
+        <p className="font-medium p-4 text-lg">Add a Child</p>
         
         <form onSubmit={handleSubmit}>
-        <div className="grid grid-cols-2 gap-3 justify-center">
+        <div className="grid grid-cols-2 gap-3">
             <div>
                 <label></label>
                     <InputBox 
-                    handleChange={handleChange}
+                    onChange={handleChange}
                     value={child.firstname}
                     name="firstname"
                     type="text"
@@ -74,7 +76,7 @@ return (
             <div>
                 <label></label>
                     <InputBox
-                    handleChange={handleChange}
+                    onChange={handleChange}
                     value={child.lastname}
                     name="lastname"
                     type="text"
@@ -84,7 +86,7 @@ return (
             <div>
                 <label></label>
                     <InputBox
-                    handleChange={handleChange}
+                    onChange={handleChange}
                     value={child.dateofbirth}
                     name="dateobirth"
                     type="date"
@@ -94,7 +96,7 @@ return (
             <div>
                 <label></label>
                     <InputBox
-                    handleChange={handleChange}
+                    onChange={handleChange}
                     value={child.medication}
                     name="medication"
                     type="text"
@@ -104,7 +106,7 @@ return (
              <div>
                 <label></label>
                     <InputBox
-                    handleChange={handleChange}
+                    onChange={handleChange}
                     value={child.aids}
                     name="aids"
                     type="text"
@@ -114,7 +116,7 @@ return (
             <div>
                 <label></label>
                     <InputBox
-                    handleChange={handleChange}
+                    onChange={handleChange}
                     value={child.education}
                     name="education"
                     type="text"
@@ -124,7 +126,7 @@ return (
             <div>
                 <label></label>
                     <InputBox
-                    handleChange={handleChange}
+                    onChange={handleChange}
                     value={child.emergency_contact}
                     name="emergency_contact"
                     type="text"
@@ -144,37 +146,29 @@ return (
             <div>
                 <label></label>
                     <InputBox
-                    handleChange={handleChange}
+                    onChange={handleChange}
                     value={child.specialists}
-                    name="specialists"
+                    name="Specialists"
                     type="text"
                     placeholder="specialists">
                     </InputBox>
             </div>
-            <div>
-                <label></label>
-                    <InputBox
-                    onChange={handleChange}
-                    value={child.aids}
-                    name="aids"
-                    type="text"
-                    placeholder="aids">
-                    </InputBox>
             </div>
-            </div>
-            <div>
+            <div className="container p-4 flex justify-center items-center">
+                
                 <label></label>
-                    <textarea
+                    <textarea className="w-96 h-32 rounded-md border-2 border-slate-300 hover:border-purple-300 m-2 p-2"
                     onChange={handleChange}
                     value={child.school_support}
                     name="school_support"
                     type="text"
                     placeholder="Support Needed at School or Place of Education">
                     </textarea>
-            </div>
-            <div>
+                    </div>
+            
+            <div className="container p-4 flex justify-center items-center">
                 <label></label>
-                    <textarea
+                    <textarea className="w-96 h-32 rounded-md border-2 border-slate-300 hover:border-purple-300 m-2 p-2"
                     onChange={handleChange}
                     value={child.home_support}
                     name="home_support"
@@ -182,6 +176,10 @@ return (
                     placeholder="Support Needed at Home">
                     </textarea>
             </div>
+            <Button text={"Submit Form"} onSubmit="handleSubmit"></Button>
+        
+    
+            
         </form>
 
     </div>
