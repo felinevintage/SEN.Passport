@@ -1,8 +1,9 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
 import InputBox from "../components/InputBox";
 import Button from "../components/Button";
+import useAuth from "../hooks/useAuth";
 
 // Any component that wants to ‘consume’ / be aware of authContext
 // just needs to import the useAuth
@@ -21,6 +22,9 @@ import Button from "../components/Button";
 // Otherwise, show me Y (div and whatever it contains)”
 // BBM
 export default function Login() {
+  const { isLoggedIn, signIn, signOut } = useAuth();
+  let location = useLocation();
+
   const [credentials, setCredentials] = useState({
     username: "",
     password: "",
@@ -38,7 +42,13 @@ export default function Login() {
       const { data } = await axios.post("/api/auth/login", credentials);
       localStorage.setItem("token", data.token);
       setErrors("");
-      navigate("/dashboard");
+      signIn();
+      if (location.state) {
+        let newLocation = location.state.from.pathname;
+        navigate(`${newLocation}`);
+      } else {
+        navigate("/dashboard");
+      }
     } catch (error) {
       setErrors(error.response.data.message);
     }
@@ -46,6 +56,11 @@ export default function Login() {
 
   function logout() {
     localStorage.removeItem("token");
+    signOut();
+  }
+
+  function goToRegister() {
+    navigate("/register");
   }
 
   return (
@@ -68,6 +83,10 @@ export default function Login() {
         {/* <button onClick={login}>Login</button> */}
         <div className="text-center text-red-500 m-2">
           {errors ? errors : null}
+        </div>
+        <div className="text-center text-slate-500">
+          <p>Are you a new user?</p>
+          <Button text={"Register"} onClick={goToRegister} />
         </div>
       </div>
     </div>
