@@ -59,10 +59,12 @@ router.get(
 
 /* GET all assessments of one child */
 router.get(
-  "/:id/all",
+  "/:id/assessments",
   [userShouldBeLoggedIn, childMustExist, mustHaveChildPermission],
   async (req, res) => {
-    const childId = req.params.id;
+    const { child } = req;
+    const childId = child.id;
+    console.log(childId);
     try {
       await models.Assessments.findAll({
         where: {
