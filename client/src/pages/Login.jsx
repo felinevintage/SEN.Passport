@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import InputBox from "../components/InputBox";
+import Button from "../components/Button";
 
 // Any component that wants to ‘consume’ / be aware of authContext
 // just needs to import the useAuth
@@ -48,22 +49,27 @@ export default function Login() {
   }
 
   return (
-    <div>
-      <InputBox
-        name="username"
-        placeholder="Username"
-        value={credentials.username}
-        handleChange={handleChange}
-      />
-      <InputBox
-        name="password"
-        placeholder="Password"
-        type="password"
-        value={credentials.password}
-        handleChange={handleChange}
-      />
-      <button onClick={login}>Login</button>
-      <div>{errors ? errors : null}</div>
+    <div className="container p-4 flex justify-center items-center h-screen ">
+      <div className="grid grid-cols-1 bg-slate-300 p-8 rounded-md">
+        <InputBox
+          name="username"
+          placeholder="Username"
+          value={credentials.username}
+          handleChange={handleChange}
+        />
+        <InputBox
+          name="password"
+          placeholder="Password"
+          type="password"
+          value={credentials.password}
+          handleChange={handleChange}
+        />
+        <Button text={"Login"} onClick={login} />
+        {/* <button onClick={login}>Login</button> */}
+        <div className="text-center text-red-500 m-2">
+          {errors ? errors : null}
+        </div>
+      </div>
     </div>
   );
 }

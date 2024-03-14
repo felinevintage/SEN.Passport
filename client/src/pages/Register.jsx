@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import InputBox from "../components/InputBox";
+import Button from "../components/Button";
 //import ConfirmPassword from "../components/ConfirmPassword";
 
 export default function Register() {
@@ -56,8 +57,11 @@ export default function Register() {
           </p>
         </div>
       ) : (
-        <div className="max-w-80">
-          <form onSubmit={handleSubmit} className="grid grid-cols-1">
+        <div>
+          <form
+            onSubmit={handleSubmit}
+            className="grid grid-cols-1 bg-slate-300 p-8 rounded-md"
+          >
             <InputBox
               name="username"
               placeholder="Username"
@@ -91,9 +95,7 @@ export default function Register() {
               handleChange={handleChange}
             />
             {/*<input placeholder="Confirm password" pattern=""></input> */}
-            <button className="bg-purple-500 hover:bg-purple-700 text-white font-bold m-2 py-2 px-4 rounded w-40 mx-auto block">
-              Register
-            </button>
+            <Button text={"Register"} />
           </form>
         </div>
       )}
