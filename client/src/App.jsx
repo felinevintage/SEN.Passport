@@ -16,6 +16,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Settings from "./pages/Settings";
 import "./App.css";
+import RequireAuth from "./components/RequireAuth";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -34,26 +35,100 @@ function App() {
   };
   return (
     <AuthContext.Provider value={authObject}>
-  
-    
-        <NavBarMenu />
-        <Routes>
-          <Route path="/" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/child" element={<Child />} />
-          <Route path="/addchild" element={<AddChild />} />
-          <Route path="/assessment" element={<Assessment />} />
-          <Route path="/assessments" element={<Assessments />} />
-          <Route path="/addassessment" element={<AddAssessment />} />
-          <Route path="/document" element={<Document />} />
-          <Route path="/documents" element={<Documents />} />
-          <Route path="/allevents" element={<AllEvents />} />
-          <Route path="/addevent" element={<AddEvent />} />
-          <Route path="/settings" element={<Settings />} />
-        </Routes>
-    
+      <NavBarMenu />
+      <Routes>
+        <Route path="/" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/login" element={<Login />} />
+        <Route
+          path="/dashboard"
+          element={
+            <RequireAuth>
+              <Dashboard />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/child"
+          element={
+            <RequireAuth>
+              <Child />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/addchild"
+          element={
+            <RequireAuth>
+              <AddChild />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/assessment"
+          element={
+            <RequireAuth>
+              <Assessment />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/assessments"
+          element={
+            <RequireAuth>
+              <Assessments />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/addassessment"
+          element={
+            <RequireAuth>
+              <AddAssessment />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/document"
+          element={
+            <RequireAuth>
+              <Document />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/documents"
+          element={
+            <RequireAuth>
+              <Documents />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/allevents"
+          element={
+            <RequireAuth>
+              <AllEvents />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/addevent"
+          element={
+            <RequireAuth>
+              <AddEvent />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/settings"
+          element={
+            <RequireAuth>
+              <Settings />
+            </RequireAuth>
+          }
+        />
+      </Routes>
     </AuthContext.Provider>
   );
 }
