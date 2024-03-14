@@ -57,4 +57,23 @@ router.get(
   }
 );
 
+/* GET all assessments of one child */
+router.get(
+  "/:id/all",
+  [userShouldBeLoggedIn, childMustExist, mustHaveChildPermission],
+  async (req, res) => {
+    const childId = req.params.id;
+    try {
+      await models.Assessments.findAll({
+        where: {
+          childId,
+        },
+      });
+      res.send("Success");
+    } catch (error) {
+      res.status(500).send(error);
+    }
+  }
+);
+
 module.exports = router;

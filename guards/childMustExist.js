@@ -1,3 +1,5 @@
+const models = require("../models");
+
 async function childMustExist(req, res, next) {
   const { id } = req.params;
   const child = await models.Children.findOne({
