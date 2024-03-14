@@ -1,3 +1,5 @@
+const models = require("../models");
+
 async function mustHaveChildPermission(req, res, next) {
   const { user, child } = req;
   // console.log("user id:", user.id, "child id:", child.id);

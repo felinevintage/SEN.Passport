@@ -19,18 +19,19 @@ import {
   CogIcon,
   // LogoutIcon,
 } from "@heroicons/react/24/outline";
-// import {
-//   Bars4Icon,
-//   GlobeAmericasIcon,
-//   NewspaperIcon,
-//   PhoneIcon,
-//   RectangleGroupIcon,
-//   SquaresPlusIcon,
-//   SunIcon,
-//   TagIcon,
-//   UserGroupIcon,
-// } from "@heroicons/react/24/solid";
- 
+
+import {
+  Bars4Icon,
+  GlobeAmericasIcon,
+  NewspaperIcon,
+  PhoneIcon,
+  RectangleGroupIcon,
+  SquaresPlusIcon,
+  SunIcon,
+  TagIcon,
+  UserGroupIcon,
+} from "@heroicons/react/24/solid";
+
 const navListMenuItems = [
   {
     title: "Settings",
@@ -40,10 +41,11 @@ const navListMenuItems = [
   {
     title: "Sign Out",
     description: "Reach out to us for assistance or inquiries",
-    // icon: LogoutIcon,
-  }
+    //icon: LogoutIcon,
+  },
+
 ];
- 
+
 function NavListMenu() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
@@ -75,9 +77,9 @@ function NavListMenu() {
           </div>
         </MenuItem>
       </a>
-    ),
+    )
   );
- 
+
   return (
     <React.Fragment>
       <Menu
@@ -122,7 +124,7 @@ function NavListMenu() {
     </React.Fragment>
   );
 }
- 
+
 function NavList() {
   return (
     <List className="mt-4 mb-6 p-0 lg:mt-0 lg:mb-0 lg:flex-row lg:p-1">
@@ -133,7 +135,9 @@ function NavList() {
         color="blue-gray"
         className="font-medium"
       >
-        <ListItem className="text-black flex items-center gap-2 py-2 pr-4">Home</ListItem>
+        <ListItem className="text-black flex items-center gap-2 py-2 pr-4">
+          Home
+        </ListItem>
       </Typography>
       <NavListMenu />
       <Typography
@@ -142,22 +146,21 @@ function NavList() {
         variant="small"
         color="blue-gray"
         className="font-medium"
-      >
-      </Typography>
+      ></Typography>
     </List>
   );
 }
- 
+
 export default function NavBarMenu() {
   const [openNav, setOpenNav] = React.useState(false);
- 
+
   React.useEffect(() => {
     window.addEventListener(
       "resize",
-      () => window.innerWidth >= 960 && setOpenNav(false),
+      () => window.innerWidth >= 960 && setOpenNav(false)
     );
   }, []);
- 
+
   return (
     <Navbar className="mx-auto max-w-screen-xl px-4 py-2">
       <div className="flex items-center justify-between text-blue-gray-900">
@@ -166,17 +169,20 @@ export default function NavBarMenu() {
           href="#"
           variant="h6"
           className="mr-4 cursor-pointer py-1.5 lg:ml-2"
-        >
-          
-        </Typography>
+        ></Typography>
         <div className="hidden lg:block">
           <NavList />
         </div>
         <div className="hidden gap-2 lg:flex">
-          <Button className="text-black" variant="text" size="sm" color="blue-gray">
+          <Button
+            className="text-black"
+            variant="text"
+            size="sm"
+            color="blue-gray"
+          >
             Log In
           </Button>
-          <Button className="bg-gray-700"variant="gradient" size="sm">
+          <Button className="bg-gray-700" variant="gradient" size="sm">
             Sign In
           </Button>
         </div>
@@ -206,4 +212,6 @@ export default function NavBarMenu() {
       </Collapse> */}
     </Navbar>
   );
-// }
+
+}
+
