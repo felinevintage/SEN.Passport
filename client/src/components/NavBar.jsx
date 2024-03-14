@@ -19,6 +19,7 @@ import {
   CogIcon,
   // LogoutIcon,
 } from "@heroicons/react/24/outline";
+
 import {
   Bars4Icon,
   GlobeAmericasIcon,
@@ -42,6 +43,7 @@ const navListMenuItems = [
     description: "Reach out to us for assistance or inquiries",
     //icon: LogoutIcon,
   },
+
 ];
 
 function NavListMenu() {
@@ -210,4 +212,6 @@ export default function NavBarMenu() {
       </Collapse> */}
     </Navbar>
   );
+
 }
+
