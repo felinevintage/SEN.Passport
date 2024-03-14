@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import InputBox from "../components/InputBox";
 //import ConfirmPassword from "../components/ConfirmPassword";
 
 export default function Register() {
@@ -13,9 +14,13 @@ export default function Register() {
   });
   const [registrationOk, setRegistrationOk] = useState(false);
 
+  function handleChange(e) {
+    const { name, value } = e.target;
+    setNewUser({ ...newUser, [name]: value });
+  }
+
   async function handleSubmit(e) {
     e.preventDefault();
-
     try {
       const response = await axios.post("/api/auth/register", newUser);
       console.log(response);
@@ -38,56 +43,57 @@ export default function Register() {
   }
 
   return (
-    <div>
+    <div className="container p-4 flex justify-center items-center h-screen">
       {registrationOk ? (
-        <div>
+        <div className="max-w-100 text-center text-2xl">
           <p>Your user has been registered.</p>
-          Click <Link to="/login">here</Link> to login.
+          <p>
+            Click{" "}
+            <Link to="/login" className="text-purple-500">
+              here
+            </Link>{" "}
+            to login.
+          </p>
         </div>
       ) : (
-        <div>
-          <form onSubmit={handleSubmit}>
-            <input
+        <div className="max-w-80">
+          <form onSubmit={handleSubmit} className="grid grid-cols-1">
+            <InputBox
               name="username"
               placeholder="Username"
               value={newUser.username}
-              onChange={(e) =>
-                setNewUser({ ...newUser, username: e.target.value })
-              }
-            ></input>
-            <input
+              handleChange={handleChange}
+            />
+            <InputBox
+              name="firstname"
               placeholder="First name"
               value={newUser.firstname}
-              onChange={(e) =>
-                setNewUser({ ...newUser, firstname: e.target.value })
-              }
-            ></input>
-            <input
+              handleChange={handleChange}
+            />
+            <InputBox
+              name="lastname"
               placeholder="Last name"
               value={newUser.lastname}
-              onChange={(e) =>
-                setNewUser({ ...newUser, lastname: e.target.value })
-              }
-            ></input>
-            <input
+              handleChange={handleChange}
+            />
+            <InputBox
+              name="email"
               placeholder="Email"
               value={newUser.email}
-              onChange={(e) =>
-                setNewUser({ ...newUser, email: e.target.value })
-              }
-            ></input>
+              handleChange={handleChange}
+            />
             {/* <ConfirmPassword setNewUser={setNewUser} newUser={newUser} /> */}
-
-            <input
+            <InputBox
+              name="password"
               type="password"
               placeholder="Password"
               value={newUser.password}
-              onChange={(e) =>
-                setNewUser({ ...newUser, password: e.target.value })
-              }
-            ></input>
+              handleChange={handleChange}
+            />
             {/*<input placeholder="Confirm password" pattern=""></input> */}
-            <button>Register</button>
+            <button className="bg-purple-500 hover:bg-purple-700 text-white font-bold m-2 py-2 px-4 rounded w-40 mx-auto block">
+              Register
+            </button>
           </form>
         </div>
       )}

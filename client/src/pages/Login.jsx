@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import InputBox from "../components/InputBox";
 
 // Any component that wants to ‘consume’ / be aware of authContext
 // just needs to import the useAuth
@@ -26,6 +27,11 @@ export default function Login() {
   const [errors, setErrors] = useState("");
   const navigate = useNavigate();
 
+  function handleChange(e) {
+    const { name, value } = e.target;
+    setCredentials({ ...credentials, [name]: value });
+  }
+
   async function login() {
     try {
       const { data } = await axios.post("/api/auth/login", credentials);
@@ -43,21 +49,19 @@ export default function Login() {
 
   return (
     <div>
-      <input
-        placeholder="username"
+      <InputBox
+        name="username"
+        placeholder="Username"
         value={credentials.username}
-        onChange={(e) =>
-          setCredentials({ ...credentials, username: e.target.value })
-        }
-      ></input>
-      <input
-        placeholder="password"
+        handleChange={handleChange}
+      />
+      <InputBox
+        name="password"
+        placeholder="Password"
         type="password"
         value={credentials.password}
-        onChange={(e) =>
-          setCredentials({ ...credentials, password: e.target.value })
-        }
-      ></input>
+        handleChange={handleChange}
+      />
       <button onClick={login}>Login</button>
       <div>{errors ? errors : null}</div>
     </div>
