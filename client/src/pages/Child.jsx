@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { useParams, Link } from "react-router-dom";
 
 const ProfilePage = () => {
   const [appointments, setAppointments] = useState([]);
@@ -21,6 +22,8 @@ const ProfilePage = () => {
       setAppointmentTime("");
     }
   };
+
+  const { id } = useParams();
 
   return (
     <div className="container mx-auto py-8">
@@ -113,8 +116,8 @@ const ProfilePage = () => {
 
       {/* Links */}
       <div className="mt-8 flex justify-between">
-        <a
-          href="/documents"
+        <Link
+          to={`/children/${id}/documents`}
           className="text-pink-500 text-lg font-bold hover:underline"
         >
           {" "}
@@ -131,9 +134,9 @@ const ProfilePage = () => {
             />
           </svg>{" "}
           Documents
-        </a>
-        <a
-          href="/assessments"
+        </Link>
+        <Link
+          to={`/children/${id}/assessments`}
           className="text-pink-500 text-lg font-bold hover:underline"
         >
           <svg
@@ -149,7 +152,7 @@ const ProfilePage = () => {
             />
           </svg>{" "}
           Assessments
-        </a>
+        </Link>
         <span className="text-gray-500">Shared with (to be coded) </span>
       </div>
       <br></br>

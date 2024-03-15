@@ -74,7 +74,7 @@ function App() {
           }
         />
         <Route
-          path="/assessments"
+          path="/children/:id/documents"
           element={
             <RequireAuth>
               <Assessments />
@@ -98,7 +98,7 @@ function App() {
           }
         />
         <Route
-          path="/documents"
+          path="/children/:id/documents"
           element={
             <RequireAuth>
               <Documents />
