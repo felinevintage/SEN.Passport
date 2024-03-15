@@ -35,7 +35,7 @@ function App() {
   };
   return (
     <AuthContext.Provider value={authObject}>
-      {/*<NavBarMenu />*/}
+      <NavBarMenu />
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/register" element={<Register />} />
