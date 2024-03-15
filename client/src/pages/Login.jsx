@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
 import InputBox from "../components/InputBox";
@@ -31,6 +31,7 @@ export default function Login() {
   });
   const [errors, setErrors] = useState("");
   const navigate = useNavigate();
+
 
   function handleChange(e) {
     const { name, value } = e.target;

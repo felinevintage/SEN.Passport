@@ -69,6 +69,7 @@ return (
                     handleChange={handleChange}
                     value={child.firstname}
                     name="firstname"
+                    id="firstname"
                     type="text"
                     placeholder="First Name"/>
                       
@@ -79,6 +80,7 @@ return (
                     handleChange={handleChange}
                     value={child.lastname}
                     name="lastname"
+                    id="lastname"
                     type="text"
                     placeholder="Last Name">
                     </InputBox>
@@ -89,6 +91,7 @@ return (
                     handleChange={handleChange}
                     value={child.dateofbirth}
                     name="dateofbirth"
+                    id="dateofbirth"
                     type="date"
                     placeholder="Date of Birth">
                     </InputBox>
@@ -99,6 +102,7 @@ return (
                     handleChange={handleChange}
                     value={child.medication}
                     name="medication"
+                    id="medication"
                     type="text"
                     placeholder="Medication">
                     </InputBox>
@@ -109,6 +113,7 @@ return (
                     handleChange={handleChange}
                     value={child.aids}
                     name="aids"
+                    id="aids"
                     type="text"
                     placeholder="Aids">
                     </InputBox>
@@ -119,6 +124,7 @@ return (
                     handleChange={handleChange}
                     value={child.education}
                     name="education"
+                    id="education"
                     type="text"
                     placeholder="School/College/Uni">
                     </InputBox>
@@ -129,6 +135,7 @@ return (
                     handleChange={handleChange}
                     value={child.emergency_contact}
                     name="emergency_contact"
+                    id="emergency_contact"
                     type="text"
                     placeholder="Emergency Contact Number">
                     </InputBox>
@@ -139,6 +146,7 @@ return (
                     handleChange={handleChange}
                     value={child.diagnoses}
                     name="diagnoses"
+                    id="diagnoses"
                     type="text"
                     placeholder="Diagnoses">
                     </InputBox>
@@ -148,9 +156,10 @@ return (
                     <InputBox
                     handleChange={handleChange}
                     value={child.specialists}
-                    name="Specialists"
+                    name="specialists"
+                    id="specialists"
                     type="text"
-                    placeholder="specialists">
+                    placeholder="Specialists">
                     </InputBox>
             </div>
             </div>
