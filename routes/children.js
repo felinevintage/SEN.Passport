@@ -2,6 +2,8 @@ var express = require("express");
 var router = express.Router();
 var models = require("../models");
 const userShouldBeLoggedIn = require("../guards/userShouldBeLoggedIn");
+const childMustExist = require("../guards/childMustExist");
+const mustHaveChildPermission = require("../guards/mustHaveChildPermission");
 
 //POST new child
 router.post("/", userShouldBeLoggedIn, async function (req, res, next) {
@@ -40,27 +42,6 @@ router.post("/", userShouldBeLoggedIn, async function (req, res, next) {
   }
 });
 
-async function childMustExist(req, res, next) {
-  const { id } = req.params;
-  const child = await models.Children.findOne({
-    where: {
-      id,
-    },
-  });
-
-  if (!child) return res.status(404).send({ message: "Child not found" });
-  req.child = child;
-  next();
-}
-
-async function mustHaveChildPermission(req, res, next) {
-  const { user, child } = req;
-  // console.log("user id:", user.id, "child id:", child.id);
-  const hasPermission = await user.hasChild(child);
-  // console.log("hasPermission:", hasPermission);
-  if (!hasPermission) return res.status(403).send({ message: "Forbidden" });
-  next();
-}
 
 // GET child
 router.get(
@@ -71,6 +52,25 @@ router.get(
 
     try {
       res.send(child);
+    } catch (error) {
+      res.status(500).send(error);
+    }
+  }
+);
+
+/* GET all assessments of one child */
+router.get(
+  "/:id/all",
+  [userShouldBeLoggedIn, childMustExist, mustHaveChildPermission],
+  async (req, res) => {
+    const childId = req.params.id;
+    try {
+      await models.Assessments.findAll({
+        where: {
+          childId,
+        },
+      });
+      res.send("Success");
     } catch (error) {
       res.status(500).send(error);
     }

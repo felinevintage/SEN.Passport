@@ -29,7 +29,7 @@ export default function AddChild () {
         e.preventDefault();
     
         try {
-            const response = await fetch('/api/child', {
+            const response = await fetch('/api/children', {
                 method: "POST", 
                 headers: {
                     "Content-Type": "application/json",
@@ -58,7 +58,7 @@ export default function AddChild () {
     
 
 return (
-    <div className="flex flex-col h-screen justify-center items-center">
+    <div className="flex flex-col h-screen mt-4 justify-center items-center">
         <p className="font-medium p-4 text-lg">Add a Child</p>
         
         <form onSubmit={handleSubmit}>
@@ -66,9 +66,10 @@ return (
             <div>
                 <label></label>
                     <InputBox 
-                    onChange={handleChange}
+                    handleChange={handleChange}
                     value={child.firstname}
                     name="firstname"
+                    id="firstname"
                     type="text"
                     placeholder="First Name"/>
                       
@@ -76,9 +77,10 @@ return (
             <div>
                 <label></label>
                     <InputBox
-                    onChange={handleChange}
+                    handleChange={handleChange}
                     value={child.lastname}
                     name="lastname"
+                    id="lastname"
                     type="text"
                     placeholder="Last Name">
                     </InputBox>
@@ -86,9 +88,10 @@ return (
             <div>
                 <label></label>
                     <InputBox
-                    onChange={handleChange}
+                    handleChange={handleChange}
                     value={child.dateofbirth}
-                    name="dateobirth"
+                    name="dateofbirth"
+                    id="dateofbirth"
                     type="date"
                     placeholder="Date of Birth">
                     </InputBox>
@@ -96,9 +99,10 @@ return (
             <div>
                 <label></label>
                     <InputBox
-                    onChange={handleChange}
+                    handleChange={handleChange}
                     value={child.medication}
                     name="medication"
+                    id="medication"
                     type="text"
                     placeholder="Medication">
                     </InputBox>
@@ -106,9 +110,10 @@ return (
              <div>
                 <label></label>
                     <InputBox
-                    onChange={handleChange}
+                    handleChange={handleChange}
                     value={child.aids}
                     name="aids"
+                    id="aids"
                     type="text"
                     placeholder="Aids">
                     </InputBox>
@@ -116,9 +121,10 @@ return (
             <div>
                 <label></label>
                     <InputBox
-                    onChange={handleChange}
+                    handleChange={handleChange}
                     value={child.education}
                     name="education"
+                    id="education"
                     type="text"
                     placeholder="School/College/Uni">
                     </InputBox>
@@ -126,9 +132,10 @@ return (
             <div>
                 <label></label>
                     <InputBox
-                    onChange={handleChange}
+                    handleChange={handleChange}
                     value={child.emergency_contact}
                     name="emergency_contact"
+                    id="emergency_contact"
                     type="text"
                     placeholder="Emergency Contact Number">
                     </InputBox>
@@ -139,6 +146,7 @@ return (
                     handleChange={handleChange}
                     value={child.diagnoses}
                     name="diagnoses"
+                    id="diagnoses"
                     type="text"
                     placeholder="Diagnoses">
                     </InputBox>
@@ -146,11 +154,12 @@ return (
             <div>
                 <label></label>
                     <InputBox
-                    onChange={handleChange}
+                    handleChange={handleChange}
                     value={child.specialists}
-                    name="Specialists"
+                    name="specialists"
+                    id="specialists"
                     type="text"
-                    placeholder="specialists">
+                    placeholder="Specialists">
                     </InputBox>
             </div>
             </div>

@@ -7,13 +7,26 @@ import {
   List,
   ListItem,
 } from "@material-tailwind/react";
-// import {
-//   Bars3Icon,
-//   XMarkIcon,
-// } from "@heroicons/react/24/outline";
-// import {
-//   CogIcon,
-// } from "@heroicons/react/24/solid";
+
+import {
+  ChevronDownIcon,
+  Bars3Icon,
+  XMarkIcon,
+  CogIcon,
+  // LogoutIcon,
+} from "@heroicons/react/24/outline";
+
+import {
+  Bars4Icon,
+  GlobeAmericasIcon,
+  NewspaperIcon,
+  PhoneIcon,
+  RectangleGroupIcon,
+  SquaresPlusIcon,
+  SunIcon,
+  TagIcon,
+  UserGroupIcon,
+} from "@heroicons/react/24/solid";
 
 const navListMenuItems = [
   {
@@ -24,11 +37,9 @@ const navListMenuItems = [
   {
     title: "Sign Out",
     description: "Reach out to us for assistance or inquiries",
-//  icon: LogoutIcon,
+    //  icon: LogoutIcon,
   }
 ];
-
-
 
 function NavListMenu() {
   const renderItems = navListMenuItems.map(
@@ -49,7 +60,7 @@ function NavListMenu() {
           </div>
         </ListItem>
       </a>
-    ),
+    )
   );
 
   return (
@@ -62,10 +73,25 @@ function NavListMenu() {
 function NavList() {
   return (
     <List className="mt-4 mb-6 p-0 lg:mt-0 lg:mb-0 lg:flex-row lg:p-1">
-      <Typography as="a" href="#" variant="small" color="blue-gray" className="font-medium">
-        <ListItem className="text-black flex items-center gap-2 py-2 pr-4">Home</ListItem>
-      </Typography>
-      <NavListMenu />
+       <Typography
+              as="a"
+              href="#"
+              variant="small"
+              color="blue-gray"
+              className="font-medium"
+            >
+              <ListItem className="text-black flex items-center gap-2 py-2 pr-4">
+                Home
+              </ListItem>
+            </Typography>
+            <NavListMenu />
+            <Typography
+              as="a"
+              href="#"
+              variant="small"
+              color="blue-gray"
+              className="font-medium"
+            ></Typography>
     </List>
   );
 }
@@ -76,21 +102,31 @@ export default function NavBarMenu() {
   React.useEffect(() => {
     window.addEventListener(
       "resize",
-      () => window.innerWidth >= 960 && setOpenNav(false),
+      () => window.innerWidth >= 960 && setOpenNav(false)
     );
   }, []);
 
   return (
     <Navbar className="mx-auto max-w-screen-xl px-4 py-2">
       <div className="flex items-center justify-between text-blue-gray-900">
-        <Typography as="a" href="#" variant="h6" className="mr-4 cursor-pointer py-1.5 lg:ml-2">
-          Material Tailwind
-        </Typography>
+
+        <Typography
+          as="a"
+          href="#"
+          variant="h6"
+          className="mr-4 cursor-pointer py-1.5 lg:ml-2"
+        ></Typography>
+
         <div className="hidden lg:block">
           <NavList />
         </div>
         <div className="hidden gap-2 lg:flex">
-          <Button className="text-black" variant="text" size="sm" color="blue-gray">
+          <Button
+            className="text-black"
+            variant="text"
+            size="sm"
+            color="blue-gray"
+          >
             Log In
           </Button>
           <Button className="bg-gray-700" variant="gradient" size="sm">
@@ -107,4 +143,5 @@ export default function NavBarMenu() {
       </div>
     </Navbar>
   );
+
 }

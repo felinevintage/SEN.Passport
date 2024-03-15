@@ -3,27 +3,16 @@ var router = express.Router();
 var models = require("../models")
 
 
-/* GET users listing. */
-router.get('/', async function(req, res, next) {
-  res.send('respond with a resource');
-});
 
-module.exports = router;
-var express = require('express');
-var router = express.Router();
-var models = require("../models")
+const userShouldBeLoggedIn = require('../guards/userShouldBeLoggedIn');
+const childMustExist = require('../guards/childMustExist');
+const mustHaveChildPermission = require('../guards/mustHaveChildPermission');
 
-/* GET user by id*/
-router.get('/:id', async function(req, res, next) {
-  const { id } = req.params;
+/* GET user */
+router.get('/', userShouldBeLoggedIn, async function(req, res, next) {
+  const { user } = req;
 
   try {
-    const user = await models.Users.findOne({
-      where: {
-        id,
-      }
-      
-    });
     res.send(user);
   } catch (error) {
     res.status(500).send(error);
@@ -31,23 +20,22 @@ router.get('/:id', async function(req, res, next) {
 });
 
 //GET children associated with user
-router.get('/:id/children', async function(req, res, next) {
-  const { id } = req.params;
+router.get('/children', userShouldBeLoggedIn, async function(req, res, next) {
+  const { user } = req;
 
   try {
-    const user = await models.Users.findOne({
-      where: {
-        id,
-      },
+    const userWithChildren = await models.Users.findOne({
+      where: { id: user.id },
       include: [{ model: models.Children }] 
     });
 
-    
-    if (!user) {
+    if (!userWithChildren) {
       return res.status(404).send('User not found');
     }
 
-    const childrenNames = user.Children.map(child => ({
+    const children = userWithChildren.Children;
+
+    const childrenNames = children.map(child => ({
       firstname: child.firstname,
       lastname: child.lastname
     }));
@@ -57,7 +45,7 @@ router.get('/:id/children', async function(req, res, next) {
     console.error(error);
     res.status(500).send('Internal server error');
   }
-})
+});
 
 
 //GET users associated with other user
