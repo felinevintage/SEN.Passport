@@ -1,7 +1,5 @@
-'use strict';
-const {
-  Model
-} = require('sequelize');
+"use strict";
+const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class Assessments extends Model {
     /**
@@ -14,13 +12,17 @@ module.exports = (sequelize, DataTypes) => {
       Assessments.belongsTo(models.Children);
     }
   }
-  Assessments.init({
-    assessment_type: DataTypes.STRING,
-    date: DataTypes.DATEONLY,
-    results_doc: DataTypes.BLOB
-  }, {
-    sequelize,
-    modelName: 'Assessments',
-  });
+  Assessments.init(
+    {
+      assessment_type: DataTypes.STRING,
+      date: DataTypes.DATEONLY,
+      results_doc: DataTypes.BLOB,
+      childId: DataTypes.BIGINT,
+    },
+    {
+      sequelize,
+      modelName: "Assessments",
+    }
+  );
   return Assessments;
 };
