@@ -137,6 +137,30 @@ router.get(
   }
 );
 
+/* DELETE assessment by id */
+router.delete(
+  "/:id/assessments/:assessId",
+  [userShouldBeLoggedIn, childMustExist, mustHaveChildPermission],
+  async (req, res) => {
+    const id = req.params.assessId;
+    try {
+      const assessment = await models.Assessments.destroy({
+        where: {
+          id,
+        },
+      });
+      console.log(assessment);
+      if (assessment === 0) {
+        res.status(404).send("This assessment does not exist.");
+      } else {
+        res.send({ deleted });
+      }
+    } catch (error) {
+      res.status(500).send({ success: false, error });
+    }
+  }
+);
+
 /* GET all documents of one child */
 router.get(
   "/:id/documents",
