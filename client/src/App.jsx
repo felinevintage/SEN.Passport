@@ -33,6 +33,7 @@ function App() {
     signIn,
     signOut,
   };
+
   return (
     <AuthContext.Provider value={authObject}>
       {/* <NavBarMenu /> */}
@@ -49,10 +50,10 @@ function App() {
           }
         />
         <Route
-          path="/child"
+          path="/child/:id"
           element={
             //<RequireAuth>
-              <Child />
+            <Child />
             //</RequireAuth>
           }
         />
