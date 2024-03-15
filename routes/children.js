@@ -45,7 +45,6 @@ router.post("/", userShouldBeLoggedIn, async function (req, res, next) {
   }
 });
 
-
 // GET child
 router.get(
   "/:id",
@@ -127,7 +126,87 @@ router.get(
           id,
         },
       });
-      res.send({ success: true, assessment });
+      if (assessment === null) {
+        res.status(404).send("This assessment does not exist.");
+      } else {
+        res.send({ success: true, assessment });
+      }
+    } catch (error) {
+      res.status(500).send({ success: false, error });
+    }
+  }
+);
+
+/* GET all documents of one child */
+router.get(
+  "/:id/documents",
+  [userShouldBeLoggedIn, childMustExist, mustHaveChildPermission],
+  async (req, res) => {
+    const { child } = req;
+    const childId = child.id;
+    try {
+      await models.Documents.findAll({
+        where: {
+          childId,
+        },
+      });
+      res.send("Success");
+    } catch (error) {
+      res.status(500).send(error);
+    }
+  }
+);
+
+/* POST document for one specific child */
+router.post(
+  "/:id/documents",
+  [
+    userShouldBeLoggedIn,
+    childMustExist,
+    mustHaveChildPermission,
+    upload.single("file"),
+  ],
+  async (req, res) => {
+    const { child } = req;
+    try {
+      // we can use the doc_name to type the name we want to appear on the database or the originalname to use the file name
+      // const { doc_name } = req.body;
+      const file = req.file;
+      // console.log(file); // Do this to see all the data it contains
+      const extension = mime.extension(file.mimetype);
+      // file.filename is the name that is going to have the file in the uploads folder
+      const newFilename = file.filename + "." + extension;
+      const document = await child.createDocument({
+        doc_name: file.originalname,
+        document: newFilename,
+      });
+      res.send({ success: true, document });
+    } catch (error) {
+      res.status(500).send({ success: false, error });
+    }
+  }
+);
+
+/* GET document by id for one specific child */
+router.get(
+  "/:id/documents/:docId",
+  [userShouldBeLoggedIn, childMustExist, mustHaveChildPermission],
+  async (req, res) => {
+    const { child } = req;
+    const childId = child.id;
+    const id = req.params.docId;
+    try {
+      const document = await models.Documents.findOne({
+        where: {
+          childId,
+          id,
+        },
+      });
+      if (document === null) {
+        res.status(404).send("This document does not exist.");
+      } else {
+        res.send({ success: true, document });
+      }
     } catch (error) {
       res.status(500).send({ success: false, error });
     }
