@@ -71,19 +71,21 @@ router.put('/')
 
 
 //DELETE child
-router.delete('/:id/children', async function(req, res, next) {
-  const{ id } = req.params;
+router.delete('/children', userShouldBeLoggedIn, async function(req, res, next) {
+  const { user } = req;
 
   try {
     await models.Children.destroy({
       where: {
-        id,
+        userId: user.id, // Assuming there's a userId field in the Children model
       },
-    })
+    });
+    res.sendStatus(204); // No content, successful deletion
   } catch(error) {
+    console.error(error);
     res.status(500).send(error);
   }
-})
+});
 
 //DELETE user
 router.delete('/:id', async function(req, res, next) {
