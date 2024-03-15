@@ -1,7 +1,5 @@
-'use strict';
-const {
-  Model
-} = require('sequelize');
+"use strict";
+const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class Children extends Model {
     /**
@@ -11,34 +9,40 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Children.belongsToMany(models.Users, {through: "Relationships"});
+      Children.belongsToMany(models.Users, { through: "Relationships" });
+      Children.hasMany(models.Assessments);
+      Children.hasMany(models.Events);
+      Children.hasMany(models.Documents);
     }
   }
-  Children.init({
-    firstname: DataTypes.STRING,
-    lastname: DataTypes.STRING,
-    diagnoses: DataTypes.TEXT,
-    school_support: DataTypes.TEXT,
-    home_support: DataTypes.TEXT,
-    specialists: DataTypes.TEXT,
-    medication: DataTypes.TEXT,
-    education: DataTypes.STRING,
-    aids: DataTypes.TEXT,
-    dateofbirth: DataTypes.DATEONLY,
-    emergency_contact: DataTypes.BIGINT,
-    createdAt: {
-      type: DataTypes.DATE,
-      allowNull: false,
-      defaultValue: DataTypes.NOW,
+  Children.init(
+    {
+      firstname: DataTypes.STRING,
+      lastname: DataTypes.STRING,
+      diagnoses: DataTypes.TEXT,
+      school_support: DataTypes.TEXT,
+      home_support: DataTypes.TEXT,
+      specialists: DataTypes.TEXT,
+      medication: DataTypes.TEXT,
+      education: DataTypes.STRING,
+      aids: DataTypes.TEXT,
+      dateofbirth: DataTypes.DATEONLY,
+      emergency_contact: DataTypes.BIGINT,
+      createdAt: {
+        type: DataTypes.DATE,
+        allowNull: false,
+        defaultValue: DataTypes.NOW,
+      },
+      updatedAt: {
+        type: DataTypes.DATE,
+        allowNull: false,
+        defaultValue: DataTypes.NOW,
+      },
     },
-    updatedAt: {
-      type: DataTypes.DATE,
-      allowNull: false,
-      defaultValue: DataTypes.NOW,
-    },
-  }, {
-    sequelize,
-    modelName: 'Children',
-  });
+    {
+      sequelize,
+      modelName: "Children",
+    }
+  );
   return Children;
 };

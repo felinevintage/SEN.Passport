@@ -78,4 +78,25 @@ router.get(
   }
 );
 
+/* POST assessment for one specific child */
+router.post(
+  "/:id/assessments",
+  [userShouldBeLoggedIn, childMustExist, mustHaveChildPermission],
+  async (req, res) => {
+    const { child } = req;
+    const child_data = child.dataValues;
+    const { assessment_type, date, results_doc } = req.body;
+    try {
+      const assessment = await child.createAssessment({
+        assessment_type: assessment_type,
+        date: date,
+        results_doc: results_doc,
+      });
+      res.send(assessment);
+    } catch (error) {
+      res.status(500).send(error);
+    }
+  }
+);
+
 module.exports = router;
