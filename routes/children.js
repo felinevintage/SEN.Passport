@@ -149,11 +149,10 @@ router.delete(
           id,
         },
       });
-      console.log(assessment);
-      if (assessment === 0) {
+      if (!assessment) {
         res.status(404).send("This assessment does not exist.");
       } else {
-        res.send({ deleted });
+        res.send({ success: true });
       }
     } catch (error) {
       res.status(500).send({ success: false, error });
@@ -226,10 +225,32 @@ router.get(
           id,
         },
       });
-      if (document === null) {
+      if (!document) {
         res.status(404).send("This document does not exist.");
       } else {
         res.send({ success: true, document });
+      }
+    } catch (error) {
+      res.status(500).send({ success: false, error });
+    }
+  }
+);
+
+/* DELETE document by id */
+router.delete(
+  "/:id/documents/:docId",
+  [userShouldBeLoggedIn, childMustExist, mustHaveChildPermission],
+  async (req, res) => {
+    try {
+      const document = await models.Documents.destroy({
+        where: {
+          id: req.params.docId,
+        },
+      });
+      if (!document) {
+        res.status(404).send("This document does not exist.");
+      } else {
+        res.send({ success: true });
       }
     } catch (error) {
       res.status(500).send({ success: false, error });
