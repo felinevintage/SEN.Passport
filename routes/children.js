@@ -67,7 +67,6 @@ router.get(
   async (req, res) => {
     const { child } = req;
     const childId = child.id;
-    console.log(childId);
     try {
       await models.Assessments.findAll({
         where: {
@@ -104,6 +103,28 @@ router.post(
         assessment_type: file.originalname,
         date: date,
         results_doc: newFilename,
+      });
+      res.send({ success: true, assessment });
+    } catch (error) {
+      res.status(500).send({ success: false, error });
+    }
+  }
+);
+
+/* GET assessment by id for one specific child */
+router.get(
+  "/:id/assessments/:assessId",
+  [userShouldBeLoggedIn, childMustExist, mustHaveChildPermission],
+  async (req, res) => {
+    const { child } = req;
+    const childId = child.id;
+    const id = req.params.assessId;
+    try {
+      const assessment = await models.Assessments.findOne({
+        where: {
+          childId,
+          id,
+        },
       });
       res.send({ success: true, assessment });
     } catch (error) {
