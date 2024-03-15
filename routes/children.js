@@ -1,6 +1,9 @@
 var express = require("express");
 var router = express.Router();
 var models = require("../models");
+const multer = require("multer");
+const upload = multer({ dest: "uploads/" });
+const mime = require("mime-types");
 const userShouldBeLoggedIn = require("../guards/userShouldBeLoggedIn");
 const childMustExist = require("../guards/childMustExist");
 const mustHaveChildPermission = require("../guards/mustHaveChildPermission");
@@ -81,20 +84,30 @@ router.get(
 /* POST assessment for one specific child */
 router.post(
   "/:id/assessments",
-  [userShouldBeLoggedIn, childMustExist, mustHaveChildPermission],
+  [
+    userShouldBeLoggedIn,
+    childMustExist,
+    mustHaveChildPermission,
+    upload.single("file"),
+  ],
   async (req, res) => {
     const { child } = req;
-    const child_data = child.dataValues;
-    const { assessment_type, date, results_doc } = req.body;
     try {
+      // we can use the assessment_type to type the name we want to appear on the database or the originalname to use the file name
+      const { assessment_type, date } = req.body;
+      const file = req.file;
+      // console.log(file); //Do this to see all the data it contains
+      const extension = mime.extension(file.mimetype);
+      // file.filename is the name that is going to have the file in the uploads folder
+      const newFilename = file.filename + "." + extension;
       const assessment = await child.createAssessment({
-        assessment_type: assessment_type,
+        assessment_type: file.originalname,
         date: date,
-        results_doc: results_doc,
+        results_doc: newFilename,
       });
-      res.send(assessment);
+      res.send({ success: true, assessment });
     } catch (error) {
-      res.status(500).send(error);
+      res.status(500).send({ success: false, error });
     }
   }
 );
