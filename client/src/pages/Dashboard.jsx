@@ -55,9 +55,9 @@ export default function Dashboard() {
     }
   }
 
-  async function handleDeleteChild(childId) {
+  async function handleDeleteChild(child) {
     try {
-      const response = await fetch(`/api/children/${childId}`, {
+      const response = await fetch(`/api/users/children/${child.id}`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
@@ -68,7 +68,7 @@ export default function Dashboard() {
         // Remove the deleted child from the state
         setChildren((prevChildren) => {
           const updatedChildren = { ...prevChildren };
-          delete updatedChildren[childId];
+          delete updatedChildren[child.id];
           return updatedChildren;
         });
       } else {
