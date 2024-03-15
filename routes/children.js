@@ -137,6 +137,29 @@ router.get(
   }
 );
 
+/* DELETE assessment by id */
+router.delete(
+  "/:id/assessments/:assessId",
+  [userShouldBeLoggedIn, childMustExist, mustHaveChildPermission],
+  async (req, res) => {
+    const id = req.params.assessId;
+    try {
+      const assessment = await models.Assessments.destroy({
+        where: {
+          id,
+        },
+      });
+      if (!assessment) {
+        res.status(404).send("This assessment does not exist.");
+      } else {
+        res.send({ success: true });
+      }
+    } catch (error) {
+      res.status(500).send({ success: false, error });
+    }
+  }
+);
+
 /* GET all documents of one child */
 router.get(
   "/:id/documents",
@@ -202,10 +225,32 @@ router.get(
           id,
         },
       });
-      if (document === null) {
+      if (!document) {
         res.status(404).send("This document does not exist.");
       } else {
         res.send({ success: true, document });
+      }
+    } catch (error) {
+      res.status(500).send({ success: false, error });
+    }
+  }
+);
+
+/* DELETE document by id */
+router.delete(
+  "/:id/documents/:docId",
+  [userShouldBeLoggedIn, childMustExist, mustHaveChildPermission],
+  async (req, res) => {
+    try {
+      const document = await models.Documents.destroy({
+        where: {
+          id: req.params.docId,
+        },
+      });
+      if (!document) {
+        res.status(404).send("This document does not exist.");
+      } else {
+        res.send({ success: true });
       }
     } catch (error) {
       res.status(500).send({ success: false, error });
