@@ -51,9 +51,9 @@ function App() {
         <Route
           path="/child"
           element={
-            <RequireAuth>
+            //<RequireAuth>
               <Child />
-            </RequireAuth>
+            //</RequireAuth>
           }
         />
         <Route
