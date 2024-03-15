@@ -6,7 +6,7 @@ import Button from "../components/Button";
 export default function Dashboard() {
   const navigate = useNavigate();
   const [user, setUser] = useState({});
-  const [children, setChildren] = useState({});
+  const [children, setChildren] = useState([]);
 
   useEffect(() => {
     getUser();
@@ -45,6 +45,7 @@ export default function Dashboard() {
       });
       if (response.ok) {
         const childData = await response.json();
+        console.log(childData);
         setChildren(childData);
       } else {
         console.log("Failed to get children");
@@ -102,25 +103,25 @@ export default function Dashboard() {
       </div>
       <div className="text-center mb-8">
         <div className="grid grid-cols-2 gap-4 mt-4">
-          {Object.keys(children).map((childId) => (
-            <div key={childId} className="bg-violet-400/75 p-4 rounded-lg">
+          {children.map((child) => (
+            <div key={child.id} className="bg-violet-400/75 p-4 rounded-lg">
               <div className="flex justify-between items-center">
                 <div>
                   <img
-                    src={`avatar_url_for_${children[childId].firstname}_${children[childId].lastname}`}
+                    src={`avatar_url_for_${child.firstname}_${child.lastname}`}
                     alt={`Avatar`}
                     className="w-16 h-16 rounded-full mb-2"
                   />
                   <Link
-                    to={`/child/${childId}`}
+                    to={`/child/${child.id}`}
                     className="font-bold text-black hover:underline block"
                   >
-                    {children[childId].firstname} {children[childId].lastname}
+                    {child.firstname} {child.lastname}
                   </Link>
                 </div>
               </div>
               <button
-                onClick={() => handleDeleteChild(childId)}
+                onClick={() => handleDeleteChild(child)}
                 className="text-red-500 hover:text-red-700"
               >
                 <svg
