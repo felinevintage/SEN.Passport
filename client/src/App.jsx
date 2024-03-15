@@ -1,6 +1,6 @@
 import { Routes, Route, Link } from "react-router-dom";
 import { useState } from "react";
-// import NavBarMenu from "./components/NavBar";
+import NavBarMenu from "./components/NavBar";
 import AddAssessment from "./pages/AddAssessment";
 import AddChild from "./pages/AddChild";
 import AddEvent from "./pages/AddEvent";
@@ -36,7 +36,7 @@ function App() {
 
   return (
     <AuthContext.Provider value={authObject}>
-      {/* <NavBarMenu /> */}
+      <NavBarMenu />
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/register" element={<Register />} />
