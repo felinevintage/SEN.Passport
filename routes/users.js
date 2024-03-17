@@ -29,18 +29,18 @@ router.get('/children', userShouldBeLoggedIn, async function(req, res, next) {
       include: [{ model: models.Children }] 
     });
 
-    if (!userWithChildren) {
-      return res.status(404).send('User not found');
-    }
+    // if (!userWithChildren) {
+    //   return res.status(404).send('User not found');
+    // }
 
     const children = userWithChildren.Children;
 
-    const childrenNames = children.map(child => ({
-      firstname: child.firstname,
-      lastname: child.lastname
-    }));
+    // const childrenNames = children.map(child => ({
+    //   firstname: child.firstname,
+    //   lastname: child.lastname
+    // }));
 
-    res.send(childrenNames);
+    res.send(children);
   } catch(error) {
     console.error(error);
     res.status(500).send('Internal server error');
@@ -71,21 +71,37 @@ router.put('/')
 
 
 //DELETE child
-router.delete('/children', userShouldBeLoggedIn, async function(req, res, next) {
-  const { user } = req;
+router.delete("/children/:id", async (req, res) => {
+  const childId = req.params.id;
 
   try {
+    // Find the child by ID
+    const child = await models.Children.findByPk(childId);
+
+    // Check if child exists
+    if (!child) {
+      return res.status(404).send("Child not found");
+    }
+
+    // Delete associated assessments, events, and documents
+    await models.Assessments.destroy({ where: { childId } });
+    await models.Events.destroy({ where: { childId } });
+    await models.Documents.destroy({ where: { childId } });
+
+    // Delete the child record
     await models.Children.destroy({
       where: {
-        userId: user.id, // Assuming there's a userId field in the Children model
-      },
+        id: childId
+      }
     });
+
     res.sendStatus(204); // No content, successful deletion
-  } catch(error) {
+  } catch (error) {
     console.error(error);
     res.status(500).send(error);
   }
 });
+
 
 //DELETE user
 router.delete('/:id', async function(req, res, next) {
