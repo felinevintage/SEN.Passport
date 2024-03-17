@@ -58,6 +58,7 @@ export default function Dashboard() {
     }
   }
 
+
   async function deleteChild(id) {
     try {
       const response = await fetch(`/api/users/children/${id}`, {
@@ -69,9 +70,11 @@ export default function Dashboard() {
       });
 
       if (response.ok) {
+
         console.log("Child deleted!");
         // Refresh children after deletion
         getChild();
+
       } else {
         console.log("Error deleting child");
       }

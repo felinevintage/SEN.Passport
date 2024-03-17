@@ -12,21 +12,9 @@ import {
   ChevronDownIcon,
   Bars3Icon,
   XMarkIcon,
-  CogIcon,
-  // LogoutIcon,
+  
 } from "@heroicons/react/24/outline";
 
-import {
-  Bars4Icon,
-  GlobeAmericasIcon,
-  NewspaperIcon,
-  PhoneIcon,
-  RectangleGroupIcon,
-  SquaresPlusIcon,
-  SunIcon,
-  TagIcon,
-  UserGroupIcon,
-} from "@heroicons/react/24/solid";
 
 const navListMenuItems = [
   {
@@ -42,32 +30,26 @@ const navListMenuItems = [
 ];
 
 function NavListMenu() {
-  const renderItems = navListMenuItems.map(
-    ({title, description }, key) => (
-      <a href="#" key={key}>
-        <ListItem className="flex items-center gap-3 rounded-lg">
-          <div className="flex items-center justify-center rounded-lg !bg-blue-gray-50 p-2 ">
-          {" "}
-<svg>{React.createElement({ strokeWidth: 2, className: "h-6 text-gray-900 w-6" })}</svg>
-          </div>
-          <div>
-            <Typography variant="h6" color="blue-gray" className="flex items-center text-sm font-bold">
-              {title}
-            </Typography>
-            <Typography variant="paragraph" className="text-xs font-medium text-blue-gray-500">
-              {description}
-            </Typography>
-          </div>
-        </ListItem>
-      </a>
-    )
-  );
+  const renderItems = navListMenuItems.map(({ title, description }, key) => (
+    <a href="#" key={key}>
+      <ListItem className="flex items-center gap-3 rounded-lg">
+        <div className="flex items-center justify-center rounded-lg !bg-blue-gray-50 p-2 ">
+          {/* Render the title as a child of the Typography component */}
+          <Typography variant="h6" color="blue-gray" className="flex items-center text-sm font-bold">
+            {title}
+          </Typography>
+        </div>
+        <div>
+          {/* Render the description as a child of the Typography component */}
+          <Typography variant="paragraph" className="text-xs font-medium text-blue-gray-500">
+            {description}
+          </Typography>
+        </div>
+      </ListItem>
+    </a>
+  ));
 
-  return (
-    <React.Fragment>
-      {renderItems}
-    </React.Fragment>
-  );
+  return <React.Fragment>{renderItems}</React.Fragment>;
 }
 
 function NavList() {
@@ -92,6 +74,29 @@ function NavList() {
               color="blue-gray"
               className="font-medium"
             ></Typography>
+            <Typography>
+        <ListItem className="text-black flex items-center gap-2 py-2 pr-4 cursor-pointer">
+          Dashboard
+          <ChevronDownIcon className="h-4 w-4" />
+        </ListItem>
+        <div className="origin-top-left absolute left-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
+          <div className="py-1">
+            <a
+              href="#"
+              className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+            >
+              Settings
+            </a>
+            <a
+              href="#"
+              className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+            >
+              Log Out
+            </a>
+          </div>
+        </div>
+      </Typography>
+
     </List>
   );
 }
@@ -121,16 +126,8 @@ export default function NavBarMenu() {
           <NavList />
         </div>
         <div className="hidden gap-2 lg:flex">
-          <Button
-            className="text-black"
-            variant="text"
-            size="sm"
-            color="blue-gray"
-          >
-            Log In
-          </Button>
           <Button className="bg-gray-700" variant="gradient" size="sm">
-            Sign In
+            Log In
           </Button>
         </div>
         <IconButton variant="text" color="blue-gray" className="lg:hidden" onClick={() => setOpenNav(!openNav)}>
