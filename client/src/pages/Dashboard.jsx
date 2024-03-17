@@ -104,7 +104,7 @@ export default function Dashboard() {
 
   return (
 <div className="flex flex-col h-screen justify-center items-center">
-  <div className="bg-violet-300 text-gar-700 font-bold text-2xl px-6 py-3 rounded-full mb-6">
+  <div className="bg-violet-300 text-gar-700 font-bold text-2xl px-6 py-3 rounded mb-6">
     {user.username}
   </div>
   <div className="flex justify-center items-center mb-10">
@@ -115,11 +115,11 @@ export default function Dashboard() {
         className="w-32 h-32 rounded-full"
       />
     </div>
-    <div className="bg-gray-200 p-6 rounded-lg">
+    <div className="bg-cyan-400 p-6 rounded-lg">
       <h1 className="text-xl font-bold">
         {user.firstname} {user.lastname}
       </h1>
-      <p className="text-gray-700 text-lg">{user.email}</p>
+      <div className="text-gray-700 text-lg">{user.email}</div>
     </div>
   </div>
   <div className="text-center mb-10">
@@ -134,12 +134,12 @@ export default function Dashboard() {
             {child.firstname} {child.lastname}
           </Link>
           <div className="flex justify-center">
-            <img
-              src={`avatar_url_for_${child.firstname}_${child.lastname}`}
-              alt={`Avatar`}
-              className="w-20 h-20 rounded-full mb-3"
-            />
-          </div>
+        <img
+          src={child.profileImage}
+          alt={`Avatar`}
+          className="w-20 h-20 rounded-full mb-3"
+        />
+      </div>
           <button
             onClick={() => handleDeleteConfirmation(child.id)}
             className="text-red-500 hover:text-red-700"
@@ -159,7 +159,6 @@ export default function Dashboard() {
 
   <Button
     text={"Add a Child"}
-    className="mt-6 px-6 py-3 bg-blue-500 text-white rounded-md text-lg"
     onClick={handleAddChildClick}
   ></Button>
   {showConfirmation && (

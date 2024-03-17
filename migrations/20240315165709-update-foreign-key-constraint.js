@@ -2,15 +2,14 @@
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.addColumn('children', 'profileImage', {
+    await queryInterface.addColumn('Children', 'avatarSeed', {
       type: Sequelize.STRING,
-      allowNull: true
+      allowNull: true, // Or false depending on whether the field is required
     });
   },
 
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.removeColumn('children', 'profileImage');
+    await queryInterface.removeColumn('Children', 'avatarSeed');
   }
 };
-
 
