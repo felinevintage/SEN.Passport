@@ -5,37 +5,29 @@ import axios from "axios";
 export default function Modal({ file, onClose }) {
   const [fileContents, setFileContents] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [docId, setDocId] = useState(null);
   const { id } = useParams();
 
-  useEffect(() => {
-    fetchFileContents();
-    console.log(file.document);
-    return () => {
-      //   if (fileContents) {
-      //     URL.revokeObjectURL(fileContents);
-      //   }
-      setFileContents("");
-      setLoading(true);
-    };
-  }, [file]);
+  const xhr = new XMLHttpRequest();
 
-  async function fetchFileContents() {
-    try {
-      const response = await axios.get(
-        `/api/children/${id}/documents/${file.id}`,
-        {
-          responseType: "blob",
-          headers: {
-            // "Content-Type": "multipart/form-data",
-            authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        }
-      );
-      console.log(response.data);
-      setFileContents(response.data);
-      setLoading(false);
-    } catch (error) {
-      console.error("Error fetching file contents:", error);
+  xhr.open("GET", `/api/children/${id}/documents/${file.id}`);
+  xhr.onreadystatechange = handler;
+  xhr.responseType = "blob";
+  xhr.setRequestHeader(
+    "Authorization",
+    "Bearer " + localStorage.getItem("token")
+  );
+  xhr.send();
+
+  function handler() {
+    if (this.readyState === this.DONE) {
+      if (this.status === 200) {
+        // this.response is a Blob, because we set responseType above
+        var data_url = URL.createObjectURL(this.response);
+        document.querySelector("#fileDisplay").src = data_url;
+      } else {
+        console.error("no pdf :(");
+      }
     }
   }
 
@@ -46,25 +38,16 @@ export default function Modal({ file, onClose }) {
           Close
         </button>
         <h2 className="text-lg font-bold mb-4">{file.doc_name}</h2>
-        {loading ? (
+        {/* {loading ? (
           <p>Loading...</p>
-        ) : (
-          <iframe
-            src={`uploads/`}
-            width="100%"
-            height="500"
-            // title="File preview"
-          />
-          //   <embed
-          //     src={URL.createObjectURL(new Blob([fileContents]), {
-          //       type: "application/pdf",
-          //     })}
-          //     width="100%"
-          //     height="500"
-          //   />
-          //   <pre className="overflow-auto mx-h-80">{fileContents}</pre>
-        )}
-        {/* <div>{file.document.data}</div> */}
+        ) : ( */}
+        <iframe
+          id="fileDisplay"
+          // src={`localhost:5000/api/children/${id}/documents/${file.id}`}
+          width="100%"
+          height="500"
+          // title="File preview"
+        />
       </div>
     </div>
   );
