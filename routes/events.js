@@ -5,11 +5,26 @@ const userShouldBeLoggedIn = require("../guards/userShouldBeLoggedIn");
 const childMustExist = require("../guards/childMustExist");
 const mustHaveChildPermission = require("../guards/mustHaveChildPermission");
 
-/* GET home page. */
-router.get("/", function (req, res, next) {
-  res.send({ title: "Express" });
-});
+/* GET all events for child */
+router.get("/:id",
+[userShouldBeLoggedIn, childMustExist, mustHaveChildPermission],
+async function (req, res, next) {
+  const { child } = req;
+  const childId = child.id
 
+  try {
+    const events = await models.Events.findAll({
+      where: {
+      childId,
+      },
+    });
+    res.send(events)
+  } catch (error) {
+    res.status(400).send(error);
+  }});
+
+
+//POST new event for child
 router.post("/:id", 
 [userShouldBeLoggedIn,
 childMustExist,
@@ -34,5 +49,7 @@ mustHaveChildPermission], async function (req, res) {
     res.status(400).send(error);
   }
 })
+
+
 
 module.exports = router;

@@ -153,6 +153,25 @@ const ProfilePage = () => {
           </svg>{" "}
           Assessments
         </Link>
+        <Link
+          to={`/child/${id}/allevents`}
+          className="text-pink-500 text-lg font-bold hover:underline"
+        >
+          {" "}
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 20 20"
+            fill="currentColor"
+            className="w-6 h-6 mr-2"
+          >
+            <path
+              fillRule="evenodd"
+              d="M2 4.95C2 3.697 3.07 3 4.25 3H9v3h6V3h4.75C17.433 3 18 3.567 18 4.25v12.5c0 .683-.567 1.25-1.25 1.25H4.25C3.567 18 3 17.433 3 16.75V4.95zM11 5H9V4h2v1zM4 5h1v1H4V5zm11 11H5V6h10v10zm-4-5h3v1h-3V11z"
+              clipRule="evenodd"
+            />
+          </svg>{" "}
+          Events
+        </Link>
         <span className="text-gray-500">Shared with (to be coded) </span>
       </div>
       <br></br>
