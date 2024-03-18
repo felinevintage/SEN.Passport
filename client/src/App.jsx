@@ -50,7 +50,7 @@ function App() {
           }
         />
         <Route
-          path="/child/:id"
+          path="/children/:id"
           element={
             //<RequireAuth>
             <Child />

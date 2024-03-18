@@ -128,7 +128,7 @@ export default function Dashboard() {
       {children.map((child) => (
         <div key={child.id} className="bg-violet-400/75 p-6 rounded-lg">
           <Link
-            to={`/child/${child.id}`}
+            to={`/children/${child.id}`}
             className="font-bold text-black hover:underline block text-lg"
           >
             {child.firstname} {child.lastname}
