@@ -1,13 +1,57 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useParams, Link } from "react-router-dom";
 
 const ProfilePage = () => {
+  const [child, setChild] = useState({
+    firstname: "", 
+      lastname: "", 
+      diagnoses: "",
+      school_support: "", 
+      home_support: "", 
+      specialists: "",
+      medication: "", 
+      education: "", 
+      aids: "", 
+      dateofbirth: "",
+      emergency_contact: "",
+      profileImage: ""
+
+});
   const [appointments, setAppointments] = useState([]);
   const [appointmentName, setAppointmentName] = useState("");
   const [appointmentDate, setAppointmentDate] = useState(null);
   const [appointmentTime, setAppointmentTime] = useState("");
+
+  const { id } = useParams();
+  useEffect(() => {
+
+    getChildInfo();
+  }, [id]);
+
+  async function getChildInfo() {
+    try {
+      const response = await fetch(`/api/children/${id}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+      if (response.ok) {
+        const childData = await response.json();
+        console.log(childData);
+        setChild(childData);
+      } else {
+        console.log("Failed to get child");
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+
 
   const addAppointment = () => {
     if (appointmentName && appointmentDate && appointmentTime) {
@@ -23,163 +67,130 @@ const ProfilePage = () => {
     }
   };
 
-  const { id } = useParams();
-
-  return (
-    <div className="container mx-auto py-8">
-      {/* Profile Info */}
-      <div className="flex items-start">
-        <div className="w-2/4">
-          <img
-            src="https://www.shutterstock.com/image-photo/five-year-kid-passport-photo-600nw-139484435.jpg"
-            alt="Profile"
-            className="rounded-full w-60 h-60 border-4 border-pink-400"
-          />
-        </div>
-        <div className="w-3/4 px-4">
-          <div className="mb-4">
-            <input
-              type="text"
-              placeholder="First Name"
-              className="w-full border border-gray-300 rounded p-2"
-            />
+    const renderChildInfo = () => {
+      if (!child) return null;
+      return (
+        <div className="container mx-auto rounded-md py-8">
+ 
+          <div className="flex items-start">
+            <div className="w-2/4">
+              <img
+                src={child.profileImage}
+                alt="Profile"
+                className="bg-white rounded-full w-80 h-80 border-4 border-purple-400 m-6"
+              />
+            </div>
+            <div className="w-3/4 px-4">
+              <div className="mb-4">
+                <h3>First Name</h3>
+                <p className="bg-white w-full border border-gray-400 rounded p-2">
+                  {child.firstname}
+                </p>
+              </div>
+              <div className="mb-4">
+                <h3>Last Name</h3>
+                <p className="bg-white w-full border border-gray-400 rounded p-2">
+                  {child.lastname}
+                </p>
+              </div>
+              <div className="mb-4">
+                <h3>Date of Birth</h3>
+                <p className="bg-white w-full border border-gray-400 rounded p-2">
+                  {child.dateofbirth}
+                </p>
+              </div>
+              <div className="mb-4">
+                <h3>Diagnoses</h3>
+                <p className="bg-white w-full border border-gray-400 rounded p-2">
+                  {child.diagnoses}
+                </p>
+              </div>
+              <div className="mb-4">
+                <h3>Emergency Contact Name</h3>
+                <p className="bg-white w-full border border-gray-400 rounded p-4">
+                  {child.emergency_contact_name}
+                </p>
+              </div>
+              <div className="mb-4">
+                <h3>Emergency Contact Number</h3>
+                <p className="bg-white w-full border border-gray-400 rounded p-2">
+                  {child.emergency_contact}
+                </p>
+              </div>
+            </div>
           </div>
+          {/* Medical Info */}
           <div className="mb-4">
-            <input
-              type="text"
-              placeholder="Last Name"
-              className="w-full border border-gray-300 rounded p-2"
-            />
+              <h3>Education</h3>
+              <p className="bg-white w-full border border-gray-400 rounded p-2">
+                {child.education}
+              </p>
           </div>
-          <div className="mb-4">
-            <input
-              type="text"
-              placeholder="Date of Birth"
-              className="w-full border border-gray-300 rounded p-2"
-            />
-          </div>
-          <div className="mb-4">
-            <input
-              type="text"
-              placeholder="Diagnoses"
-              className="w-full border border-gray-300 rounded p-2"
-            />
-          </div>
-          <div className="mb-4">
-            <input
-              type="text"
-              placeholder="Emergency Contact Name"
-              className="w-full border border-gray-300 rounded p-2"
-            />
-          </div>
-          <div className="mb-4">
-            <input
-              type="text"
-              placeholder="Emergency Contact Number"
-              className="w-full border border-gray-300 rounded p-2"
-            />
+  
+          <div className="mt-8">
+            <div className="mb-4">
+              <h3>Medication</h3>
+              <p className="bg-white w-full border border-gray-400 rounded p-2">
+                {child.medication}
+              </p>
+            </div>
+            <div className="mb-4">
+              <h3>Medical Aids</h3>
+              <p className="bg-white w-full border border-gray-400 rounded p-2">
+                {child.aids}
+              </p>
+            </div>
+            <div className="mb-4">
+              <h3>Specialists</h3>
+              <p className="bg-white w-full border border-gray-400 rounded p-2">
+                {child.specialists}
+              </p>
+            </div>
+            <div className="mb-4">
+              <h3>Home Support</h3>
+              <p className="bg-white w-full border border-gray-400 rounded p-2">
+                {child.home_support}
+              </p>
+            </div>
+            <div className="mb-4">
+              <h3>School Support</h3>
+              <p className="bg-white w-full border border-gray-400 rounded p-2">
+                {child.school_support}
+              </p>
+            </div>
           </div>
         </div>
-      </div>
-
-      {/* Medical Info */}
-      {/* Input fields for medical info */}
-
-      <div className="mt-8">
-        <div className="mb-4">
-          <input
-            type="text"
-            placeholder="Medication"
-            className="w-full border border-gray-300 rounded p-2"
-          />
-        </div>
-        <div className="mb-4">
-          <input
-            type="text"
-            placeholder="Medical Aids"
-            className="w-full border border-gray-300 rounded p-2"
-          />
-        </div>
-        <div className="mb-4">
-          <textarea
-            placeholder="Home Support"
-            className="w-full border border-gray-300 rounded p-2"
-          ></textarea>
-        </div>
-        <div className="mb-4">
-          <textarea
-            placeholder="School Support"
-            className="w-full border border-gray-300 rounded p-2"
-          ></textarea>
-        </div>
-      </div>
-
-      {/* Links */}
-      <div className="mt-8 flex justify-between">
-        <Link
-          to={`/children/${id}/documents`}
-          className="text-pink-500 text-lg font-bold hover:underline"
-        >
-          {" "}
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 20 20"
-            fill="currentColor"
-            className="w-6 h-6 mr-2"
-          >
-            <path
-              fillRule="evenodd"
-              d="M2 4.95C2 3.697 3.07 3 4.25 3H9v3h6V3h4.75C17.433 3 18 3.567 18 4.25v12.5c0 .683-.567 1.25-1.25 1.25H4.25C3.567 18 3 17.433 3 16.75V4.95zM11 5H9V4h2v1zM4 5h1v1H4V5zm11 11H5V6h10v10zm-4-5h3v1h-3V11z"
-              clipRule="evenodd"
-            />
-          </svg>{" "}
-          Documents
-        </Link>
-        <Link
-          to={`/children/${id}/assessments`}
-          className="text-pink-500 text-lg font-bold hover:underline"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 20 20"
-            fill="currentColor"
-            className="w-6 h-6 mr-2"
-          >
-            <path
-              fillRule="evenodd"
-              d="M17.293 5.293a1 1 0 0 1 1.414 1.414l-10 10a1 1 0 0 1-1.414 0l-5-5a1 1 0 0 1 1.414-1.414L7 14.086l9.293-9.293a1 1 0 0 1 1.414 0z"
-              clipRule="evenodd"
-            />
-          </svg>{" "}
-          Assessments
-        </Link>
-        <Link
-          to={`/child/${id}/allevents`}
-          className="text-pink-500 text-lg font-bold hover:underline"
-        >
-          {" "}
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 20 20"
-            fill="currentColor"
-            className="w-6 h-6 mr-2"
-          >
-            <path
-              fillRule="evenodd"
-              d="M2 4.95C2 3.697 3.07 3 4.25 3H9v3h6V3h4.75C17.433 3 18 3.567 18 4.25v12.5c0 .683-.567 1.25-1.25 1.25H4.25C3.567 18 3 17.433 3 16.75V4.95zM11 5H9V4h2v1zM4 5h1v1H4V5zm11 11H5V6h10v10zm-4-5h3v1h-3V11z"
-              clipRule="evenodd"
-            />
-          </svg>{" "}
-          Events
-        </Link>
-        <span className="text-gray-500">Shared with (to be coded) </span>
-      </div>
-      <br></br>
+      );
+    }
+  
+    return (
+      <div className="container mx-auto py-8">
+        {renderChildInfo()}
+        
+    {/* Links */}
+<div className="mt-8 flex justify-between">
+  <button
+    onClick={() => history.push(`/children/${id}/documents`)}
+    className="bg-purple-500 hover:bg-purple-700 text-white font-bold m-2 py-4 px-4 rounded w-40 mx-auto block"
+    
+  >
+    Documents
+  </button>
+  <button
+    onClick={() => history.push(`/children/${id}/assessments`)}
+    className="bg-purple-500 hover:bg-purple-700 text-white font-bold m-2 py-4 px-4 rounded w-40 mx-auto block"
+    
+  >
+    Assessments
+  </button>
+  <span className="text-gray-500">Shared with (to be coded) </span>
+</div>
+<br />
 
       <h2 className="text-lg font-semibold mb-4">Upcoming Appointments</h2>
       {/* Appointments List */}
       <div className="mt-4">
-        <ul className="w-full bg-gray-500 text-white rounded p-2">
+        <ul className="w-full bg-gray-400 text-white rounded p-2">
           <li className="flex justify-between font-semibold mb-2">
             <span className="w-1/3">Appointment Name</span>
             <span className="w-1/3">Date</span>
@@ -223,13 +234,15 @@ const ProfilePage = () => {
             className="w-1/2 ml-2 border border-gray-300 rounded p-2"
           />
         </div>
+
         <Link to={`/child/${id}/addevent`} className="bg-pink-300 text-gar-700 font-bold text-white text-1xl px-6 py-3 rounded hover:bg-purple-700 mb-4">
           Add Event
         </Link>
+
         <div className="mt-8"></div>
       </div>
     </div>
   );
 };
 
-export default ProfilePage; // Correct export statement
+export default ProfilePage;
