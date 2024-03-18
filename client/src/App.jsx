@@ -106,7 +106,7 @@ function App() {
           }
         />
         <Route
-          path="/allevents"
+          path="/child/:id/allevents"
           element={
             <RequireAuth>
               <AllEvents />

@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { useNavigate, Link, useParams, useSearchParams } from "react-router-dom";
+import { useState } from "react";
+import { useNavigate, Link, useParams } from "react-router-dom";
 import Button from "../components/Button";
 import InputBox from "../components/InputBox";
 import calendar from "../assets/SENcalendar.png";
@@ -15,7 +15,6 @@ const initial = {
 export default function AddEvent () {
     const navigate = useNavigate();
     const [event, setEvent] = useState({...initial})
-    // const [searchParams, setSearchParams] = useSearchParams();
     const {id} = useParams();
 
 

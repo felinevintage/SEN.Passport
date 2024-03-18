@@ -33,11 +33,6 @@ router.get("/children", userShouldBeLoggedIn, async function (req, res, next) {
 
     const children = userWithChildren.Children;
 
-    // const childrenNames = children.map((child) => ({
-    //   firstname: child.firstname,
-    //   lastname: child.lastname,
-    // }));
-
     res.send(children);
   } catch (error) {
     console.error(error);
