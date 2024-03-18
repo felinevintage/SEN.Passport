@@ -23,6 +23,7 @@ router.post("/", userShouldBeLoggedIn, async function (req, res, next) {
     aids,
     dateofbirth,
     emergency_contact,
+    profileImage,
   } = req.body;
 
   try {
@@ -38,6 +39,7 @@ router.post("/", userShouldBeLoggedIn, async function (req, res, next) {
       aids: aids,
       dateofbirth: dateofbirth,
       emergency_contact: emergency_contact,
+      profileImage: profileImage
     });
     res.send(child);
   } catch (error) {

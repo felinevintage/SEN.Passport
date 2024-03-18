@@ -27,6 +27,7 @@ router.get("/children", userShouldBeLoggedIn, async function (req, res, next) {
       include: [{ model: models.Children }],
     });
 
+
     if (!userWithChildren) {
       return res.status(404).send("User not found");
     }
@@ -65,26 +66,37 @@ router.get("/children", userShouldBeLoggedIn, async function (req, res, next) {
 router.put("/");
 
 //DELETE child
-router.delete(
-  "/children/:id",
-  userShouldBeLoggedIn,
-  async function (req, res, next) {
-    const { user } = req;
-    const id = req.params.id;
-    console.log(id);
-    try {
-      await models.Children.destroy({
-        where: {
-          id, // Assuming there's a userId field in the Children model
-        },
-      });
-      res.sendStatus(204); // No content, successful deletion
-    } catch (error) {
-      console.error(error);
-      res.status(500).send(error);
+router.delete("/children/:id", async (req, res) => {
+  const childId = req.params.id;
+
+  try {
+    // Find the child by ID
+    const child = await models.Children.findByPk(childId);
+
+    // Check if child exists
+    if (!child) {
+      return res.status(404).send("Child not found");
     }
+
+    // Delete associated assessments, events, and documents
+    await models.Assessments.destroy({ where: { childId } });
+    await models.Events.destroy({ where: { childId } });
+    await models.Documents.destroy({ where: { childId } });
+
+    // Delete the child record
+    await models.Children.destroy({
+      where: {
+        id: childId
+      }
+    });
+
+    res.sendStatus(204); // No content, successful deletion
+  } catch (error) {
+    console.error(error);
+    res.status(500).send(error);
   }
 );
+
 
 //DELETE user
 router.delete("/:id", async function (req, res, next) {
