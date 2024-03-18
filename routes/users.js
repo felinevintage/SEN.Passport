@@ -27,7 +27,6 @@ router.get("/children", userShouldBeLoggedIn, async function (req, res, next) {
       include: [{ model: models.Children }],
     });
 
-
     if (!userWithChildren) {
       return res.status(404).send("User not found");
     }
@@ -86,8 +85,8 @@ router.delete("/children/:id", async (req, res) => {
     // Delete the child record
     await models.Children.destroy({
       where: {
-        id: childId
-      }
+        id: childId,
+      },
     });
 
     res.sendStatus(204); // No content, successful deletion
@@ -95,8 +94,7 @@ router.delete("/children/:id", async (req, res) => {
     console.error(error);
     res.status(500).send(error);
   }
-);
-
+});
 
 //DELETE user
 router.delete("/:id", async function (req, res, next) {
