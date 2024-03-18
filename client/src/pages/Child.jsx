@@ -234,12 +234,11 @@ const ProfilePage = () => {
             className="w-1/2 ml-2 border border-gray-300 rounded p-2"
           />
         </div>
-        <button
-          onClick={addAppointment}
-          className= "bg-purple-500 hover:bg-purple-700 text-white font-bold m-2 py-4 px-4 rounded w-40 mx-auto block"
-        >
-          Add Appointment{" "}
-        </button>
+
+        <Link to={`/child/${id}/addevent`} className="bg-pink-300 text-gar-700 font-bold text-white text-1xl px-6 py-3 rounded hover:bg-purple-700 mb-4">
+          Add Event
+        </Link>
+
         <div className="mt-8"></div>
       </div>
     </div>

@@ -36,7 +36,7 @@ function App() {
 
   return (
     <AuthContext.Provider value={authObject}>
-      <NavBarMenu />
+      {/* <NavBarMenu /> */}
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/register" element={<Register />} />
@@ -74,7 +74,7 @@ function App() {
           }
         />
         <Route
-          path="/children/:id/documents"
+          path="/children/:id/assessments"
           element={
             <RequireAuth>
               <Assessments />
@@ -106,7 +106,7 @@ function App() {
           }
         />
         <Route
-          path="/allevents"
+          path="/child/:id/allevents"
           element={
             <RequireAuth>
               <AllEvents />
@@ -114,7 +114,7 @@ function App() {
           }
         />
         <Route
-          path="/addevent"
+          path="/child/:id/addevent"
           element={
             <RequireAuth>
               <AddEvent />
