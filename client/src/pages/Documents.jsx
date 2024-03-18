@@ -31,12 +31,19 @@ export default function Documents() {
   }
 
   return (
-    <div>
-      <p>Documents</p>
+    <div className="container p-4 flex justify-center items-center h-screen">
+      <div className="text-center bg-slate-300 p-8 rounded-md">
+        <div>
+          {" "}
+          <p className="font-bold text-lg">Documents</p>
+        </div>
 
-      {documents.map((document) => (
-        <div key={document.id}>{document.doc_name}</div>
-      ))}
+        {documents.map((document) => (
+          <div key={document.id} className="bg-purple-300 p-2 m-2 rounded-md ">
+            {document.doc_name}
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
