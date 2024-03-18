@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import Button from "../components/Button";
 
 export default function Documents() {
   const [documents, setDocuments] = useState([]);
@@ -79,15 +80,15 @@ export default function Documents() {
           </div>
         ))}
       </div>
-      <div>
-        New document
+      <div className="text-center bg-slate-300 m-2 p-8 rounded-md">
+        <p className="font-bold text-lg mb-2">Add a new document</p>
         <form onSubmit={handleSubmit}>
           <div>
-            <label htmlFor="fileInput">Choose file:</label>
+            <label htmlFor="fileInput">Choose file: </label>
             <input type="file" id="fileInput" onChange={handleFileChange} />
           </div>
           {error && <p>{error}</p>}
-          <button>Update Document</button>
+          <Button text={"Add document"} />
         </form>
       </div>
     </div>
