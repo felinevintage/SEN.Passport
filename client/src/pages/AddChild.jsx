@@ -27,15 +27,6 @@ const initial = {
 
 }
 
-// const avatarOptions = [
-//     { path: blueAvatar, selected: false },
-//     { path: blue2Avatar, selected: false },
-//     { path: pinkAvatar, selected: false },
-//     { path: purpleAvatar, selected: false },
-//     { path: yellowAvatar, selected: false },
-//     { path: yellow2Avatar, selected: false }
-//   ];
-
 export default function AddChild () {
     const navigate = useNavigate();
     const [child, setChild] = useState({...initial});

@@ -114,7 +114,7 @@ function App() {
           }
         />
         <Route
-          path="/addevent"
+          path="/child/:id/addevent"
           element={
             <RequireAuth>
               <AddEvent />
