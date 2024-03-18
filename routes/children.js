@@ -170,12 +170,12 @@ router.get(
     const { child } = req;
     const childId = child.id;
     try {
-      await models.Documents.findAll({
+      const documents = await models.Documents.findAll({
         where: {
           childId,
         },
       });
-      res.send("Success");
+      res.send(documents);
     } catch (error) {
       res.status(500).send(error);
     }
