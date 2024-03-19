@@ -3,12 +3,17 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 import "react-datepicker/dist/react-datepicker.css";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 
 const ProfilePage = () => {
+  const [users, setUsers] = useState([]);
+  const [relationship, setRelationship] = useState("")
   const [events, setEvents] = useState([]);
+  const [userIds, setUserIds] = useState([]);
   const [child, setChild] = useState({
-
+  
+  const navigate = useNavigate();
+=======
     firstname: "",
     lastname: "",
     diagnoses: "",
@@ -25,11 +30,14 @@ const ProfilePage = () => {
  
   const navigate = useNavigate();
 
+
   const { id } = useParams();
+ 
   useEffect(() => {
     getEvents()
+    getUsers();
     getChildInfo();
-  }, [id]);
+  }, []);
 
   async function getChildInfo() {
     try {
@@ -73,6 +81,53 @@ const ProfilePage = () => {
       console.log(error);
     }
   }
+
+  const getUsers = async () => {
+    try {
+      const response = await fetch("/api/users/all",);
+        const data = await response.json();
+        console.log("Users data:", data);
+        setUsers(data);
+    } catch (error) {
+      console.error("Error fetching users:", error);
+    }
+  };
+
+  const handleCheckboxChange = (userId) => {
+    setUserIds((prevUserIds) =>
+      prevUserIds.includes(userId)
+        ? prevUserIds.filter((id) => id !== userId)
+        : [...prevUserIds, userId]
+    );
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+  
+    try {
+      const response = await fetch(`/api/children/${id}/addUsers`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+        body: JSON.stringify({
+          userIds,
+          relationship
+        }),
+      });
+  
+      if (response.ok) {
+        console.log("Users added successfully");
+        navigate(`/children/${id}`);
+      } else {
+        console.error("Failed to add users");
+      }
+    } catch (error) {
+      console.error("Error adding users:", error);
+    }
+  };
+
     
 
   const renderChildInfo = () => {
@@ -223,7 +278,37 @@ const ProfilePage = () => {
       </div> */}
       <br></br>
 
-
+      <div>
+      <h1>Add Users to Child</h1>
+      <form onSubmit={handleSubmit}>
+        <div>
+          {users.map((user) => (
+            <div key={user.id}>
+              <input
+                type="checkbox"
+                id={user.id}
+                checked={userIds.includes(user.id)}
+                onChange={() => handleCheckboxChange(user.id)}
+              />
+              <label htmlFor={user.id}>
+                {user.username}
+              </label>
+            </div>
+          ))}
+        </div>
+        <div>
+          <label>
+            Relationship:
+            <input
+              type="text"
+              value={relationship}
+              onChange={(e) => setRelationship(e.target.value)}
+            />
+          </label>
+        </div>
+        <button type="submit">Add Users</button>
+      </form>
+    </div>
 
 
         <div className="mt-8"></div>

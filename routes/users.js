@@ -17,6 +17,16 @@ router.get("/", userShouldBeLoggedIn, async function (req, res, next) {
   }
 });
 
+router.get("/all", async function (req, res, next) {
+  try {
+    const users = await models.Users.findAll();
+    res.send(users);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Internal server error");
+  }
+});
+
 //GET children associated with user
 router.get("/children", userShouldBeLoggedIn, async function (req, res, next) {
   const { user } = req;
@@ -107,31 +117,39 @@ router.delete("/:id", async function (req, res, next) {
 });
 
 router.put(
-  "/:childId/add-users",
-  [userShouldBeLoggedIn, childMustExist, mustHaveChildPermission],
+  "/:id/addUsers",
+  [userShouldBeLoggedIn, childMustExist],
   async (req, res) => {
     const { child } = req;
-    const { userIds } = req.body; // Array of userIds to add
+    const { userIds, relationship } = req.body;
 
     try {
-      // Fetch the users to add
-      const usersToAdd = await models.Users.findAll({
+      // Fetch user objects based on the provided user IDs
+      const users = await models.Users.findAll({
         where: { id: userIds },
       });
 
-      // Add each user to the child
-      await Promise.all(
-        usersToAdd.map((user) =>
-          child.addUser(user, { through: { access: "default", relationship: "none" } })
-        )
-      );
+      // Check if all provided user IDs were valid
+      if (users.length !== userIds.length) {
+        return res.status(400).send("One or more users not found");
+      }
 
-      res.sendStatus(200);
+      console.log("Child ID:", child.id);
+      console.log("User IDs:", userIds);
+
+      // Add users to the child
+      // await child.addUsers(users, { through: { relationship } });
+      await child.addUsers({
+        userIds: userIds,
+        relationship: relationship});
+
+      res.sendStatus(200); // Success
     } catch (error) {
       console.error(error);
-      res.status(500).send("Internal server error");
+      res.status(500).send(error);
     }
   }
 );
+
 
 module.exports = router;
