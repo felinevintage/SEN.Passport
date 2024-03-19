@@ -47,11 +47,14 @@ export default function AllEvents() {
 
   return (
     <div>
-        <div className="flex flex-col h-screen justify-center items-center">
-          <BackButton onClick={() => navigate(`/children/${id}`)} />
+      <BackButton onClick={() => navigate(`/children/${id}`)} />
+        <div className="flex flex-col h-full justify-center items-center">
+          <div>
+          
           <Link to={`/children/${id}/addevent`} className="bg-pink-300 text-gar-700 font-bold text-white text-1xl px-6 py-3 rounded hover:bg-purple-700 mb-4">
           Add Event
         </Link>
+        </div>
         <img style={{ width: "50%" }} src={calendar}>
         </img>
       <ul>

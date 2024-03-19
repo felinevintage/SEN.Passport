@@ -51,8 +51,9 @@ export default function AddEvent () {
 
     return (
         <div>
-            <div className="flex flex-col h-full mt-4 justify-center items-center">
-            <BackButton onClick={() => navigate(`/children/${id}`)} />
+             <BackButton onClick={() => navigate(`/children/${id}/allevents`)} />
+            <div className="flex flex-col h-full justify-center items-center">
+           
         <img style={{ width: "50%" }} src={calendar}>
         </img>
         

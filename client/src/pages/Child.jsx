@@ -128,7 +128,7 @@ const ProfilePage = () => {
     return (
 
       
-      <div className="container h-full mx-auto rounded-md py-8">
+      <div className="flex flex-col h-full">
         <BackButton onClick={() => navigate(`/dashboard`)} />
 
         <div className="flex items-start">
