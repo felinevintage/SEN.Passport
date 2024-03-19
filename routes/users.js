@@ -141,7 +141,8 @@ router.put(
       // await child.addUsers(users, { through: { relationship } });
       await child.addUsers({
         userIds: userIds,
-        relationship: relationship});
+        relationship: relationship,
+      });
 
       res.sendStatus(200); // Success
     } catch (error) {
@@ -150,6 +151,5 @@ router.put(
     }
   }
 );
-
 
 module.exports = router;
