@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
-import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useParams, Link } from "react-router-dom";
 
 const ProfilePage = () => {
+  const [events, setEvents] = useState([]);
   const [child, setChild] = useState({
     firstname: "", 
       lastname: "", 
@@ -19,14 +19,10 @@ const ProfilePage = () => {
       profileImage: ""
 
 });
-  const [appointments, setAppointments] = useState([]);
-  const [appointmentName, setAppointmentName] = useState("");
-  const [appointmentDate, setAppointmentDate] = useState(null);
-  const [appointmentTime, setAppointmentTime] = useState("");
-
+ 
   const { id } = useParams();
   useEffect(() => {
-
+    getEvents()
     getChildInfo();
   }, [id]);
 
@@ -51,21 +47,27 @@ const ProfilePage = () => {
     }
   }
 
+  async function getEvents() {
+    try {
+      const response = await fetch(`/api/events/${id}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
 
-
-  const addAppointment = () => {
-    if (appointmentName && appointmentDate && appointmentTime) {
-      const newAppointment = {
-        name: appointmentName,
-        date: appointmentDate.toLocaleDateString(),
-        time: appointmentTime,
-      };
-      setAppointments([...appointments, newAppointment]);
-      setAppointmentName("");
-      setAppointmentDate(null);
-      setAppointmentTime("");
+      if (response.ok) {
+        const data = await response.json();
+        setEvents(data);
+      } else {
+        console.log("Failed to get events");
+      }
+    } catch (error) {
+      console.log(error);
     }
-  };
+  }
+    
 
     const renderChildInfo = () => {
       if (!child) return null;
@@ -235,8 +237,7 @@ const ProfilePage = () => {
 
 <br />
 
-      <h2 className="text-lg font-semibold mb-4">Upcoming Appointments</h2>
-      {/* Appointments List */}
+      {/* <h2 className="text-lg font-semibold mb-4">Upcoming Appointments</h2>
       <div className="mt-4">
         <ul className="w-full bg-gray-400 text-white rounded p-2">
           <li className="flex justify-between font-semibold mb-2">
@@ -253,43 +254,14 @@ const ProfilePage = () => {
           ))}
         </ul>
         <br></br>
-      </div>
+      </div> */}
       <br></br>
-      <h2 className="text-lg font-semibold mb-4">Add a new appointment</h2>
-      {/* Appointments */}
-      <div className="mt-4">
-        <div className="mb-4">
-          <input
-            type="text"
-            placeholder="Appointment Name"
-            value={appointmentName}
-            onChange={(e) => setAppointmentName(e.target.value)}
-            className="w-full border border-gray-300 rounded p-2"
-          />
-        </div>
-        <div className="flex mb-4">
-          <DatePicker
-            selected={appointmentDate}
-            onChange={(date) => setAppointmentDate(date)}
-            placeholderText="Date"
-            className="w-1/2 mr-2 border border-gray-300 rounded p-2"
-          />
-          <input
-            type="text"
-            placeholder="Time"
-            value={appointmentTime}
-            onChange={(e) => setAppointmentTime(e.target.value)}
-            className="w-1/2 ml-2 border border-gray-300 rounded p-2"
-          />
-        </div>
 
-        <Link to={`/children/${id}/addevent`} className="bg-pink-300 text-gar-700 font-bold text-white text-1xl px-6 py-3 rounded hover:bg-purple-700 mb-4">
-          Add Event
-        </Link>
+       
 
         <div className="mt-8"></div>
       </div>
-    </div>
+    
   );
 };
 
