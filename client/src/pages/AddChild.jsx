@@ -11,6 +11,7 @@ import yellowAvatar from "../assets/Avatars/yellow.jpg";
 import yellow2Avatar from "../assets/Avatars/yellow2.jpg";
 
 
+
 const initial = {
     firstname: "", 
       lastname: "", 
