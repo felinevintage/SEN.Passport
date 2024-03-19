@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import "react-datepicker/dist/react-datepicker.css";
 import { useParams, Link, useNavigate } from "react-router-dom";
+import Button from "../components/Button";
+import BackButton from "../components/BackButton";
 
 const ProfilePage = () => {
   const navigate = useNavigate();
@@ -121,9 +123,14 @@ const ProfilePage = () => {
   };
 
   const renderChildInfo = () => {
+    
     if (!child) return null;
     return (
-      <div className="container mx-auto rounded-md py-8">
+
+      
+      <div className="container h-full mx-auto rounded-md py-8">
+        <BackButton onClick={() => navigate(`/dashboard`)} />
+
         <div className="flex items-start">
           <div className="w-2/4">
             <img
@@ -306,37 +313,38 @@ const ProfilePage = () => {
     </div> */}
       <br></br>
 
+
+    <div className="flex justify-center items-center">
+  <div className="w-full max-w-md">
+    <h1 className="text-2xl font-semibold mb-4 text-center">Add Users to Child</h1>
+    <form onSubmit={handleSubmit} className="space-y-4">
       <div>
-        <h1>Add Users to Child</h1>
-        <form onSubmit={handleSubmit}>
-          <div>
-            {users.map((user) => (
-              <div key={user.id}>
-                <input
-                  type="checkbox"
-                  id={user.id}
-                  // checked={userIds.includes(user.id)}
-                  onChange={() => setUserIds(user.id)}
-                />
-                <label htmlFor={user.id}>{user.username}</label>
-              </div>
-            ))}
-          </div>
-          <div>
-            <label>
-              Relationship:
-              <input
-                type="text"
-                value={relationship}
-                onChange={(e) => setRelationship(e.target.value)}
-              />
+        {users.map((user) => (
+          <div key={user.id} className="flex items-center">
+            <input
+              type="checkbox"
+              id={user.id}
+              checked={userIds.includes(user.id)}
+              onChange={() => handleCheckboxChange(user.id)}
+              className="mr-2"
+            />
+            <label htmlFor={user.id} className="font-medium">
+              {user.username}
             </label>
           </div>
-          <button type="submit">Add Users</button>
-        </form>
+        ))}
       </div>
+      <Button
+      text={"Add Users"}
+      type="submit"
+      
+    >
+    </Button>
+    </form>
+  </div>
+</div>
 
-      <div className="mt-8"></div>
+
     </div>
   );
 };
