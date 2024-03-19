@@ -24,11 +24,13 @@ export default function FilesPage({
 
   return (
     <div className="container h-full min-h-screen">
+    <BackButton onClick={() => navigate(`/children/${id}`)} />
+    
       <div className="flex justify-center pt-10">
         {" "}
         <h1 className="font-bold text-lg">{title}</h1>
       </div>
-      <BackButton onClick={() => navigate(`/children/${id}`)} />
+      
       <div className="grid grid-cols-2 gap-4">
         <div className="col-span-1 flex justify-center my-10 h-fit">
           <table className="table-auto">

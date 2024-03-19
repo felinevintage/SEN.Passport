@@ -84,10 +84,10 @@ export default function AddChild() {
 
   return (
     <div>
-      <div className="flex flex-col h-full mt-4 justify-center items-center">
-        <div>
-          <BackButton onClick={() => navigate(`/dashboard`)} />
-        </div>
+      <BackButton onClick={() => navigate(`/dashboard`)}/>
+    <div className="flex flex-col h-full mt-4 justify-center items-center">
+      <div>
+  
         <div className="font-medium p-4 text-lg">Add a Child</div>
 
         <form className="mb-6" onSubmit={handleSubmit}>
@@ -216,6 +216,7 @@ export default function AddChild() {
             ></textarea>
           </div>
 
+
           <div className="mb-4">
             <label htmlFor="profileImage">Select Avatar:</label>
             <div className="flex flex-wrap items-center justify-center">
@@ -246,6 +247,7 @@ export default function AddChild() {
           ></Button>
         </form>
       </div>
+
     </div>
   );
 }
