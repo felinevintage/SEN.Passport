@@ -17,6 +17,7 @@ router.get("/", userShouldBeLoggedIn, async function (req, res, next) {
   }
 });
 
+//GET list of all users
 router.get("/all", async function (req, res, next) {
   try {
     const users = await models.Users.findAll();
@@ -121,7 +122,7 @@ router.put(
   [userShouldBeLoggedIn, childMustExist],
   async (req, res) => {
     const { child } = req;
-    const { userIds, relationship } = req.body;
+    const { userIds } = req.body;
 
     try {
       // Fetch user objects based on the provided user IDs
@@ -139,11 +140,9 @@ router.put(
 
       // Add users to the child
       // await child.addUsers(users, { through: { relationship } });
-      await child.addUsers({
-        userIds: userIds,
-        relationship: relationship});
-
-      res.sendStatus(200); // Success
+      
+      const response = await child.addUsers(userIds)
+      res.send(response); // Success
     } catch (error) {
       console.error(error);
       res.status(500).send(error);
