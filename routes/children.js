@@ -7,6 +7,9 @@ const mime = require("mime-types");
 const userShouldBeLoggedIn = require("../guards/userShouldBeLoggedIn");
 const childMustExist = require("../guards/childMustExist");
 const mustHaveChildPermission = require("../guards/mustHaveChildPermission");
+const path = require("path");
+const fs = require("fs/promises");
+const { v4: uuidv4 } = require("uuid");
 
 //POST new child
 router.post("/", userShouldBeLoggedIn, async function (req, res, next) {
@@ -39,7 +42,7 @@ router.post("/", userShouldBeLoggedIn, async function (req, res, next) {
       aids: aids,
       dateofbirth: dateofbirth,
       emergency_contact: emergency_contact,
-      profileImage: profileImage
+      profileImage: profileImage,
     });
     res.send(child);
   } catch (error) {
@@ -70,12 +73,12 @@ router.get(
     const { child } = req;
     const childId = child.id;
     try {
-      await models.Assessments.findAll({
+      const assessments = await models.Assessments.findAll({
         where: {
           childId,
         },
       });
-      res.send("Success");
+      res.send(assessments);
     } catch (error) {
       res.status(500).send(error);
     }
@@ -93,20 +96,21 @@ router.post(
   ],
   async (req, res) => {
     const { child } = req;
+    const file = req.file;
+    const { assessment_type, date } = req.body;
+    const extension = mime.extension(file.mimetype);
+    const newFilename = uuidv4() + "." + extension;
+    const tmpPath = file.path;
+    const targetPath = path.join(__dirname, "../uploads/") + newFilename;
     try {
-      // we can use the assessment_type to type the name we want to appear on the database or the originalname to use the file name
-      const { assessment_type, date } = req.body;
-      const file = req.file;
-      // console.log(file); //Do this to see all the data it contains
-      const extension = mime.extension(file.mimetype);
-      // file.filename is the name that is going to have the file in the uploads folder
-      const newFilename = file.filename + "." + extension;
+      await fs.rename(tmpPath, targetPath);
+
       const assessment = await child.createAssessment({
         assessment_type: file.originalname,
         date: date,
         results_doc: newFilename,
       });
-      res.send({ success: true, assessment });
+      res.send(assessment);
     } catch (error) {
       res.status(500).send({ success: false, error });
     }
@@ -131,7 +135,11 @@ router.get(
       if (assessment === null) {
         res.status(404).send("This assessment does not exist.");
       } else {
-        res.send({ success: true, assessment });
+        const filename =
+          path.join(__dirname, "../uploads/") + assessment.results_doc;
+        const data = await fs.readFile(filename);
+
+        res.set("Content-Type", mime.lookup(filename)).send(data);
       }
     } catch (error) {
       res.status(500).send({ success: false, error });
@@ -193,20 +201,25 @@ router.post(
   ],
   async (req, res) => {
     const { child } = req;
+
+    // we can use the doc_name to type the name we want to appear on the database or the originalname to use the file name
+    // const { doc_name } = req.body;
+    const file = req.file;
+    // console.log(file); // Do this to see all the data it contains
+    const extension = mime.extension(file.mimetype);
+    // file.filename is the name that is going to have the file in the uploads folder
+    const newFilename = uuidv4() + "." + extension;
+    const tmpPath = file.path;
+    const targetPath = path.join(__dirname, "../uploads/") + newFilename;
     try {
-      // we can use the doc_name to type the name we want to appear on the database or the originalname to use the file name
-      // const { doc_name } = req.body;
-      const file = req.file;
-      // console.log(file); // Do this to see all the data it contains
-      const extension = mime.extension(file.mimetype);
-      // file.filename is the name that is going to have the file in the uploads folder
-      const newFilename = file.filename + "." + extension;
+      await fs.rename(tmpPath, targetPath);
       const document = await child.createDocument({
         doc_name: file.originalname,
         document: newFilename,
       });
-      res.send({ success: true, document });
+      res.send(document);
     } catch (error) {
+      console.log(error);
       res.status(500).send({ success: false, error });
     }
   }
@@ -230,7 +243,11 @@ router.get(
       if (!document) {
         res.status(404).send("This document does not exist.");
       } else {
-        res.send({ success: true, document });
+        const filename =
+          path.join(__dirname, "../uploads/") + document.document;
+        const data = await fs.readFile(filename);
+
+        res.set("Content-Type", mime.lookup(filename)).send(data);
       }
     } catch (error) {
       res.status(500).send({ success: false, error });
@@ -259,5 +276,9 @@ router.delete(
     }
   }
 );
+
+
+
+
 
 module.exports = router;

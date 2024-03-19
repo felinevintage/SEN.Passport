@@ -10,7 +10,6 @@ import Assessments from "./pages/Assessments";
 import AuthContext from "./contexts/AuthContext";
 import Child from "./pages/Child";
 import Dashboard from "./pages/Dashboard";
-import Document from "./pages/Document";
 import Documents from "./pages/Documents";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
@@ -90,14 +89,6 @@ function App() {
           }
         />
         <Route
-          path="/document"
-          element={
-            <RequireAuth>
-              <Document />
-            </RequireAuth>
-          }
-        />
-        <Route
           path="/children/:id/documents"
           element={
             <RequireAuth>
@@ -106,7 +97,7 @@ function App() {
           }
         />
         <Route
-          path="/child/:id/allevents"
+          path="/children/:id/allevents"
           element={
             <RequireAuth>
               <AllEvents />
@@ -114,7 +105,7 @@ function App() {
           }
         />
         <Route
-          path="/child/:id/addevent"
+          path="/children/:id/addevent"
           element={
             <RequireAuth>
               <AddEvent />

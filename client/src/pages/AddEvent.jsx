@@ -3,6 +3,7 @@ import { useNavigate, Link, useParams } from "react-router-dom";
 import Button from "../components/Button";
 import InputBox from "../components/InputBox";
 import calendar from "../assets/SENcalendar.png";
+import BackButton from "../components/BackButton";
 
 const initial = {
     event_type: "",
@@ -51,9 +52,7 @@ export default function AddEvent () {
     return (
         <div>
             <div className="flex flex-col h-full mt-4 justify-center items-center">
-            <Link to={`/child/${id}`} className="bg-violet-300 text-gar-700 font-bold text-md px-4 py-2 rounded hover:bg-purple-700 mb-4">
-          Back to Child Profile
-        </Link>
+            <BackButton onClick={() => navigate(`/children/${id}`)} />
         <img style={{ width: "50%" }} src={calendar}>
         </img>
         
