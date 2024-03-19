@@ -242,7 +242,7 @@ const ProfilePage = () => {
         </Link>
         <div>
           <Link
-            to={`/children/${id}/Documents`}
+            to={`/children/${id}/documents`}
             className="text-pink-500 text-lg font-bold hover:underline"
           >
             {" "}
