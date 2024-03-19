@@ -1,11 +1,6 @@
-import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import axios from "axios";
 
 export default function Modal({ file, onClose }) {
-  const [fileContents, setFileContents] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [docId, setDocId] = useState(null);
   const { id } = useParams();
 
   // https://stackoverflow.com/questions/13432821/is-it-possible-to-add-request-headers-to-an-iframe-src-request
@@ -42,7 +37,9 @@ export default function Modal({ file, onClose }) {
           X
         </button>
         <div className="w-screen h-screen">
-          <h2 className="text-lg font-bold m-4">{file.doc_name}</h2>
+          <h2 className="text-lg font-bold m-4">
+            {file.doc_name ? file.doc_name : file.assessment_type}
+          </h2>
           <iframe id="fileDisplay" className="w-screen h-screen" />
         </div>
       </div>
