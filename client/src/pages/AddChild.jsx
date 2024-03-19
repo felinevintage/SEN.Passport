@@ -89,10 +89,10 @@ export default function AddChild () {
 
 return (
     <div>
-    <div className="flex flex-col h-full mt-4 justify-center items-center">
-    <div>
       <BackButton onClick={() => navigate(`/dashboard`)}/>
-    </div>
+    <div className="flex flex-col h-full mt-4 justify-center items-center">
+      <div>
+   
         <div className="font-medium p-4 text-lg">Add a Child</div>
         
         <form className= "mb-6" onSubmit={handleSubmit}>
@@ -248,7 +248,7 @@ return (
     
             
         </form>
-
+        </div>
     </div>
     </div>
 )
