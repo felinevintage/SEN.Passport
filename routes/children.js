@@ -274,7 +274,6 @@ router.delete(
   }
 );
 
-// PUT to add user access to a child
 
 
 
