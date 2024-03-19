@@ -75,7 +75,7 @@ export default function FilesPage({
         </div>
         <div className="col-span-1 flex justify-center my-10 h-56">
           <div className="bg-slate-300 p-8 rounded-md">
-            <p className="font-bold text-lg mb-2">Add a new {title}</p>
+            <p className="font-bold text-lg mb-2">Add New {title}</p>
             <form onSubmit={handleSubmit} className="flex flex-col gap-4">
               <div>
                 <label htmlFor="fileInput">Choose file: </label>
