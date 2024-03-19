@@ -1,6 +1,6 @@
 import React from "react";
 import {useState, useEffect} from "react";
-import {useNavigate, Link} from "react-router-dom";
+import {useNavigate, useParams, Link} from "react-router-dom";
 import InputBox from "../components/InputBox";
 import Button from "../components/Button";
 import blueAvatar from "../assets/Avatars/blue.jpg";
@@ -9,6 +9,8 @@ import pinkAvatar from "../assets/Avatars/pink.jpg";
 import purpleAvatar from "../assets/Avatars/purple.jpg";
 import yellowAvatar from "../assets/Avatars/yellow.jpg";
 import yellow2Avatar from "../assets/Avatars/yellow2.jpg";
+import BackButton from "../components/BackButton";
+
 
 
 const initial = {
@@ -28,6 +30,7 @@ const initial = {
 }
 
 export default function AddChild () {
+    const { id } = useParams();
     const navigate = useNavigate();
     const [child, setChild] = useState({...initial});
     const [avatarOptions, setAvatarOptions] = useState([
@@ -87,9 +90,9 @@ export default function AddChild () {
 return (
     <div>
     <div className="flex flex-col h-full mt-4 justify-center items-center">
-    <Link to="/dashboard" className="bg-violet-300 text-gar-700 font-bold text-1xl px-6 py-3 rounded hover:bg-purple-700 mb-4">
-          Back to Dashboard
-        </Link>
+    <div>
+      <BackButton onClick={() => navigate(`/dashboard`)}/>
+    </div>
         <div className="font-medium p-4 text-lg">Add a Child</div>
         
         <form className= "mb-6" onSubmit={handleSubmit}>

@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from "react";
+
 import { useNavigate } from "react-router-dom";
-import DatePicker from "react-datepicker";
+
 import "react-datepicker/dist/react-datepicker.css";
 import { useParams, Link } from "react-router-dom";
 
 const ProfilePage = () => {
+  const [events, setEvents] = useState([]);
   const [child, setChild] = useState({
+
     firstname: "",
     lastname: "",
     diagnoses: "",
@@ -19,14 +22,12 @@ const ProfilePage = () => {
     emergency_contact: "",
     profileImage: "",
   });
-  const [appointments, setAppointments] = useState([]);
-  const [appointmentName, setAppointmentName] = useState("");
-  const [appointmentDate, setAppointmentDate] = useState(null);
-  const [appointmentTime, setAppointmentTime] = useState("");
+ 
   const navigate = useNavigate();
 
   const { id } = useParams();
   useEffect(() => {
+    getEvents()
     getChildInfo();
   }, [id]);
 
@@ -51,19 +52,28 @@ const ProfilePage = () => {
     }
   }
 
-  const addAppointment = () => {
-    if (appointmentName && appointmentDate && appointmentTime) {
-      const newAppointment = {
-        name: appointmentName,
-        date: appointmentDate.toLocaleDateString(),
-        time: appointmentTime,
-      };
-      setAppointments([...appointments, newAppointment]);
-      setAppointmentName("");
-      setAppointmentDate(null);
-      setAppointmentTime("");
+
+  async function getEvents() {
+    try {
+      const response = await fetch(`/api/events/${id}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        setEvents(data);
+      } else {
+        console.log("Failed to get events");
+      }
+    } catch (error) {
+      console.log(error);
     }
-  };
+  }
+    
 
   const renderChildInfo = () => {
     if (!child) return null;
@@ -116,74 +126,84 @@ const ProfilePage = () => {
             </div>
           </div>
         </div>
-        {/* Medical Info */}
-        <div className="mb-4">
-          <h3>Education</h3>
-          <p className="bg-white w-full border border-gray-400 rounded p-2">
-            {child.education}
-          </p>
-        </div>
 
-        <div className="mt-8">
-          <div className="mb-4">
-            <h3>Medication</h3>
-            <p className="bg-white w-full border border-gray-400 rounded p-2">
-              {child.medication}
-            </p>
-          </div>
-          <div className="mb-4">
-            <h3>Medical Aids</h3>
-            <p className="bg-white w-full border border-gray-400 rounded p-2">
-              {child.aids}
-            </p>
-          </div>
-          <div className="mb-4">
-            <h3>Specialists</h3>
-            <p className="bg-white w-full border border-gray-400 rounded p-2">
-              {child.specialists}
-            </p>
-          </div>
-          <div className="mb-4">
-            <h3>Home Support</h3>
-            <p className="bg-white w-full border border-gray-400 rounded p-2">
-              {child.home_support}
-            </p>
-          </div>
-          <div className="mb-4">
-            <h3>School Support</h3>
-            <p className="bg-white w-full border border-gray-400 rounded p-2">
-              {child.school_support}
-            </p>
-          </div>
-        </div>
-      </div>
-    );
-  };
+      );
+    }
+  
+    return (
+      <div className="container mx-auto py-8">
+        {renderChildInfo()}
+        
+    {/* Links */}
+<div className="mt-8 flex justify-between">
 
-  return (
-    <div className="container mx-auto py-8">
-      {renderChildInfo()}
-
-      {/* Links */}
-      <div className="mt-8 flex justify-between">
-        <button
-          onClick={() => navigate(`/children/${id}/documents`)}
-          className="bg-purple-500 hover:bg-purple-700 text-white font-bold m-2 py-4 px-4 rounded w-40 mx-auto block"
+        <Link
+          to={`/children/${id}/assessments`}
+          className="text-pink-500 text-lg font-bold hover:underline"
         >
-          Documents
-        </button>
-        <button
-          onClick={() => navigate(`/children/${id}/assessments`)}
-          className="bg-purple-500 hover:bg-purple-700 text-white font-bold m-2 py-4 px-4 rounded w-40 mx-auto block"
-        >
+          {" "}
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 20 20"
+            fill="currentColor"
+            className="w-6 h-6 mr-2"
+          >
+            <path
+              fillRule="evenodd"
+              d="M2 4.95C2 3.697 3.07 3 4.25 3H9v3h6V3h4.75C17.433 3 18 3.567 18 4.25v12.5c0 .683-.567 1.25-1.25 1.25H4.25C3.567 18 3 17.433 3 16.75V4.95zM11 5H9V4h2v1zM4 5h1v1H4V5zm11 11H5V6h10v10zm-4-5h3v1h-3V11z"
+              clipRule="evenodd"
+            />
+          </svg>{" "}
           Assessments
-        </button>
-        <span className="text-gray-500">Shared with (to be coded) </span>
-      </div>
-      <br />
+        </Link>
+        <div>
+        <Link
+          to={`/children/${id}/Documents`}
+          className="text-pink-500 text-lg font-bold hover:underline"
+        >
+          {" "}
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 20 20"
+            fill="currentColor"
+            className="w-6 h-6 mr-2"
+          >
+            <path
+              fillRule="evenodd"
+              d="M2 4.95C2 3.697 3.07 3 4.25 3H9v3h6V3h4.75C17.433 3 18 3.567 18 4.25v12.5c0 .683-.567 1.25-1.25 1.25H4.25C3.567 18 3 17.433 3 16.75V4.95zM11 5H9V4h2v1zM4 5h1v1H4V5zm11 11H5V6h10v10zm-4-5h3v1h-3V11z"
+              clipRule="evenodd"
+            />
+          </svg>{" "}
+          Documents
+        </Link>
+        </div>
+        <div>
+        <Link
+          to={`/children/${id}/allevents`}
+          className="text-pink-500 text-lg font-bold hover:underline"
+        >
+          {" "}
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 20 20"
+            fill="currentColor"
+            className="w-6 h-6 mr-2"
+          >
+            <path
+              fillRule="evenodd"
+              d="M2 4.95C2 3.697 3.07 3 4.25 3H9v3h6V3h4.75C17.433 3 18 3.567 18 4.25v12.5c0 .683-.567 1.25-1.25 1.25H4.25C3.567 18 3 17.433 3 16.75V4.95zM11 5H9V4h2v1zM4 5h1v1H4V5zm11 11H5V6h10v10zm-4-5h3v1h-3V11z"
+              clipRule="evenodd"
+            />
+          </svg>{" "}
+          Events
+        </Link>
+        </div>
+        </div>
 
-      <h2 className="text-lg font-semibold mb-4">Upcoming Appointments</h2>
-      {/* Appointments List */}
+<br />
+
+
+      {/* <h2 className="text-lg font-semibold mb-4">Upcoming Appointments</h2>
       <div className="mt-4">
         <ul className="w-full bg-gray-400 text-white rounded p-2">
           <li className="flex justify-between font-semibold mb-2">
@@ -200,46 +220,15 @@ const ProfilePage = () => {
           ))}
         </ul>
         <br></br>
-      </div>
+      </div> */}
       <br></br>
-      <h2 className="text-lg font-semibold mb-4">Add a new appointment</h2>
-      {/* Appointments */}
-      <div className="mt-4">
-        <div className="mb-4">
-          <input
-            type="text"
-            placeholder="Appointment Name"
-            value={appointmentName}
-            onChange={(e) => setAppointmentName(e.target.value)}
-            className="w-full border border-gray-300 rounded p-2"
-          />
-        </div>
-        <div className="flex mb-4">
-          <DatePicker
-            selected={appointmentDate}
-            onChange={(date) => setAppointmentDate(date)}
-            placeholderText="Date"
-            className="w-1/2 mr-2 border border-gray-300 rounded p-2"
-          />
-          <input
-            type="text"
-            placeholder="Time"
-            value={appointmentTime}
-            onChange={(e) => setAppointmentTime(e.target.value)}
-            className="w-1/2 ml-2 border border-gray-300 rounded p-2"
-          />
-        </div>
 
-        <Link
-          to={`/child/${id}/addevent`}
-          className="bg-pink-300 text-gar-700 font-bold text-white text-1xl px-6 py-3 rounded hover:bg-purple-700 mb-4"
-        >
-          Add Event
-        </Link>
+
+
 
         <div className="mt-8"></div>
       </div>
-    </div>
+    
   );
 };
 

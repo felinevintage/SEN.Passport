@@ -97,7 +97,7 @@ function App() {
           }
         />
         <Route
-          path="/child/:id/allevents"
+          path="/children/:id/allevents"
           element={
             <RequireAuth>
               <AllEvents />
@@ -105,7 +105,7 @@ function App() {
           }
         />
         <Route
-          path="/child/:id/addevent"
+          path="/children/:id/addevent"
           element={
             <RequireAuth>
               <AddEvent />
