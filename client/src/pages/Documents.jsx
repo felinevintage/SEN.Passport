@@ -3,6 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import Button from "../components/Button";
 import Modal from "../components/Modal";
+import BackButton from "../components/BackButton";
 
 export default function Documents() {
   const [documents, setDocuments] = useState([]);
@@ -71,25 +72,7 @@ export default function Documents() {
         {" "}
         <h1 className="font-bold text-lg">Documents</h1>
       </div>
-      <button
-        className="absolute top-0 right-0 px-4 py-2 bg-slate-100 rounded-md"
-        onClick={() => navigate(`/children/${id}`)}
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          strokeWidth={1.5}
-          stroke="currentColor"
-          className="w-6 h-6"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M9 15 3 9m0 0 6-6M3 9h12a6 6 0 0 1 0 12h-3"
-          />
-        </svg>
-      </button>
+      <BackButton onClick={() => navigate(`/children/${id}`)} />
       <div className="grid grid-cols-2 gap-4">
         <div className="col-span-1 flex justify-center my-10">
           <table className="table-auto bg-slate-300 p-8 rounded-md">
