@@ -1,12 +1,12 @@
 import { useParams } from "react-router-dom";
 
-export default function Modal({ file, onClose }) {
+export default function Modal({ file, onClose, dataType }) {
   const { id } = useParams();
 
   // https://stackoverflow.com/questions/13432821/is-it-possible-to-add-request-headers-to-an-iframe-src-request
   const xhr = new XMLHttpRequest();
 
-  xhr.open("GET", `/api/children/${id}/documents/${file.id}`);
+  xhr.open("GET", `/api/children/${id}/${dataType}/${file.id}`);
   xhr.onreadystatechange = handler;
   xhr.responseType = "blob";
   xhr.setRequestHeader(
@@ -22,7 +22,7 @@ export default function Modal({ file, onClose }) {
         var data_url = URL.createObjectURL(this.response);
         document.querySelector("#fileDisplay").src = data_url;
       } else {
-        console.error("no pdf :(");
+        console.error("no file :(");
       }
     }
   }
