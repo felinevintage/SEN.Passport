@@ -106,4 +106,32 @@ router.delete("/:id", async function (req, res, next) {
   }
 });
 
+router.put(
+  "/:childId/add-users",
+  [userShouldBeLoggedIn, childMustExist, mustHaveChildPermission],
+  async (req, res) => {
+    const { child } = req;
+    const { userIds } = req.body; // Array of userIds to add
+
+    try {
+      // Fetch the users to add
+      const usersToAdd = await models.Users.findAll({
+        where: { id: userIds },
+      });
+
+      // Add each user to the child
+      await Promise.all(
+        usersToAdd.map((user) =>
+          child.addUser(user, { through: { access: "default", relationship: "none" } })
+        )
+      );
+
+      res.sendStatus(200);
+    } catch (error) {
+      console.error(error);
+      res.status(500).send("Internal server error");
+    }
+  }
+);
+
 module.exports = router;
