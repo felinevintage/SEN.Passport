@@ -7,6 +7,9 @@ const mime = require("mime-types");
 const userShouldBeLoggedIn = require("../guards/userShouldBeLoggedIn");
 const childMustExist = require("../guards/childMustExist");
 const mustHaveChildPermission = require("../guards/mustHaveChildPermission");
+const path = require("path");
+const fs = require("fs/promises");
+const { v4: uuidv4 } = require("uuid");
 
 //POST new child
 router.post("/", userShouldBeLoggedIn, async function (req, res, next) {
@@ -39,7 +42,7 @@ router.post("/", userShouldBeLoggedIn, async function (req, res, next) {
       aids: aids,
       dateofbirth: dateofbirth,
       emergency_contact: emergency_contact,
-      profileImage: profileImage
+      profileImage: profileImage,
     });
     res.send(child);
   } catch (error) {
@@ -100,7 +103,7 @@ router.post(
       // console.log(file); //Do this to see all the data it contains
       const extension = mime.extension(file.mimetype);
       // file.filename is the name that is going to have the file in the uploads folder
-      const newFilename = file.filename + "." + extension;
+      const newFilename = uuidv4() + "." + extension;
       const assessment = await child.createAssessment({
         assessment_type: file.originalname,
         date: date,
@@ -193,20 +196,26 @@ router.post(
   ],
   async (req, res) => {
     const { child } = req;
+
+    // we can use the doc_name to type the name we want to appear on the database or the originalname to use the file name
+    // const { doc_name } = req.body;
+    const file = req.file;
+    console.log(file); // Do this to see all the data it contains
+    const extension = mime.extension(file.mimetype);
+    // file.filename is the name that is going to have the file in the uploads folder
+    const newFilename = uuidv4() + "." + extension;
+    const tmpPath = file.path;
+    const targetPath = path.join(__dirname, "../uploads/") + newFilename;
     try {
-      // we can use the doc_name to type the name we want to appear on the database or the originalname to use the file name
-      // const { doc_name } = req.body;
-      const file = req.file;
-      // console.log(file); // Do this to see all the data it contains
-      const extension = mime.extension(file.mimetype);
-      // file.filename is the name that is going to have the file in the uploads folder
-      const newFilename = file.filename + "." + extension;
+      await fs.rename(tmpPath, targetPath);
       const document = await child.createDocument({
         doc_name: file.originalname,
         document: newFilename,
       });
-      res.send({ success: true, document });
+      //const docUrl = `/uploads/${newFilename}`;
+      res.send(document);
     } catch (error) {
+      console.log(error);
       res.status(500).send({ success: false, error });
     }
   }
@@ -230,9 +239,14 @@ router.get(
       if (!document) {
         res.status(404).send("This document does not exist.");
       } else {
-        res.send({ success: true, document });
+        const filename =
+          path.join(__dirname, "../uploads/") + document.document;
+        const data = await fs.readFile(filename);
+
+        res.set("Content-Type", mime.lookup(filename)).send(data);
       }
     } catch (error) {
+      console.log(error);
       res.status(500).send({ success: false, error });
     }
   }
