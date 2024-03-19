@@ -1,11 +1,9 @@
 import { Routes, Route, Link } from "react-router-dom";
 import { useState } from "react";
 import NavBarMenu from "./components/NavBar";
-import AddAssessment from "./pages/AddAssessment";
 import AddChild from "./pages/AddChild";
 import AddEvent from "./pages/AddEvent";
 import AllEvents from "./pages/AllEvents";
-import Assessment from "./pages/Assessment";
 import Assessments from "./pages/Assessments";
 import AuthContext from "./contexts/AuthContext";
 import Child from "./pages/Child";
@@ -35,7 +33,7 @@ function App() {
 
   return (
     <AuthContext.Provider value={authObject}>
-      {/* <NavBarMenu /> */}
+      <NavBarMenu />
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/register" element={<Register />} />
@@ -65,26 +63,10 @@ function App() {
           }
         />
         <Route
-          path="/assessment"
-          element={
-            <RequireAuth>
-              <Assessment />
-            </RequireAuth>
-          }
-        />
-        <Route
           path="/children/:id/assessments"
           element={
             <RequireAuth>
               <Assessments />
-            </RequireAuth>
-          }
-        />
-        <Route
-          path="/addassessment"
-          element={
-            <RequireAuth>
-              <AddAssessment />
             </RequireAuth>
           }
         />

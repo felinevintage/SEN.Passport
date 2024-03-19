@@ -138,17 +138,15 @@ router.put(
       console.log("Child ID:", child.id);
       console.log("User IDs:", userIds);
 
-      // Add users to the child
-      // await child.addUsers(users, { through: { relationship } });
       
       const response = await child.addUsers(userIds)
       res.send(response); // Success
+
     } catch (error) {
       console.error(error);
       res.status(500).send(error);
     }
   }
 );
-
 
 module.exports = router;
