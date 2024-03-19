@@ -49,6 +49,7 @@ export default function Documents() {
       );
       console.log(response);
       getDocuments();
+      setNewDocs(null);
     } catch (error) {
       setError(error);
       console.error("Error updating document:", error);

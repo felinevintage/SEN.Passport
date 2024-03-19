@@ -6,6 +6,7 @@ import FilesPage from "../components/FilesPage";
 export default function Assessments() {
   const [assessments, setAssessments] = useState([]);
   const [newAssess, setNewAssess] = useState(null);
+  const [date, setDate] = useState(null);
   const [error, setError] = useState(null);
   const [selectedAssessment, setSelectedAssessment] = useState(null);
   const { id } = useParams();
@@ -31,10 +32,18 @@ export default function Assessments() {
     setNewAssess(e.target.files[0]);
   };
 
+  function handleDateChange(e) {
+    console.log(e);
+    setDate(e.target.value);
+  }
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData();
     formData.append("file", newAssess, newAssess.name);
+    if (date) {
+      formData.append("date", date);
+    }
 
     try {
       const response = await axios.post(
@@ -49,6 +58,7 @@ export default function Assessments() {
       );
       console.log(response);
       getAssessments();
+      setDate(null);
     } catch (error) {
       setError(error);
       console.error("Error updating assessment:", error);
@@ -75,6 +85,9 @@ export default function Assessments() {
       handleCloseModal={handleCloseModal}
       error={error}
       id={id}
+      date={date}
+      setDate={setDate}
+      handleDateChange={handleDateChange}
     />
   );
 }

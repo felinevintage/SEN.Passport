@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import Button from "../components/Button";
 import Modal from "../components/Modal";
 import BackButton from "../components/BackButton";
+import InputBox from "./InputBox";
 
 export default function FilesPage({
   title,
@@ -15,43 +16,47 @@ export default function FilesPage({
   handleCloseModal,
   error,
   id,
+  date,
+  setDate,
+  handleDateChange,
 }) {
   const navigate = useNavigate();
 
   return (
-    <div>
+    <div className="container h-full min-h-screen">
       <div className="flex justify-center pt-10">
         {" "}
         <h1 className="font-bold text-lg">{title}</h1>
       </div>
       <BackButton onClick={() => navigate(`/children/${id}`)} />
       <div className="grid grid-cols-2 gap-4">
-        <div className="col-span-1 flex justify-center my-10">
-          <table className="table-auto bg-slate-300 p-8 rounded-md">
+        <div className="col-span-1 flex justify-center my-10 h-fit">
+          <table className="table-auto">
             <thead>
-              <tr key="title">
-                <th>Name</th>
-                <th>Link</th>
-                <th>{dateTitle}</th>
+              <tr
+                key="title"
+                className="bg-slate-100 text-slate-400 border-b-2 border-slate-300"
+              >
+                <th className="p-2">File Name</th>
+                <th className="p-2">Link</th>
+                <th className="p-2">{dateTitle}</th>
               </tr>
             </thead>
             <tbody>
               {!files.length ? (
-                <tr>
-                  <td className="border px-4 py-2">No files</td>
-                  <td className="border px-4 py-2"></td>
-                  <td className="border px-4 py-2"></td>
-                  {/* <td>No files</td>
-                  <td>No files</td> */}
+                <tr className="bg-slate-50 text-slate-500">
+                  <td className="px-4 py-2 text-center">No files</td>
+                  <td className="px-4 py-2"></td>
+                  <td className="px-4 py-2"></td>
                 </tr>
               ) : (
                 files.map((file) => (
-                  <tr key={file.id}>
-                    <td className="border px-4 py-2">
+                  <tr key={file.id} className="bg-slate-50 text-slate-500">
+                    <td className="px-4 py-2 text-center ">
                       {file.doc_name ? file.doc_name : file.assessment_type}
                     </td>
                     <td
-                      className="border px-4 py-2 cursor-pointer"
+                      className="px-4 py-2 cursor-pointer text-center"
                       onClick={() => handleFileClick(file)}
                     >
                       <svg
@@ -74,7 +79,7 @@ export default function FilesPage({
                         />
                       </svg>
                     </td>
-                    <td className="border px-4 py-2">
+                    <td className="px-4 py-2 text-center">
                       {file.date ? file.date : file.createdAt.slice(0, 10)}
                     </td>
                   </tr>
@@ -83,9 +88,11 @@ export default function FilesPage({
             </tbody>
           </table>
         </div>
-        <div className="col-span-1 flex justify-center my-10 h-56">
-          <div className="bg-slate-300 p-8 rounded-md">
-            <p className="font-bold text-lg mb-2">Add New {title}</p>
+        <div className="bg-slate-200 col-span-1 flex justify-center my-10 h-fit">
+          <div className=" p-8 rounded-md text-slate-500">
+            <p className="font-bold text-lg mb-2">
+              Add a new {title.slice(0, -1).toLowerCase()}
+            </p>
             <form onSubmit={handleSubmit} className="flex flex-col gap-4">
               <div>
                 <label htmlFor="fileInput">Choose file: </label>
@@ -93,21 +100,33 @@ export default function FilesPage({
                   type="file"
                   id="fileInput"
                   onChange={handleFileChange}
-                  className="border p-2 rounded-md"
+                  className="py-2"
                 />
               </div>
+
+              <div>
+                {title === "Assessments" ? (
+                  <InputBox
+                    name="date"
+                    type="date"
+                    placeholder="Assessment date"
+                    handleChange={handleDateChange}
+                    value={date}
+                  />
+                ) : null}
+              </div>
               {error && <p>{error}</p>}
-              <Button text={`New ${title}`} />
+              <Button text={`New ${title.slice(0, -1)}`} />
             </form>
           </div>
-          {selectedFile && (
-            <Modal
-              file={selectedFile}
-              onClose={handleCloseModal}
-              dataType={title.toLowerCase()}
-            />
-          )}
         </div>
+        {selectedFile && (
+          <Modal
+            file={selectedFile}
+            onClose={handleCloseModal}
+            dataType={title.toLowerCase()}
+          />
+        )}
       </div>
     </div>
   );
