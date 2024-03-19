@@ -1,25 +1,30 @@
 import React, { useState, useEffect } from "react";
+
+import { useNavigate } from "react-router-dom";
+
 import "react-datepicker/dist/react-datepicker.css";
 import { useParams, Link } from "react-router-dom";
 
 const ProfilePage = () => {
   const [events, setEvents] = useState([]);
   const [child, setChild] = useState({
-    firstname: "", 
-      lastname: "", 
-      diagnoses: "",
-      school_support: "", 
-      home_support: "", 
-      specialists: "",
-      medication: "", 
-      education: "", 
-      aids: "", 
-      dateofbirth: "",
-      emergency_contact: "",
-      profileImage: ""
 
-});
+    firstname: "",
+    lastname: "",
+    diagnoses: "",
+    school_support: "",
+    home_support: "",
+    specialists: "",
+    medication: "",
+    education: "",
+    aids: "",
+    dateofbirth: "",
+    emergency_contact: "",
+    profileImage: "",
+  });
  
+  const navigate = useNavigate();
+
   const { id } = useParams();
   useEffect(() => {
     getEvents()
@@ -47,6 +52,7 @@ const ProfilePage = () => {
     }
   }
 
+
   async function getEvents() {
     try {
       const response = await fetch(`/api/events/${id}`, {
@@ -69,99 +75,58 @@ const ProfilePage = () => {
   }
     
 
-    const renderChildInfo = () => {
-      if (!child) return null;
-      return (
-        <div className="container mx-auto rounded-md py-8">
- 
-          <div className="flex items-start">
-            <div className="w-2/4">
-              <img
-                src={child.profileImage}
-                alt="Profile"
-                className="bg-white rounded-full w-80 h-80 border-4 border-purple-400 m-6"
-              />
-            </div>
-            <div className="w-3/4 px-4">
-              <div className="mb-4">
-                <h3>First Name</h3>
-                <p className="bg-white w-full border border-gray-400 rounded p-2">
-                  {child.firstname}
-                </p>
-              </div>
-              <div className="mb-4">
-                <h3>Last Name</h3>
-                <p className="bg-white w-full border border-gray-400 rounded p-2">
-                  {child.lastname}
-                </p>
-              </div>
-              <div className="mb-4">
-                <h3>Date of Birth</h3>
-                <p className="bg-white w-full border border-gray-400 rounded p-2">
-                  {child.dateofbirth}
-                </p>
-              </div>
-              <div className="mb-4">
-                <h3>Diagnoses</h3>
-                <p className="bg-white w-full border border-gray-400 rounded p-2">
-                  {child.diagnoses}
-                </p>
-              </div>
-              <div className="mb-4">
-                <h3>Emergency Contact Name</h3>
-                <p className="bg-white w-full border border-gray-400 rounded p-4">
-                  {child.emergency_contact_name}
-                </p>
-              </div>
-              <div className="mb-4">
-                <h3>Emergency Contact Number</h3>
-                <p className="bg-white w-full border border-gray-400 rounded p-2">
-                  {child.emergency_contact}
-                </p>
-              </div>
-            </div>
+  const renderChildInfo = () => {
+    if (!child) return null;
+    return (
+      <div className="container mx-auto rounded-md py-8">
+        <div className="flex items-start">
+          <div className="w-2/4">
+            <img
+              src={child.profileImage}
+              alt="Profile"
+              className="bg-white rounded-full w-80 h-80 border-4 border-purple-400 m-6"
+            />
           </div>
-          {/* Medical Info */}
-          <div className="mb-4">
-              <h3>Education</h3>
-              <p className="bg-white w-full border border-gray-400 rounded p-2">
-                {child.education}
-              </p>
-          </div>
-  
-          <div className="mt-8">
+          <div className="w-3/4 px-4">
             <div className="mb-4">
-              <h3>Medication</h3>
+              <h3>First Name</h3>
               <p className="bg-white w-full border border-gray-400 rounded p-2">
-                {child.medication}
+                {child.firstname}
               </p>
             </div>
             <div className="mb-4">
-              <h3>Medical Aids</h3>
+              <h3>Last Name</h3>
               <p className="bg-white w-full border border-gray-400 rounded p-2">
-                {child.aids}
+                {child.lastname}
               </p>
             </div>
             <div className="mb-4">
-              <h3>Specialists</h3>
+              <h3>Date of Birth</h3>
               <p className="bg-white w-full border border-gray-400 rounded p-2">
-                {child.specialists}
+                {child.dateofbirth}
               </p>
             </div>
             <div className="mb-4">
-              <h3>Home Support</h3>
+              <h3>Diagnoses</h3>
               <p className="bg-white w-full border border-gray-400 rounded p-2">
-                {child.home_support}
+                {child.diagnoses}
               </p>
             </div>
             <div className="mb-4">
-              <h3>School Support</h3>
+              <h3>Emergency Contact Name</h3>
+              <p className="bg-white w-full border border-gray-400 rounded p-4">
+                {child.emergency_contact_name}
+              </p>
+            </div>
+            <div className="mb-4">
+              <h3>Emergency Contact Number</h3>
               <p className="bg-white w-full border border-gray-400 rounded p-2">
-                {child.school_support}
+                {child.emergency_contact}
               </p>
             </div>
           </div>
         </div>
+
       );
     }
   
@@ -237,6 +202,7 @@ const ProfilePage = () => {
 
 <br />
 
+
       {/* <h2 className="text-lg font-semibold mb-4">Upcoming Appointments</h2>
       <div className="mt-4">
         <ul className="w-full bg-gray-400 text-white rounded p-2">
@@ -257,7 +223,8 @@ const ProfilePage = () => {
       </div> */}
       <br></br>
 
-       
+
+
 
         <div className="mt-8"></div>
       </div>

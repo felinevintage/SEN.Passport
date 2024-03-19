@@ -10,7 +10,6 @@ import Assessments from "./pages/Assessments";
 import AuthContext from "./contexts/AuthContext";
 import Child from "./pages/Child";
 import Dashboard from "./pages/Dashboard";
-import Document from "./pages/Document";
 import Documents from "./pages/Documents";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
@@ -86,14 +85,6 @@ function App() {
           element={
             <RequireAuth>
               <AddAssessment />
-            </RequireAuth>
-          }
-        />
-        <Route
-          path="/document"
-          element={
-            <RequireAuth>
-              <Document />
             </RequireAuth>
           }
         />
