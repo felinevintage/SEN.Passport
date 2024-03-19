@@ -8,6 +8,7 @@ export default function Modal({ file, onClose }) {
   const [docId, setDocId] = useState(null);
   const { id } = useParams();
 
+  // https://stackoverflow.com/questions/13432821/is-it-possible-to-add-request-headers-to-an-iframe-src-request
   const xhr = new XMLHttpRequest();
 
   xhr.open("GET", `/api/children/${id}/documents/${file.id}`);
@@ -34,20 +35,16 @@ export default function Modal({ file, onClose }) {
   return (
     <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
       <div className="bg-white p-4 rounded-md">
-        <button onClick={onClose} className="absolute top-0 right-0 p-2">
-          Close
+        <button
+          onClick={onClose}
+          className="absolute top-0 right-0 px-4 py-2 bg-slate-100 rounded-md"
+        >
+          X
         </button>
-        <h2 className="text-lg font-bold mb-4">{file.doc_name}</h2>
-        {/* {loading ? (
-          <p>Loading...</p>
-        ) : ( */}
-        <iframe
-          id="fileDisplay"
-          // src={`localhost:5000/api/children/${id}/documents/${file.id}`}
-          width="100%"
-          height="500"
-          // title="File preview"
-        />
+        <div className="w-screen h-screen">
+          <h2 className="text-lg font-bold m-4">{file.doc_name}</h2>
+          <iframe id="fileDisplay" className="w-screen h-screen" />
+        </div>
       </div>
     </div>
   );
