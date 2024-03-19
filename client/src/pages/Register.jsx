@@ -4,6 +4,12 @@ import axios from "axios";
 import InputBox from "../components/InputBox";
 import Button from "../components/Button";
 //import ConfirmPassword from "../components/ConfirmPassword";
+import avatar1 from "../assets/Avatars/userAvatars/avatar1.jpg";
+import avatar2 from "../assets/Avatars/userAvatars/avatar2.jpg";
+import avatar3 from "../assets/Avatars/userAvatars/avatar3.jpg";
+import avatar4 from "../assets/Avatars/userAvatars/avatar4.jpg";
+import avatar5 from "../assets/Avatars/userAvatars/avatar5.jpg";
+import avatar6 from "../assets/Avatars/userAvatars/avatar6.jpg";
 
 export default function Register() {
   const [newUser, setNewUser] = useState({
@@ -12,12 +18,31 @@ export default function Register() {
     firstname: "",
     lastname: "",
     email: "",
+    profileImage: "",
   });
+  const [avatarOptions, setAvatarOptions] = useState([
+    { path: avatar1, selected: false },
+    { path: avatar2, selected: false },
+    { path: avatar3, selected: false },
+    { path: avatar4, selected: false },
+    { path: avatar5, selected: false },
+    { path: avatar6, selected: false },
+  ]);
+
   const [registrationOk, setRegistrationOk] = useState(false);
 
   function handleChange(e) {
     const { name, value } = e.target;
     setNewUser({ ...newUser, [name]: value });
+  }
+
+  function handleAvatarSelection(index) {
+    const avatar = avatarOptions.map((avatar, i) => ({
+      ...avatar,
+      selected: i === index,
+    }));
+    setAvatarOptions(avatar);
+    setNewUser({ ...newUser, profileImage: avatar[index].path });
   }
 
   async function handleSubmit(e) {
@@ -60,7 +85,7 @@ export default function Register() {
         <div>
           <form
             onSubmit={handleSubmit}
-            className="grid grid-cols-1 bg-slate-300 p-8 rounded-md"
+            className="grid grid-cols-1 justify-items-center bg-slate-300 p-8 rounded-md"
           >
             <InputBox
               name="username"
@@ -95,6 +120,33 @@ export default function Register() {
               handleChange={handleChange}
             />
             {/*<input placeholder="Confirm password" pattern=""></input> */}
+
+            <div className="mb-4">
+              <label htmlFor="profileImage" className="text-slate-600">
+                Select Avatar:{" "}
+              </label>
+              <div className="flex flex-wrap items-center justify-center">
+                {avatarOptions.map((avatar, index) => (
+                  <div
+                    key={index}
+                    className={`relative w-12 h-12 rounded-full cursor-pointer mx-2 my-1 ${
+                      avatar.selected ? "border-2 border-blue-500" : ""
+                    }`}
+                    onClick={() => handleAvatarSelection(index)}
+                  >
+                    <img
+                      src={avatar.path}
+                      alt={`Avatar ${index + 1}`}
+                      className="w-full h-full rounded-full"
+                    />
+                    {avatar.selected && (
+                      <div className="absolute inset-0 bg-blue-500 opacity-50 rounded-full" />
+                    )}
+                  </div>
+                ))}
+              </div>
+            </div>
+
             <Button text={"Register"} />
           </form>
         </div>
