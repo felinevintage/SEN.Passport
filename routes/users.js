@@ -28,6 +28,8 @@ router.get("/all", async function (req, res, next) {
   }
 });
 
+
+
 //GET children associated with user
 router.get("/children", userShouldBeLoggedIn, async function (req, res, next) {
   const { user } = req;
