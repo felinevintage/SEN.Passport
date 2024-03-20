@@ -4,8 +4,6 @@ import { useParams, Link } from "react-router-dom";
 import UserNetwork from "../components/UserNetwork";
 
 export default function ProfilePage() {
-  const [childUsers, setChildUsers] = useState([]);
-  const [users, setUsers] = useState([]);
   const [events, setEvents] = useState([]);
   const [child, setChild] = useState({
     firstname: "",
@@ -26,9 +24,7 @@ export default function ProfilePage() {
 
   useEffect(() => {
     getEvents();
-    getUsers();
     getChildInfo();
-    getChildUsers();
   }, []);
 
   async function getChildInfo() {
@@ -72,38 +68,6 @@ export default function ProfilePage() {
       console.log(error);
     }
   }
-
-  async function getChildUsers() {
-    try {
-      const response = await fetch(`/api/children/${id}/users`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      });
-
-      if (response.ok) {
-        const userData = await response.json();
-        setChildUsers(userData);
-      } else {
-        console.log("Failed to get users");
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  }
-
-  const getUsers = async () => {
-    try {
-      const response = await fetch("/api/users/all");
-      const data = await response.json();
-      // console.log("Users data:", data);
-      setUsers(data);
-    } catch (error) {
-      console.error("Error fetching users:", error);
-    }
-  };
 
   const renderChildInfo = () => {
     if (!child) return null;
@@ -267,16 +231,6 @@ export default function ProfilePage() {
             Events
           </Link>
         </div>
-      </div>
-      <br />
-      <div>
-        <ul>
-          {childUsers.map((childUser) => (
-            <li key={childUser.id}>
-              {childUser.username} {child.profilePicture}
-            </li>
-          ))}
-        </ul>
       </div>
       <UserNetwork />
     </div>

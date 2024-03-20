@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import InputBox from "./InputBox";
 import Button from "./Button";
 import axios from "axios";
@@ -9,10 +9,35 @@ export default function AddUserForm() {
     username: "",
     relationship: "",
   });
-  //const navigate = useNavigate();
   const [errors, setErrors] = useState("");
   const { id } = useParams();
   const [userRelationshipOk, setUserRelationshipOk] = useState(false);
+  const [childUsers, setChildUsers] = useState([]);
+
+  useEffect(() => {
+    getChildUsers();
+  }, []);
+
+  async function getChildUsers() {
+    try {
+      const response = await fetch(`/api/children/${id}/users`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+
+      if (response.ok) {
+        const userData = await response.json();
+        setChildUsers(userData);
+      } else {
+        console.log("Failed to get users");
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
   function handleChange(e) {
     const { name, value } = e.target;
@@ -29,7 +54,7 @@ export default function AddUserForm() {
         },
       });
       //console.log(response);
-      //getUsers();
+      getChildUsers();
       setUserRelationshipOk(true);
       setErrors("");
       setNetwork({
@@ -43,6 +68,16 @@ export default function AddUserForm() {
 
   return (
     <div>
+      <h1 className="text-center text-purple-600 text-3xl">Your Network</h1>
+      <div>
+        <ul>
+          {childUsers.map((childUser) => (
+            <li key={childUser.id}>
+              {childUser.username} {childUser.profilePicture}
+            </li>
+          ))}
+        </ul>
+      </div>
       <div className="flex flex-col items-center justify-center h-screen">
         <div className="bg-white rounded-lg shadow-md mt-2 p-6">
           <h1 className="font-bold text-xl text-purple-600 mb-4">
