@@ -24,7 +24,7 @@ export default function ProfilePage() {
   });
 
   const { id } = useParams();
-  const navigate = useNavigate();
+  
 
   useEffect(() => {
     getEvents();
