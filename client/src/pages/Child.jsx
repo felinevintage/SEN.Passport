@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from "react";
 import "react-datepicker/dist/react-datepicker.css";
 import { useParams, Link, useNavigate } from "react-router-dom";
+import BackButton from "../components/BackButton";
 
 export default function ProfilePage() {
   const navigate = useNavigate();
-  const [childUsers, setChildUsers] = useState([])
+  const [childUsers, setChildUsers] = useState([]);
   const [users, setUsers] = useState([]);
   const [events, setEvents] = useState([]);
-  const [userId, setUserId] = useState([]);
+  const [userIds, setUserIds] = useState([]);
   const [child, setChild] = useState({
     firstname: "",
     lastname: "",
@@ -29,7 +30,7 @@ export default function ProfilePage() {
     getEvents();
     getUsers();
     getChildInfo();
-    getChildUsers()
+    getChildUsers();
   }, []);
 
   async function getChildInfo() {
@@ -144,6 +145,10 @@ export default function ProfilePage() {
     if (!child) return null;
     return (
       <div className="container mx-auto rounded-md py-8">
+        <div>
+          
+        <BackButton onClick={() => navigate(`/dashboard`)} />
+        </div>
         <div className="flex items-start">
           <div className="w-2/4">
             <img
@@ -175,12 +180,6 @@ export default function ProfilePage() {
               <h3>Diagnoses</h3>
               <p className="bg-white w-full border border-gray-400 rounded p-2">
                 {child.diagnoses}
-              </p>
-            </div>
-            <div className="mb-4">
-              <h3>Emergency Contact Name</h3>
-              <p className="bg-white w-full border border-gray-400 rounded p-4">
-                {child.emergency_contact_name}
               </p>
             </div>
             <div className="mb-4">
@@ -303,43 +302,44 @@ export default function ProfilePage() {
           </Link>
         </div>
       </div>
-
-
-<br />
-<div>
-  <ul>
-    {childUsers.map((childUser) => (
-      <li key={childUser.id}>{childUser.username} {child.profilePicture}</li>
-    ))}
-  </ul>
-</div>
-    <div className="flex flex-col items-center justify-center h-screen">
-      <div className="bg-white rounded-lg shadow-md mt-2 p-6">
-        <h1 className="font-bold text-xl mb-4">Add Users to Child</h1>
-        <form onSubmit={handleSubmit}>
-          <div className="space-y-2">
-            {users.map((user) => (
-              <div key={user.id} className="flex items-center">
-                <input
-                  type="checkbox"
-                  id={user.id}
-                  checked={userIds.includes(user.id)}
-                  onChange={() => handleCheckboxChange(user.id)}
-                  className="mr-2"
-                />
-                <label htmlFor={user.id} className="text-base">
-                  {user.username}
-                </label>
-              </div>
-            ))}
-          </div>
-          <button
-            type="submit"
-            className="bg-blue-500 text-white py-2 px-4 mt-4 rounded-md hover:bg-blue-600"
-          >
-            Add Users
-          </button>
-        </form>
+      <br />
+      <div>
+        <ul>
+          {childUsers.map((childUser) => (
+            <li key={childUser.id}>
+              {childUser.username} {child.profilePicture}
+            </li>
+          ))}
+        </ul>
+      </div>
+      <div className="flex flex-col items-center justify-center h-screen">
+        <div className="bg-white rounded-lg shadow-md mt-2 p-6">
+          <h1 className="font-bold text-xl mb-4">Add Users to Child</h1>
+          <form onSubmit={handleSubmit}>
+            <div className="space-y-2">
+              {users.map((user) => (
+                <div key={user.id} className="flex items-center">
+                  <input
+                    type="checkbox"
+                    id={user.id}
+                    checked={userIds.includes(user.id)}
+                    onChange={() => handleCheckboxChange(user.id)}
+                    className="mr-2"
+                  />
+                  <label htmlFor={user.id} className="text-base">
+                    {user.username}
+                  </label>
+                </div>
+              ))}
+            </div>
+            <button
+              type="submit"
+              className="bg-blue-500 text-white py-2 px-4 mt-4 rounded-md hover:bg-blue-600"
+            >
+              Add Users
+            </button>
+          </form>
+        </div>
       </div>
     </div>
   );
