@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "react-datepicker/dist/react-datepicker.css";
 
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import UserNetwork from "../components/UserNetwork";
 import BackButton from "../components/BackButton";
 
@@ -23,6 +23,7 @@ export default function ProfilePage() {
   });
 
   const { id } = useParams();
+  const navigate = useNavigate();
 
   useEffect(() => {
     getEvents();
@@ -76,8 +77,7 @@ export default function ProfilePage() {
     return (
       <div className="container mx-auto rounded-md py-8">
         <div>
-          
-        <BackButton onClick={() => navigate(`/dashboard`)} />
+          <BackButton onClick={() => navigate(`/dashboard`)} />
         </div>
         <div className="flex items-start">
           <div className="w-2/4">
