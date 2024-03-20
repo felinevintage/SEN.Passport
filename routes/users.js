@@ -28,8 +28,6 @@ router.get("/all", async function (req, res, next) {
   }
 });
 
-
-
 //GET children associated with user
 router.get("/children", userShouldBeLoggedIn, async function (req, res, next) {
   const { user } = req;
@@ -124,22 +122,18 @@ router.put(
   [userShouldBeLoggedIn, childMustExist],
   async (req, res) => {
     const { child } = req;
-    const { userId, relationship } = req.body;
+    const { username, relationship } = req.body;
 
     try {
       // Fetch user objects based on the provided user IDs
       const user = await models.Users.findOne({
-        where: { id: userId },
+        where: { username: username },
       });
       if (!user) {
         return res.status(400).send("User not found");
       }
 
-      // Check if all provided user IDs were valid
-      // if (users.length !== userId.length) {
-      //   return res.status(400).send("One or more users not found");
-      // }
-
+      console.log(user);
       const response = await child.addUser(user, {
         through: { relationship: relationship },
       });
