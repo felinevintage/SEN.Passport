@@ -109,7 +109,7 @@ export default function Dashboard() {
   <div className="flex justify-center items-center mb-10">
     <div className="mr-6">
       <img
-        src="placeholder_profile_picture_url"
+        src={user.profileImage}
         alt="User Avatar"
         className="w-32 h-32 rounded-full"
       />
