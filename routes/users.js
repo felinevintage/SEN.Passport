@@ -51,21 +51,7 @@ router.get("/children", userShouldBeLoggedIn, async function (req, res, next) {
   }
 });
 
-//GET users associated with other user
-// router.get('/:id/users',async function(req, res, next) {
-//   const { id } = req.params;
 
-//   try {
-//     const user = await models.Users.findOne({
-//       where: {
-//         id,
-//       },
-//     })
-//     res.send(user.getUsers());
-//   } catch(error) {
-//     res.status(500).send(error);
-//   }
-// })
 
 //Update/PUT user info
 router.put("/");
@@ -132,8 +118,6 @@ router.put(
       if (!user) {
         return res.status(400).send("User not found");
       }
-
-      console.log(user);
       const response = await child.addUser(user, {
         through: { relationship: relationship },
       });

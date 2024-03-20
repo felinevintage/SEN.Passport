@@ -4,6 +4,7 @@ import { useParams, Link, useNavigate } from "react-router-dom";
 
 export default function ProfilePage() {
   const navigate = useNavigate();
+  const [childUsers, setChildUsers] = useState([])
   const [users, setUsers] = useState([]);
   const [events, setEvents] = useState([]);
   const [userId, setUserId] = useState([]);
@@ -28,6 +29,7 @@ export default function ProfilePage() {
     getEvents();
     getUsers();
     getChildInfo();
+    getChildUsers()
   }, []);
 
   async function getChildInfo() {
@@ -69,6 +71,27 @@ export default function ProfilePage() {
       }
     } catch (error) {
       console.log(error);
+    }
+  }
+
+  async function getChildUsers() {
+    try {
+      const response = await fetch(`/api/children/${id}/users`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+
+      if (response.ok) {
+        const userData = await response.json();
+        setChildUsers(userData);
+      } else {
+        console.log("Failed to get users");
+      }
+    } catch (error) {
+      console.error(error);
     }
   }
 
@@ -281,54 +304,42 @@ export default function ProfilePage() {
         </div>
       </div>
 
-      <br />
 
-      {/* <h2 className="text-lg font-semibold mb-4">Upcoming Appointments</h2>
-    <div className="mt-4">
-      <ul className="w-full bg-gray-400 text-white rounded p-2">
-        <li className="flex justify-between font-semibold mb-2">
-          <span className="w-1/3">Appointment Name</span>
-          <span className="w-1/3">Date</span>
-          <span className="w-1/3">Time</span>
-        </li>
-        {appointments.map((appointment, index) => (
-          <li key={index} className="flex justify-between">
-            <span className="w-1/3">📅{appointment.name}</span>
-            <span className="w-1/3">{appointment.date}</span>
-            <span className="w-1/3">{appointment.time}</span>
-          </li>
-        ))}
-      </ul>
-      <br></br>
-    </div> */}
-      <div className="flex flex-col items-center justify-center h-screen">
-        <div className="bg-white rounded-lg shadow-md mt-2 p-6">
-          <h1 className="font-bold text-xl mb-4">Add Users to Child</h1>
-          <form onSubmit={handleSubmit}>
-            <div className="space-y-2">
-              {users.map((user) => (
-                <div key={user.id} className="flex items-center">
-                  <input
-                    type="checkbox"
-                    id={user.id}
-                    checked={userId.includes(user.id)}
-                    onChange={() => handleCheckboxChange(user.id)}
-                    className="mr-2"
-                  />
-                  <label htmlFor={user.id} className="text-base">
-                    {user.username}
-                  </label>
-                </div>
-              ))}
-            </div>
-            <button
-              type="submit"
-              className="bg-blue-500 text-white py-2 px-4 mt-4 rounded-md hover:bg-blue-600"
-            >
-              Add Users
-            </button>
-          </form>
-        </div>
+<br />
+<div>
+  <ul>
+    {childUsers.map((childUser) => (
+      <li key={childUser.id}>{childUser.username} {child.profilePicture}</li>
+    ))}
+  </ul>
+</div>
+    <div className="flex flex-col items-center justify-center h-screen">
+      <div className="bg-white rounded-lg shadow-md mt-2 p-6">
+        <h1 className="font-bold text-xl mb-4">Add Users to Child</h1>
+        <form onSubmit={handleSubmit}>
+          <div className="space-y-2">
+            {users.map((user) => (
+              <div key={user.id} className="flex items-center">
+                <input
+                  type="checkbox"
+                  id={user.id}
+                  checked={userIds.includes(user.id)}
+                  onChange={() => handleCheckboxChange(user.id)}
+                  className="mr-2"
+                />
+                <label htmlFor={user.id} className="text-base">
+                  {user.username}
+                </label>
+              </div>
+            ))}
+          </div>
+          <button
+            type="submit"
+            className="bg-blue-500 text-white py-2 px-4 mt-4 rounded-md hover:bg-blue-600"
+          >
+            Add Users
+          </button>
+        </form>
       </div>
     </div>
   );
