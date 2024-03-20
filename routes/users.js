@@ -28,8 +28,6 @@ router.get("/all", async function (req, res, next) {
   }
 });
 
-
-
 //GET children associated with user
 router.get("/children", userShouldBeLoggedIn, async function (req, res, next) {
   const { user } = req;
@@ -52,22 +50,6 @@ router.get("/children", userShouldBeLoggedIn, async function (req, res, next) {
     res.status(500).send("Internal server error");
   }
 });
-
-//GET users associated with other user
-// router.get('/:id/users',async function(req, res, next) {
-//   const { id } = req.params;
-
-//   try {
-//     const user = await models.Users.findOne({
-//       where: {
-//         id,
-//       },
-//     })
-//     res.send(user.getUsers());
-//   } catch(error) {
-//     res.status(500).send(error);
-//   }
-// })
 
 //Update/PUT user info
 router.put("/");
@@ -124,22 +106,16 @@ router.put(
   [userShouldBeLoggedIn, childMustExist],
   async (req, res) => {
     const { child } = req;
-    const { userId, relationship } = req.body;
+    const { username, relationship } = req.body;
 
     try {
       // Fetch user objects based on the provided user IDs
       const user = await models.Users.findOne({
-        where: { id: userId },
+        where: { username: username },
       });
       if (!user) {
-        return res.status(400).send("User not found");
+        return res.status(404).send("User not found");
       }
-
-      // Check if all provided user IDs were valid
-      // if (users.length !== userId.length) {
-      //   return res.status(400).send("One or more users not found");
-      // }
-
       const response = await child.addUser(user, {
         through: { relationship: relationship },
       });
@@ -147,7 +123,7 @@ router.put(
       // console.log(response);
       return res.send(response); // Success
     } catch (error) {
-      console.error(error);
+      console.error(error.request.response);
       return res.status(500).send(error);
     }
   }

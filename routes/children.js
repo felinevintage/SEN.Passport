@@ -65,6 +65,30 @@ router.get(
   }
 );
 
+//GET users associated with child
+router.get('/:childId/users', async (req, res) => {
+  const childId = req.params.childId;
+
+  try {
+      // Find the child by ID along with its associated users
+      const child = await models.Children.findByPk(childId, {
+          include: [{ model: models.Users }]
+      });
+
+      if (!child) {
+          return res.status(404).json({ error: 'Child not found' });
+      }
+
+      // Access the associated users
+      const users = child.Users;
+
+      return res.json(users);
+  } catch (error) {
+    console.log(error)
+      return res.status(500).json({ error: `Error fetching users: ${error.message}` });
+  }
+});
+
 /* GET all assessments of one child */
 router.get(
   "/:id/assessments",
@@ -169,6 +193,8 @@ router.delete(
     }
   }
 );
+
+
 
 /* GET all documents of one child */
 router.get(

@@ -24,19 +24,26 @@ const navListMenuItems = [
   {
     title: "Sign Out",
     description: "Reach out to us for assistance or inquiries",
-  }
+  },
 ];
 
 function NavListMenu() {
   const renderItems = navListMenuItems.map(({ title, description }, key) => (
     <ListItem key={key} className="flex items-center gap-3 rounded-lg">
       <div className="flex items-center justify-center rounded-lg bg-blue-gray-50 p-2">
-        <Typography variant="h6" color="blue-gray" className="flex items-center text-sm font-bold">
+        <Typography
+          variant="h6"
+          color="blue-gray"
+          className="flex items-center text-sm font-bold"
+        >
           {title}
         </Typography>
       </div>
       <div>
-        <Typography variant="paragraph" className="text-xs font-medium text-blue-gray-500">
+        <Typography
+          variant="paragraph"
+          className="text-xs font-medium text-blue-gray-500"
+        >
           {description}
         </Typography>
       </div>
@@ -54,6 +61,7 @@ function NavList() {
   const {isLoggedIn, signOut} = useAuth()
   return (
     <List className="mt-4 mb-6 p-0 lg:mt-0 lg:mb-0 lg:flex-row lg:p-1">
+
       <NavListMenu />
       <ListItem className="text-black flex items-center gap-2 py-2 pr-4 cursor-pointer relative">
         <div className="flex"> {/* Ensure that flex class is applied here */}
@@ -93,6 +101,7 @@ export default function NavBarMenu() {
   }, []);
 
   return (
+
     <Navbar className="mx-auto px-4 py-2 w-full flex justify-between items-center">
       <NavList />
       {!isLoggedIn && (
