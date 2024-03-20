@@ -102,7 +102,7 @@ export default function Dashboard() {
   };
 
   return (
-<div className="flex flex-col h-screen justify-center items-center">
+<div className="flex flex-col h-screen min-h-screen justify-center items-center">
   <div className="bg-violet-300 text-gar-700 font-bold text-2xl px-6 py-3 rounded mb-6">
     {user.username}
   </div>
