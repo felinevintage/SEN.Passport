@@ -1,4 +1,7 @@
 import React from "react";
+import { Link } from 'react-router-dom';
+import useAuth from "../hooks/useAuth"
+
 import {
   Navbar,
   Typography,
@@ -9,7 +12,6 @@ import {
 } from "@material-tailwind/react";
 
 import {
-  ChevronDownIcon,
   Bars3Icon,
   XMarkIcon,
 } from "@heroicons/react/24/outline";
@@ -44,44 +46,43 @@ function NavListMenu() {
   return <React.Fragment>{renderItems}</React.Fragment>;
 }
 
+function logout() {
+  localStorage.removeItem("token");
+  signOut();
+}
 function NavList() {
+  const {isLoggedIn, signOut} = useAuth()
   return (
     <List className="mt-4 mb-6 p-0 lg:mt-0 lg:mb-0 lg:flex-row lg:p-1">
-      
-      <ListItem className="text-black flex items-center gap-2 py-2 pr-4">
-      <Link>
-            to={`/`}
-            className="font-bold text-black hover:underline block text-lg"
-        <Typography as="span" variant="small" color="blue-gray" className="font-medium">
-          Home
-        </Typography>
-        </Link>
-      </ListItem>
       <NavListMenu />
-      <ListItem>
-        <Typography as="span" variant="small" color="blue-gray" className="font-medium">
-          TEST
-        </Typography>
-      </ListItem>
-      <ListItem className="text-black flex items-center gap-2 py-2 pr-4 cursor-pointer">
-        Dashboard
-        <ChevronDownIcon className="h-4 w-4" />
-      </ListItem>
-      <div className="origin-top-left absolute left-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
-        <div className="py-1">
-          <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-            Settings
-          </a>
-          <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-            Log Out
-          </a>
+      <ListItem className="text-black flex items-center gap-2 py-2 pr-4 cursor-pointer relative">
+        <div className="flex"> {/* Ensure that flex class is applied here */}
+          <div className="py-1">
+            <div className="flex items-center gap-2">
+              <Link to="/" className="block px-4 py-2 text-m text-gray-700 hover:bg-purple-100">
+                Home
+              </Link>
+              {isLoggedIn ? (
+                <>
+                  <Link to="/dashboard" className="block px-4 py-2 text-m text-gray-700 hover:bg-purple-100">
+                    Dashboard
+                  </Link>   
+                  <Button onClick={signOut} className="block px-4 py-2 text-m text-gray-700 hover:bg-purple-100">
+                    Log Out
+                  </Button>
+                </>
+              ) : null}
+            </div>
+          </div>
         </div>
-      </div>
+      </ListItem>
     </List>
   );
 }
 
+
 export default function NavBarMenu() {
+  const { isLoggedIn } = useAuth();
   const [openNav, setOpenNav] = React.useState(false);
 
   React.useEffect(() => {
@@ -92,24 +93,13 @@ export default function NavBarMenu() {
   }, []);
 
   return (
-    <Navbar className="mx-auto px-4 py-2 w-full">
-
-      <Typography
-        as="a"
-        href="#"
-        variant="h6"
-        className="mr-4 cursor-pointer py-1.5 lg:ml-2"
-      >
-        TEST
-      </Typography>
-      <div className="flex flex-grow justify-center">
-        <NavList />
-      </div>
-      <div className="hidden lg:flex gap-2">
-        <Button className="bg-gray-700" variant="gradient" size="sm">
+    <Navbar className="mx-auto px-4 py-2 w-full flex justify-between items-center">
+      <NavList />
+      {!isLoggedIn && (
+        <Button className="bg-purple-500 py-2 px-4" variant="gradient" size="lg">
           Log In
         </Button>
-      </div>
+      )}
       <IconButton
         variant="text"
         color="blue-gray"
