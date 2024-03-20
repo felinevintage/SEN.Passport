@@ -10,9 +10,10 @@ export default function AddUserForm() {
   });
   const navigate = useNavigate();
 
-  //   function handleChange() {
-  //     setNet
-  //   }
+  function handleChange(e) {
+    const { name, value } = e.target;
+    setNetwork({ ...network, [name]: value });
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -48,13 +49,13 @@ export default function AddUserForm() {
             name="username"
             placeholder="Username"
             value={network.username}
-            handleChange={() =>
-              setNetwork({ ...network, username: e.target.value })
-            }
+            handleChange={handleChange}
           />
           <InputBox
             name="relationship"
             placeholder="Relationship with the child"
+            value={network.relationship}
+            handleChange={handleChange}
           />
           {/* <div className="space-y-2">
             {users.map((user) => (
