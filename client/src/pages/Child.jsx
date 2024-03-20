@@ -1,16 +1,14 @@
 import React, { useState, useEffect } from "react";
 import "react-datepicker/dist/react-datepicker.css";
 import { useParams, Link, useNavigate } from "react-router-dom";
-import Button from "../components/Button";
-import BackButton from "../components/BackButton";
 
-const ProfilePage = () => {
+export default function ProfilePage() {
   const navigate = useNavigate();
   const [users, setUsers] = useState([]);
-  const [relationship, setRelationship] = useState("");
   const [events, setEvents] = useState([]);
-  const [userIds, setUserIds] = useState("");
+  const [userIds, setUserIds] = useState([]);
   const [child, setChild] = useState({
+
     firstname: "",
     lastname: "",
     diagnoses: "",
@@ -25,10 +23,12 @@ const ProfilePage = () => {
     profileImage: "",
   });
 
-  const { id } = useParams();
 
+
+  const { id } = useParams();
+ 
   useEffect(() => {
-    getEvents();
+    getEvents()
     getUsers();
     getChildInfo();
   }, []);
@@ -44,7 +44,7 @@ const ProfilePage = () => {
       });
       if (response.ok) {
         const childData = await response.json();
-        // console.log(childData);
+        console.log(childData);
         setChild(childData);
       } else {
         console.log("Failed to get child");
@@ -53,6 +53,7 @@ const ProfilePage = () => {
       console.error(err);
     }
   }
+
 
   async function getEvents() {
     try {
@@ -77,27 +78,26 @@ const ProfilePage = () => {
 
   const getUsers = async () => {
     try {
-      const response = await fetch("/api/users/all");
-      const data = await response.json();
-      // console.log("Users data:", data);
-      setUsers(data);
+      const response = await fetch("/api/users/all",);
+        const data = await response.json();
+        console.log("Users data:", data);
+        setUsers(data);
     } catch (error) {
       console.error("Error fetching users:", error);
     }
   };
 
   const handleCheckboxChange = (userId) => {
-    setUserIds(userId);
-    // setUserIds((prevUserIds) =>
-    //   prevUserIds.includes(userId)
-    //     ? prevUserIds.filter((id) => id !== userId)
-    //     : [...prevUserIds, userId]
-    // );
+    setUserIds((prevUserIds) =>
+      prevUserIds.includes(userId)
+        ? prevUserIds.filter((id) => id !== userId)
+        : [...prevUserIds, userId]
+    );
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
     try {
       const response = await fetch(`/api/users/${id}/addUsers`, {
         method: "PUT",
@@ -107,10 +107,9 @@ const ProfilePage = () => {
         },
         body: JSON.stringify({
           userIds,
-          relationship,
         }),
       });
-
+  
       if (response.ok) {
         console.log("Users added successfully");
         navigate(`/children/${id}`);
@@ -122,14 +121,12 @@ const ProfilePage = () => {
     }
   };
 
-  const renderChildInfo = () => {
     
+
+  const renderChildInfo = () => {
     if (!child) return null;
     return (
-
-      
-      <div className="flex flex-col h-full">
-        <BackButton onClick={() => navigate(`/dashboard`)} />
+      <div className="container mx-auto rounded-md py-8">
 
         <div className="flex items-start">
           <div className="w-2/4">
@@ -180,10 +177,10 @@ const ProfilePage = () => {
         </div>
         {/* Medical Info */}
         <div className="mb-4">
-          <h3>Education</h3>
-          <p className="bg-white w-full border border-gray-400 rounded p-2">
-            {child.education}
-          </p>
+            <h3>Education</h3>
+            <p className="bg-white w-full border border-gray-400 rounded p-2">
+              {child.education}
+            </p>
         </div>
 
         <div className="mt-8">
@@ -220,80 +217,81 @@ const ProfilePage = () => {
         </div>
       </div>
     );
-  };
+  }
 
   return (
     <div className="container mx-auto py-8">
       {renderChildInfo()}
+      
+  {/* Links */}
+<div className="mt-8 flex justify-between">
 
-      {/* Links */}
-      <div className="mt-8 flex justify-between">
-        <Link
-          to={`/children/${id}/assessments`}
-          className="text-pink-500 text-lg font-bold hover:underline"
+      <Link
+        to={`/children/${id}/assessments`}
+        className="text-pink-500 text-lg font-bold hover:underline"
+      >
+        {" "}
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 20 20"
+          fill="currentColor"
+          className="w-6 h-6 mr-2"
         >
-          {" "}
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 20 20"
-            fill="currentColor"
-            className="w-6 h-6 mr-2"
-          >
-            <path
-              fillRule="evenodd"
-              d="M2 4.95C2 3.697 3.07 3 4.25 3H9v3h6V3h4.75C17.433 3 18 3.567 18 4.25v12.5c0 .683-.567 1.25-1.25 1.25H4.25C3.567 18 3 17.433 3 16.75V4.95zM11 5H9V4h2v1zM4 5h1v1H4V5zm11 11H5V6h10v10zm-4-5h3v1h-3V11z"
-              clipRule="evenodd"
-            />
-          </svg>{" "}
-          Assessments
-        </Link>
-        <div>
-          <Link
-            to={`/children/${id}/documents`}
-            className="text-pink-500 text-lg font-bold hover:underline"
-          >
-            {" "}
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 20 20"
-              fill="currentColor"
-              className="w-6 h-6 mr-2"
-            >
-              <path
-                fillRule="evenodd"
-                d="M2 4.95C2 3.697 3.07 3 4.25 3H9v3h6V3h4.75C17.433 3 18 3.567 18 4.25v12.5c0 .683-.567 1.25-1.25 1.25H4.25C3.567 18 3 17.433 3 16.75V4.95zM11 5H9V4h2v1zM4 5h1v1H4V5zm11 11H5V6h10v10zm-4-5h3v1h-3V11z"
-                clipRule="evenodd"
-              />
-            </svg>{" "}
-            Documents
-          </Link>
-        </div>
-        <div>
-          <Link
-            to={`/children/${id}/allevents`}
-            className="text-pink-500 text-lg font-bold hover:underline"
-          >
-            {" "}
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 20 20"
-              fill="currentColor"
-              className="w-6 h-6 mr-2"
-            >
-              <path
-                fillRule="evenodd"
-                d="M2 4.95C2 3.697 3.07 3 4.25 3H9v3h6V3h4.75C17.433 3 18 3.567 18 4.25v12.5c0 .683-.567 1.25-1.25 1.25H4.25C3.567 18 3 17.433 3 16.75V4.95zM11 5H9V4h2v1zM4 5h1v1H4V5zm11 11H5V6h10v10zm-4-5h3v1h-3V11z"
-                clipRule="evenodd"
-              />
-            </svg>{" "}
-            Events
-          </Link>
-        </div>
+          <path
+            fillRule="evenodd"
+            d="M2 4.95C2 3.697 3.07 3 4.25 3H9v3h6V3h4.75C17.433 3 18 3.567 18 4.25v12.5c0 .683-.567 1.25-1.25 1.25H4.25C3.567 18 3 17.433 3 16.75V4.95zM11 5H9V4h2v1zM4 5h1v1H4V5zm11 11H5V6h10v10zm-4-5h3v1h-3V11z"
+            clipRule="evenodd"
+          />
+        </svg>{" "}
+        Assessments
+      </Link>
+      <div>
+      <Link
+        to={`/children/${id}/Documents`}
+        className="text-pink-500 text-lg font-bold hover:underline"
+      >
+        {" "}
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 20 20"
+          fill="currentColor"
+          className="w-6 h-6 mr-2"
+        >
+          <path
+            fillRule="evenodd"
+            d="M2 4.95C2 3.697 3.07 3 4.25 3H9v3h6V3h4.75C17.433 3 18 3.567 18 4.25v12.5c0 .683-.567 1.25-1.25 1.25H4.25C3.567 18 3 17.433 3 16.75V4.95zM11 5H9V4h2v1zM4 5h1v1H4V5zm11 11H5V6h10v10zm-4-5h3v1h-3V11z"
+            clipRule="evenodd"
+          />
+        </svg>{" "}
+        Documents
+      </Link>
+      </div>
+      <div>
+      <Link
+        to={`/children/${id}/allevents`}
+        className="text-pink-500 text-lg font-bold hover:underline"
+      >
+        {" "}
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 20 20"
+          fill="currentColor"
+          className="w-6 h-6 mr-2"
+        >
+          <path
+            fillRule="evenodd"
+            d="M2 4.95C2 3.697 3.07 3 4.25 3H9v3h6V3h4.75C17.433 3 18 3.567 18 4.25v12.5c0 .683-.567 1.25-1.25 1.25H4.25C3.567 18 3 17.433 3 16.75V4.95zM11 5H9V4h2v1zM4 5h1v1H4V5zm11 11H5V6h10v10zm-4-5h3v1h-3V11z"
+            clipRule="evenodd"
+          />
+        </svg>{" "}
+        Events
+      </Link>
+      </div>
       </div>
 
-      <br />
+<br />
 
-      {/* <h2 className="text-lg font-semibold mb-4">Upcoming Appointments</h2>
+    {/* <h2 className="text-lg font-semibold mb-4">Upcoming Appointments</h2>
     <div className="mt-4">
       <ul className="w-full bg-gray-400 text-white rounded p-2">
         <li className="flex justify-between font-semibold mb-2">
@@ -311,42 +309,37 @@ const ProfilePage = () => {
       </ul>
       <br></br>
     </div> */}
-      <br></br>
-
-
-    <div className="flex justify-center items-center">
-  <div className="w-full max-w-md">
-    <h1 className="text-2xl font-semibold mb-4 text-center">Add Users to Child</h1>
-    <form onSubmit={handleSubmit} className="space-y-4">
-      <div>
-        {users.map((user) => (
-          <div key={user.id} className="flex items-center">
-            <input
-              type="checkbox"
-              id={user.id}
-              checked={userIds.includes(user.id)}
-              onChange={() => handleCheckboxChange(user.id)}
-              className="mr-2"
-            />
-            <label htmlFor={user.id} className="font-medium">
-              {user.username}
-            </label>
+    <div className="flex flex-col items-center justify-center h-screen">
+      <div className="bg-white rounded-lg shadow-md mt-2 p-6">
+        <h1 className="font-bold text-xl mb-4">Add Users to Child</h1>
+        <form onSubmit={handleSubmit}>
+          <div className="space-y-2">
+            {users.map((user) => (
+              <div key={user.id} className="flex items-center">
+                <input
+                  type="checkbox"
+                  id={user.id}
+                  checked={userIds.includes(user.id)}
+                  onChange={() => handleCheckboxChange(user.id)}
+                  className="mr-2"
+                />
+                <label htmlFor={user.id} className="text-base">
+                  {user.username}
+                </label>
+              </div>
+            ))}
           </div>
-        ))}
+          <button
+            type="submit"
+            className="bg-blue-500 text-white py-2 px-4 mt-4 rounded-md hover:bg-blue-600"
+          >
+            Add Users
+          </button>
+        </form>
       </div>
-      <Button
-      text={"Add Users"}
-      type="submit"
-      
-    >
-    </Button>
-    </form>
-  </div>
-</div>
-
-
     </div>
-  );
-};
-
-export default ProfilePage;
+      
+    </div>
+  
+);
+}
