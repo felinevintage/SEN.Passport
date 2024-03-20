@@ -122,29 +122,31 @@ router.put(
   [userShouldBeLoggedIn, childMustExist],
   async (req, res) => {
     const { child } = req;
-    const { userIds } = req.body;
+    const { userId, relationship } = req.body;
 
     try {
       // Fetch user objects based on the provided user IDs
-      const users = await models.Users.findAll({
-        where: { id: userIds },
+      const user = await models.Users.findOne({
+        where: { id: userId },
       });
-
-      // Check if all provided user IDs were valid
-      if (users.length !== userIds.length) {
-        return res.status(400).send("One or more users not found");
+      if (!user) {
+        return res.status(400).send("User not found");
       }
 
-      console.log("Child ID:", child.id);
-      console.log("User IDs:", userIds);
+      // Check if all provided user IDs were valid
+      // if (users.length !== userId.length) {
+      //   return res.status(400).send("One or more users not found");
+      // }
 
-      
-      const response = await child.addUsers(userIds)
-      res.send(response); // Success
+      const response = await child.addUser(user, {
+        through: { relationship: relationship },
+      });
 
+      // console.log(response);
+      return res.send(response); // Success
     } catch (error) {
       console.error(error);
-      res.status(500).send(error);
+      return res.status(500).send(error);
     }
   }
 );

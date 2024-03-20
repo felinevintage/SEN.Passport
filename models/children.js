@@ -39,12 +39,12 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         defaultValue: DataTypes.NOW,
       },
-      profileImage: DataTypes.STRING
+      profileImage: DataTypes.STRING,
     },
     {
       sequelize,
       modelName: "Children",
-    },
+    }
   );
   return Children;
 };
