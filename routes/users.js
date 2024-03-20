@@ -51,8 +51,6 @@ router.get("/children", userShouldBeLoggedIn, async function (req, res, next) {
   }
 });
 
-
-
 //Update/PUT user info
 router.put("/");
 
@@ -116,7 +114,7 @@ router.put(
         where: { username: username },
       });
       if (!user) {
-        return res.status(400).send("User not found");
+        return res.status(404).send("User not found");
       }
       const response = await child.addUser(user, {
         through: { relationship: relationship },
@@ -125,7 +123,7 @@ router.put(
       // console.log(response);
       return res.send(response); // Success
     } catch (error) {
-      console.error(error);
+      console.error(error.request.response);
       return res.status(500).send(error);
     }
   }
