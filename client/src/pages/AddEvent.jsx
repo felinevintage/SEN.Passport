@@ -33,7 +33,7 @@ export default function AddEvent () {
             });
             if (response.ok) {
                 setEvent({...initial});
-                navigate("/events");
+                navigate(`/children/${id}/allevents`);
             } else {
                 console.log("Event not created");
             }

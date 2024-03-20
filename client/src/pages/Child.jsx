@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
 import "react-datepicker/dist/react-datepicker.css";
+
 import { useParams, Link } from "react-router-dom";
 import UserNetwork from "../components/UserNetwork";
+import BackButton from "../components/BackButton";
 
 export default function ProfilePage() {
   const [events, setEvents] = useState([]);
@@ -73,6 +75,10 @@ export default function ProfilePage() {
     if (!child) return null;
     return (
       <div className="container mx-auto rounded-md py-8">
+        <div>
+          
+        <BackButton onClick={() => navigate(`/dashboard`)} />
+        </div>
         <div className="flex items-start">
           <div className="w-2/4">
             <img
@@ -104,12 +110,6 @@ export default function ProfilePage() {
               <h3>Diagnoses</h3>
               <p className="bg-white w-full border border-gray-400 rounded p-2">
                 {child.diagnoses}
-              </p>
-            </div>
-            <div className="mb-4">
-              <h3>Emergency Contact Name</h3>
-              <p className="bg-white w-full border border-gray-400 rounded p-4">
-                {child.emergency_contact_name}
               </p>
             </div>
             <div className="mb-4">
