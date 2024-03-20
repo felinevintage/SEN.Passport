@@ -1,21 +1,21 @@
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import InputBox from "./InputBox";
+import Button from "./Button";
 
-export default function AddUserForm({ users }) {
-  const [username, setUsername] = useState([]);
+export default function AddUserForm() {
+  const [network, setNetwork] = useState({
+    username: "",
+    relationship: "",
+  });
   const navigate = useNavigate();
 
-  const handleCheckboxChange = (userId) => {
-    setUserId((prevUserIds) =>
-      prevUserIds.includes(userId)
-        ? prevUserIds.filter((id) => id !== userId)
-        : [...prevUserIds, userId]
-    );
-  };
+  //   function handleChange() {
+  //     setNet
+  //   }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     try {
       const response = await fetch(`/api/users/${id}/addUsers`, {
         method: "PUT",
@@ -24,7 +24,7 @@ export default function AddUserForm({ users }) {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
         body: JSON.stringify({
-          userId,
+          username,
         }),
       });
 
@@ -42,9 +42,21 @@ export default function AddUserForm({ users }) {
   return (
     <div className="flex flex-col items-center justify-center h-screen">
       <div className="bg-white rounded-lg shadow-md mt-2 p-6">
-        <h1 className="font-bold text-xl mb-4">Add Users to Child</h1>
+        <h1 className="font-bold text-xl mb-4">Increase your Network!</h1>
         <form onSubmit={handleSubmit}>
-          <div className="space-y-2">
+          <InputBox
+            name="username"
+            placeholder="Username"
+            value={network.username}
+            handleChange={() =>
+              setNetwork({ ...network, username: e.target.value })
+            }
+          />
+          <InputBox
+            name="relationship"
+            placeholder="Relationship with the child"
+          />
+          {/* <div className="space-y-2">
             {users.map((user) => (
               <div key={user.id} className="flex items-center">
                 <input
@@ -59,13 +71,8 @@ export default function AddUserForm({ users }) {
                 </label>
               </div>
             ))}
-          </div>
-          <button
-            type="submit"
-            className="bg-blue-500 text-white py-2 px-4 mt-4 rounded-md hover:bg-blue-600"
-          >
-            Add Users
-          </button>
+          </div> */}
+          <Button text="Add User" />
         </form>
       </div>
     </div>

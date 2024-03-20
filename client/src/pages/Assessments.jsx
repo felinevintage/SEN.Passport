@@ -56,9 +56,10 @@ export default function Assessments() {
           },
         }
       );
-      console.log(response);
+      //console.log(response);
       getAssessments();
       setDate(null);
+      setSelectedAssessment(null);
     } catch (error) {
       setError(error);
       console.error("Error updating assessment:", error);

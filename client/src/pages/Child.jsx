@@ -278,7 +278,7 @@ export default function ProfilePage() {
           ))}
         </ul>
       </div>
-      <AddUserForm users={users} />
+      <AddUserForm />
     </div>
   );
 }
