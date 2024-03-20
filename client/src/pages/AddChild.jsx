@@ -247,7 +247,7 @@ export default function AddChild() {
           ></Button>
         </form>
       </div>
-
+    </div>
     </div>
   );
 }
