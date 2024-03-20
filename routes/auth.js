@@ -28,7 +28,11 @@ router.post("/register", async (req, res) => {
     });
     res.send(newUser);
   } catch (error) {
-    res.status(400).send({ message: error.message });
+    if (error.name === "SequelizeUniqueConstraintError") {
+      res.status(400).send({ message: "Username is already taken" });
+    } else {
+      res.status(400).send({ message: error.message });
+    }
   }
 });
 
