@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
 import "react-datepicker/dist/react-datepicker.css";
 
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import UserNetwork from "../components/UserNetwork";
 import BackButton from "../components/BackButton";
 
 export default function ProfilePage() {
+  const navigate = useNavigate();
   const [events, setEvents] = useState([]);
   const [child, setChild] = useState({
     firstname: "",
@@ -71,9 +72,10 @@ export default function ProfilePage() {
     }
   }
 
-  const renderChildInfo = () => {
-    if (!child) return null;
+  // const renderChildInfo = () => {
+  //   if (!child) return null;
     return (
+      <div>
       <div className="container mx-auto rounded-md py-8">
         <div>
           
@@ -161,12 +163,12 @@ export default function ProfilePage() {
           </div>
         </div>
       </div>
-    );
-  };
+  {/* //   );
+  // };
 
-  return (
-    <div className="container mx-auto py-8">
-      {renderChildInfo()}
+  // return (
+  //   <div className="container mx-auto py-8">
+  //     {renderChildInfo()} */}
 
       {/* Links */}
       <div className="mt-8 flex justify-between">
@@ -234,5 +236,6 @@ export default function ProfilePage() {
       </div>
       <UserNetwork />
     </div>
+    
   );
 }
