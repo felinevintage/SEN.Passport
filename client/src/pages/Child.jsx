@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "react-datepicker/dist/react-datepicker.css";
 import { useParams, Link } from "react-router-dom";
-import AddUserForm from "../components/AddUserForm";
+import UserNetwork from "../components/UserNetwork";
 
 export default function ProfilePage() {
   const [childUsers, setChildUsers] = useState([]);
@@ -278,7 +278,7 @@ export default function ProfilePage() {
           ))}
         </ul>
       </div>
-      <AddUserForm />
+      <UserNetwork />
     </div>
   );
 }
