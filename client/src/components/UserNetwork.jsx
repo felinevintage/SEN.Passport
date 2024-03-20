@@ -78,11 +78,13 @@ export default function AddUserForm() {
           <div key={i} className="bg-purple-50 border-0 rounded-lg">
             <div className="text-center">{childUser.username}</div>
             {/* <div>{childUser.relationship}</div> */}
-            <img
-              src={childUser.profileImage}
-              alt={`Avatar`}
-              className="w-20 h-20 rounded-full mb-3"
-            />
+            <div className="flex justify-center">
+              <img
+                src={childUser.profileImage}
+                alt={`Avatar`}
+                className="w-20 h-20 rounded-full mb-3"
+              />
+            </div>
           </div>
         ))}
       </div>

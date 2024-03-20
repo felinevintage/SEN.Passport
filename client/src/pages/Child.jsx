@@ -24,6 +24,7 @@ export default function ProfilePage() {
   });
 
   const { id } = useParams();
+  const navigate = useNavigate();
 
   useEffect(() => {
     getEvents();
@@ -78,8 +79,7 @@ export default function ProfilePage() {
       <div>
       <div className="container mx-auto rounded-md py-8">
         <div>
-          
-        <BackButton onClick={() => navigate(`/dashboard`)} />
+          <BackButton onClick={() => navigate(`/dashboard`)} />
         </div>
         <div className="flex items-start">
           <div className="w-2/4">
