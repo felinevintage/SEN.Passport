@@ -99,42 +99,9 @@ export default function Dashboard() {
   };
 
   return (
-<div className="flex flex-col h-screen min-h-screen justify-center items-center">
-  <div className="bg-violet-300 text-gar-700 font-bold text-2xl px-6 py-3 rounded mb-6">
-    {user.username}
-  </div>
-  <div className="flex justify-center items-center mb-10">
-    <div className="mr-6">
-      <img
-        src={user.profileImage}
-        alt="User Avatar"
-        className="w-32 h-32 rounded-full"
-      />
-    </div>
-    <div className="bg-cyan-400 p-6 rounded-lg">
-      <h1 className="text-xl font-bold">
-        {user.firstname} {user.lastname}
-      </h1>
-      <div className="text-gray-700 text-lg">{user.email}</div>
-    </div>
-  </div>
-  <div className="text-center mb-10">
-  <div className="flex items-center justify-center">
-    <div className="flex items-center grid grid-cols-3 gap-4 mt-4">
-      {children.map((child) => (
-        <div key={child.id} className="bg-violet-400/75 p-6 rounded-lg">
-          <Link
-            to={`/children/${child.id}`}
-            className="font-bold text-black hover:underline block text-lg"
-          >
-            {child.firstname} {child.lastname}
-          </Link>
-          <div className="flex justify-center">
-        <img
-          src={child.profileImage}
-          alt={`Avatar`}
-          className="w-20 h-20 rounded-full mb-3"
-        />
+    <div className="flex flex-col h-full min-h-screen justify-center items-center">
+      <div className="bg-violet-300 text-gar-700 font-bold text-2xl px-6 py-3 rounded my-6">
+        {user.username}
       </div>
       <div className="flex justify-center items-center mb-10">
         <div className="mr-6">
@@ -193,8 +160,10 @@ export default function Dashboard() {
           </div>
         </div>
       </div>
+      <div className="mb-4">
+        <Button text={"Add a Child"} onClick={handleAddChildClick}></Button>
+      </div>
 
-      <Button text={"Add a Child"} onClick={handleAddChildClick}></Button>
       {showConfirmation && (
         <div className="fixed top-0 left-0 w-full h-full bg-gray-600 bg-opacity-50 flex justify-center items-center">
           <div className="bg-white p-6 rounded-lg">
