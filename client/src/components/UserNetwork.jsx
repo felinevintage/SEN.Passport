@@ -68,17 +68,25 @@ export default function AddUserForm() {
 
   return (
     <div>
-      <h1 className="text-center text-purple-600 text-3xl">Your Network</h1>
-      <div>
-        <ul>
-          {childUsers.map((childUser) => (
-            <li key={childUser.id}>
-              {childUser.username} {childUser.profilePicture}
-            </li>
-          ))}
-        </ul>
+      <div className="mt-10 border-t border-purple-700">
+        <h1 className="text-center text-purple-600 my-4 text-3xl">
+          Your Network
+        </h1>
       </div>
-      <div className="flex flex-col items-center justify-center h-screen">
+      <div className="grid grid-cols-6 gap-4 mt-4">
+        {childUsers.map((childUser, i) => (
+          <div key={i} className="bg-purple-50 border-0 rounded-lg">
+            <div className="text-center">{childUser.username}</div>
+            {/* <div>{childUser.relationship}</div> */}
+            <img
+              src={childUser.profileImage}
+              alt={`Avatar`}
+              className="w-20 h-20 rounded-full mb-3"
+            />
+          </div>
+        ))}
+      </div>
+      <div className="flex flex-col items-center justify-center">
         <div className="bg-white rounded-lg shadow-md mt-2 p-6">
           <h1 className="font-bold text-xl text-purple-600 mb-4">
             Increase your Network!
