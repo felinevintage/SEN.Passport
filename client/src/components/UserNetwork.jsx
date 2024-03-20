@@ -68,7 +68,7 @@ export default function AddUserForm() {
 
   return (
     <div>
-      <div className="mt-10 border-t border-purple-700">
+      <div className="mt-10 mb-10 border-t border-purple-700">
         <h1 className="text-center text-purple-600 my-4 text-3xl">
           Your Network
         </h1>
