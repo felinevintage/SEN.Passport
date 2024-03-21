@@ -1,6 +1,6 @@
 import { Routes, Route, Link } from "react-router-dom";
 import { useState } from "react";
-import NavBarMenu from "./components/NavBar";
+import NavBar from "./components/NavBar";
 import AddChild from "./pages/AddChild";
 import AddEvent from "./pages/AddEvent";
 import AllEvents from "./pages/AllEvents";
@@ -33,7 +33,7 @@ function App() {
 
   return (
     <AuthContext.Provider value={authObject}>
-      <NavBarMenu />
+      <NavBar />
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/register" element={<Register />} />
@@ -49,9 +49,9 @@ function App() {
         <Route
           path="/children/:id"
           element={
-            //<RequireAuth>
+            <RequireAuth>
             <Child />
-            //</RequireAuth>
+            </RequireAuth>
           }
         />
         <Route
@@ -91,14 +91,6 @@ function App() {
           element={
             <RequireAuth>
               <AddEvent />
-            </RequireAuth>
-          }
-        />
-        <Route
-          path="/settings"
-          element={
-            <RequireAuth>
-              <Settings />
             </RequireAuth>
           }
         />
