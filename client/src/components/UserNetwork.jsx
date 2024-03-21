@@ -77,7 +77,7 @@ export default function AddUserForm() {
         {childUsers.map((childUser, i) => (
           <div key={i} className="bg-purple-50 border-0 rounded-lg">
             <div className="text-center">{childUser.username}</div>
-            {/* <div>{childUser.relationship}</div> */}
+            <div className="text-center">{childUser.Relationships.relationship}</div>
             <div className="flex justify-center">
               <img
                 src={childUser.profileImage}

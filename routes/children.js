@@ -72,8 +72,13 @@ router.get('/:childId/users', async (req, res) => {
   try {
       // Find the child by ID along with its associated users
       const child = await models.Children.findByPk(childId, {
-          include: [{ model: models.Users }]
-      });
+        include: [
+          { 
+            model: models.Users,
+            through: { attributes: ['relationship'] } // Include relationship column from Relationships model
+          }
+        ]
+    });
 
       if (!child) {
           return res.status(404).json({ error: 'Child not found' });
