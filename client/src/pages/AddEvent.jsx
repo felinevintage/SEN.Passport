@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate, Link, useParams } from "react-router-dom";
 import Button from "../components/Button";
 import InputBox from "../components/InputBox";
-import calendar from "../assets/SENcalendar.png";
+import calendar from "../assets/SENcalendarevents.png";
 import BackButton from "../components/BackButton";
 
 const initial = {
@@ -58,7 +58,7 @@ export default function AddEvent () {
         </img>
         
             <div>
-                <form className= "mb-6" onSubmit={handleSubmit}>
+                <form className= "mb-6 text-purple-700" onSubmit={handleSubmit}>
                     <div className="gap-3">
                         <InputBox
                         handleChange={handleChange}

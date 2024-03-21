@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
-import calendar from "../assets/SENcalendar.png";
+import calendar from "../assets/SENcalendarevents.png";
 import Button from "../components/Button";
 import BackButton from "../components/BackButton";
 
@@ -48,7 +48,7 @@ export default function AllEvents() {
   return (
     <div>
       <BackButton onClick={() => navigate(`/children/${id}`)} />
-        <div className="flex flex-col h-full justify-center items-center">
+        <div className="flex flex-col h-screen justify-center items-center">
           <div>
           
           <Link to={`/children/${id}/addevent`} className="bg-pink-300 text-gar-700 font-bold text-white text-1xl px-6 py-3 rounded hover:bg-purple-700 mb-4">
@@ -59,7 +59,7 @@ export default function AllEvents() {
         </img>
       <ul>
         {events.map((event) => (
-          <li className="bg-violet-300 text-gar-700 font-bold text-2xl px-6 py-3 rounded mb-6" key={event.id}>
+          <li className="bg-violet-300 text-purple-800 font-bold text-2xl px-6 py-3 rounded mb-6" key={event.id}>
             <button onClick={() => handleEventClick(event)}>
               {event.event_type}
             </button>
@@ -83,12 +83,12 @@ export default function AllEvents() {
                 ></path>
               </svg>
             
-            <h2 className="text-2xl font-bold mb-4">
+            <h2 className="text-2xl text-purple-800 font-bold mb-4">
               {selectedEvent.event_type}
             </h2>
-            <p className="text-gray-700 text-xl mb-2">Date: {selectedEvent.date}</p>
-            <p className="text-gray-700 text-xl mb-2">Time: {selectedEvent.time}</p>
-            <p className="text-gray-700 text-xl mb-4">
+            <p className="text-purple-700 text-xl mb-2">Date: {selectedEvent.date}</p>
+            <p className="text-purple-700 text-xl mb-2">Time: {selectedEvent.time}</p>
+            <p className="text-purple-700 text-xl mb-4">
               Location: {selectedEvent.location}
             </p>
             <div className="flex justify-end">

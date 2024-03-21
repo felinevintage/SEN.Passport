@@ -76,8 +76,8 @@ export default function ProfilePage() {
   // const renderChildInfo = () => {
   //   if (!child) return null;
     return (
-      <div>
-      <div className="container mx-auto rounded-md py-8">
+      <div className="container text-purple-800 mx-auto rounded-md py-8 px-4">
+      <div className="container mx-auto rounded-md py-8 px-4">
         <div>
           <BackButton onClick={() => navigate(`/dashboard`)} />
         </div>
@@ -92,7 +92,7 @@ export default function ProfilePage() {
           <div className="w-3/4 px-4">
             <div className="mb-4">
               <h3>First Name</h3>
-              <p className="bg-white w-full border border-gray-400 rounded p-2">
+              <p className="bg-white w-full border text-purple-700 border-gray-400 rounded p-2">
                 {child.firstname}
               </p>
             </div>

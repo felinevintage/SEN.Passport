@@ -100,10 +100,10 @@ export default function Dashboard() {
 
   return (
     <div className="flex flex-col h-full min-h-screen justify-center items-center">
-      <div className="bg-violet-300 text-gar-700 font-bold text-2xl px-6 py-3 rounded my-6">
+      <div className="bg-violet-300 text-purple-700 font-bold text-2xl px-6 py-3 rounded my-6">
         {user.username}
       </div>
-      <div className="flex justify-center items-center mb-10">
+      <div className="flex justify-center text-purple-700 items-center mb-10">
         <div className="mr-6">
           <img
             src={user.profileImage}
@@ -115,17 +115,17 @@ export default function Dashboard() {
           <h1 className="text-xl font-bold">
             {user.firstname} {user.lastname}
           </h1>
-          <div className="text-gray-700 text-lg">{user.email}</div>
+          <div className="text-purple-800 text-lg">{user.email}</div>
         </div>
       </div>
       <div className="text-center mb-10">
         <div className="flex items-center justify-center">
-          <div className="flex items-center grid grid-cols-3 gap-4 mt-4">
+          <div className="flex items-center text-purple-700 grid grid-cols-3 gap-4 mt-4">
             {children.map((child) => (
               <div key={child.id} className="bg-violet-400/75 p-6 rounded-lg">
                 <Link
                   to={`/children/${child.id}`}
-                  className="font-bold text-black hover:underline block text-lg"
+                  className="font-bold text-purple-700 hover:underline block text-lg"
                 >
                   {child.firstname} {child.lastname}
                 </Link>

@@ -75,7 +75,7 @@ export default function AddUserForm() {
       </div>
       <div className="grid grid-cols-6 gap-4 mt-4">
         {childUsers.map((childUser, i) => (
-          <div key={i} className="bg-purple-50 border-0 rounded-lg">
+          <div key={i} className="bg-purple-50 border-0 mb-4 rounded-lg">
             <div className="text-center">{childUser.username}</div>
             <div className="text-center">{childUser.Relationships.relationship}</div>
             <div className="flex justify-center">
